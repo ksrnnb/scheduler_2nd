@@ -65840,28 +65840,146 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var Test = /*#__PURE__*/function (_React$Component) {
-  _inherits(Test, _React$Component);
+var ScheduleName = /*#__PURE__*/function (_React$Component) {
+  _inherits(ScheduleName, _React$Component);
 
-  var _super = _createSuper(Test);
+  var _super = _createSuper(ScheduleName);
 
-  function Test() {
-    _classCallCheck(this, Test);
+  function ScheduleName() {
+    _classCallCheck(this, ScheduleName);
 
     return _super.apply(this, arguments);
   }
 
-  _createClass(Test, [{
+  _createClass(ScheduleName, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Hello!");
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "input-title"
+      }, "Schedule Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text"
+      }));
     }
   }]);
 
-  return Test;
+  return ScheduleName;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Test, null), document.getElementById('root'));
+var Memo = /*#__PURE__*/function (_React$Component2) {
+  _inherits(Memo, _React$Component2);
+
+  var _super2 = _createSuper(Memo);
+
+  function Memo() {
+    _classCallCheck(this, Memo);
+
+    return _super2.apply(this, arguments);
+  }
+
+  _createClass(Memo, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "input-title"
+      }, "Memo (optional)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", null));
+    }
+  }]);
+
+  return Memo;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var Calender = /*#__PURE__*/function (_React$Component3) {
+  _inherits(Calender, _React$Component3);
+
+  var _super3 = _createSuper(Calender);
+
+  function Calender() {
+    _classCallCheck(this, Calender);
+
+    return _super3.apply(this, arguments);
+  }
+
+  _createClass(Calender, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "input-title"
+      }, "Calender"));
+    }
+  }]);
+
+  return Calender;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var CandidatesList = /*#__PURE__*/function (_React$Component4) {
+  _inherits(CandidatesList, _React$Component4);
+
+  var _super4 = _createSuper(CandidatesList);
+
+  function CandidatesList() {
+    _classCallCheck(this, CandidatesList);
+
+    return _super4.apply(this, arguments);
+  }
+
+  _createClass(CandidatesList, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "input-title"
+      }, "Candidates List"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", null));
+    }
+  }]);
+
+  return CandidatesList;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var MakeScheduleButton = /*#__PURE__*/function (_React$Component5) {
+  _inherits(MakeScheduleButton, _React$Component5);
+
+  var _super5 = _createSuper(MakeScheduleButton);
+
+  function MakeScheduleButton() {
+    _classCallCheck(this, MakeScheduleButton);
+
+    return _super5.apply(this, arguments);
+  }
+
+  _createClass(MakeScheduleButton, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit",
+        value: "Create"
+      }));
+    }
+  }]);
+
+  return MakeScheduleButton;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var Main = /*#__PURE__*/function (_React$Component6) {
+  _inherits(Main, _React$Component6);
+
+  var _super6 = _createSuper(Main);
+
+  function Main() {
+    _classCallCheck(this, Main);
+
+    return _super6.apply(this, arguments);
+  }
+
+  _createClass(Main, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ScheduleName, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Memo, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Calender, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CandidatesList, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MakeScheduleButton, null));
+    }
+  }]);
+
+  return Main;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Main, null), document.getElementById('root'));
 
 /***/ }),
 

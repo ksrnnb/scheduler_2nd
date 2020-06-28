@@ -13,13 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('index');
+// });
+Route::get('/', 'ScheduleController@index');
+Route::post('/create', 'ScheduleController@create');
 
-Route::get('/test', function() {
-    return view('test');
-});
-Auth::routes();
+// Route::get('/test', function() {
+//     return view('test');
+// });
+// Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
