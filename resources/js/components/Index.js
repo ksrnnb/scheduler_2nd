@@ -68,7 +68,9 @@ class Schedule extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <Schedule />,
-  document.getElementById('root')
-);
+if (document.getElementById('index')) {
+  ReactDOM.render(
+    <Schedule />,
+    document.getElementById('index')
+  );
+}

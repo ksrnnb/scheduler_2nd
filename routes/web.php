@@ -17,7 +17,11 @@ use Illuminate\Support\Facades\Route;
 //     return view('index');
 // });
 Route::get('/', 'ScheduleController@index');
-Route::post('/create', 'ScheduleController@create');
+Route::post('/', 'ScheduleController@create');
+
+Route::get('/add', 'ScheduleController@add');
+
+
 
 // Route::get('/test', function() {
 //     return view('test');

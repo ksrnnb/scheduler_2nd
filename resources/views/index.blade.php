@@ -1,9 +1,9 @@
 @extends('layouts.schedule')
 
 @section('body')
-<form action="create" method="post">
-  {{ csrf_field() }}
-  <div id="root"></div>
+<form action="/" method="post">
+  @csrf
+  <div id="index"></div>
   <script src="{{asset('js/app.js')}}"></script>
 </form>
 @endsection

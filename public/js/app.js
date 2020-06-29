@@ -65753,7 +65753,9 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
  */
 
 
-__webpack_require__(/*! ./components/App */ "./resources/js/components/App.js");
+__webpack_require__(/*! ./components/Add */ "./resources/js/components/Add.js");
+
+__webpack_require__(/*! ./components/Index */ "./resources/js/components/Index.js");
 
 /***/ }),
 
@@ -65802,10 +65804,135 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/components/App.js":
+/***/ "./resources/js/components/Add.js":
 /*!****************************************!*\
-  !*** ./resources/js/components/App.js ***!
+  !*** ./resources/js/components/Add.js ***!
   \****************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var ScheduleName = /*#__PURE__*/function (_React$Component) {
+  _inherits(ScheduleName, _React$Component);
+
+  var _super = _createSuper(ScheduleName);
+
+  function ScheduleName() {
+    _classCallCheck(this, ScheduleName);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(ScheduleName, [{
+    key: "render",
+    value: function render() {
+      var scheduleName = document.getElementById('scheduleName').value;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, scheduleName));
+    }
+  }]);
+
+  return ScheduleName;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component); // class Memo extends React.Component {
+//   render() {
+//     return (
+//       <div>
+//         <p className="input-title">Memo (optional)</p>
+//         <textarea name="memo" />
+//       </div>
+//     );
+//   }
+// }
+// class Calender extends React.Component {
+//   render () {
+//     return (
+//       <div>
+//         <p className="input-title">Calender</p>
+//       </div>
+//     );
+//   }
+// }
+// class CandidatesList extends React.Component {
+//   render () {
+//     return (
+//       <div>
+//         <p className="input-title">Candidates List</p>
+//         <textarea name="candidates"/>
+//       </div>
+//     );
+//   }
+// }
+// class MakeScheduleButton extends React.Component {
+//   render () {
+//     return (
+//       <div>
+//         <input type="submit" value="Create" />
+//       </div>
+//     );
+//   }
+// }
+
+
+var Schedule = /*#__PURE__*/function (_React$Component2) {
+  _inherits(Schedule, _React$Component2);
+
+  var _super2 = _createSuper(Schedule);
+
+  function Schedule() {
+    _classCallCheck(this, Schedule);
+
+    return _super2.apply(this, arguments);
+  }
+
+  _createClass(Schedule, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ScheduleName, null));
+    }
+  }]);
+
+  return Schedule;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+if (document.getElementById('add')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Schedule, null), document.getElementById('add'));
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/Index.js":
+/*!******************************************!*\
+  !*** ./resources/js/components/Index.js ***!
+  \******************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -65857,7 +65984,8 @@ var ScheduleName = /*#__PURE__*/function (_React$Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "input-title"
       }, "Schedule Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text"
+        type: "text",
+        name: "scheduleName"
       }));
     }
   }]);
@@ -65881,7 +66009,9 @@ var Memo = /*#__PURE__*/function (_React$Component2) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "input-title"
-      }, "Memo (optional)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", null));
+      }, "Memo (optional)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        name: "memo"
+      }));
     }
   }]);
 
@@ -65927,7 +66057,9 @@ var CandidatesList = /*#__PURE__*/function (_React$Component4) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "input-title"
-      }, "Candidates List"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", null));
+      }, "Candidates List"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        name: "candidates"
+      }));
     }
   }]);
 
@@ -65958,28 +66090,30 @@ var MakeScheduleButton = /*#__PURE__*/function (_React$Component5) {
   return MakeScheduleButton;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-var Main = /*#__PURE__*/function (_React$Component6) {
-  _inherits(Main, _React$Component6);
+var Schedule = /*#__PURE__*/function (_React$Component6) {
+  _inherits(Schedule, _React$Component6);
 
-  var _super6 = _createSuper(Main);
+  var _super6 = _createSuper(Schedule);
 
-  function Main() {
-    _classCallCheck(this, Main);
+  function Schedule() {
+    _classCallCheck(this, Schedule);
 
     return _super6.apply(this, arguments);
   }
 
-  _createClass(Main, [{
+  _createClass(Schedule, [{
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ScheduleName, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Memo, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Calender, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CandidatesList, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MakeScheduleButton, null));
     }
   }]);
 
-  return Main;
+  return Schedule;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Main, null), document.getElementById('root'));
+if (document.getElementById('index')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Schedule, null), document.getElementById('index'));
+}
 
 /***/ }),
 
