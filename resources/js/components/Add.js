@@ -12,53 +12,37 @@ class ScheduleName extends React.Component {
   }
 }
 
-// class Memo extends React.Component {
-//   render() {
-//     return (
-//       <div>
-//         <p className="input-title">Memo (optional)</p>
-//         <textarea name="memo" />
-//       </div>
-//     );
-//   }
-// }
+class Url extends React.Component {
+  render() {
+    let url = document.getElementById('url').value;
+    return (
+      <div>
+        <p>url</p>
+        <input type="text" value={url} readOnly />
+      </div>
+    );
+  }
+}
 
-// class Calender extends React.Component {
-//   render () {
-//     return (
-//       <div>
-//         <p className="input-title">Calender</p>
-//       </div>
-//     );
-//   }
-// }
-
-// class CandidatesList extends React.Component {
-//   render () {
-//     return (
-//       <div>
-//         <p className="input-title">Candidates List</p>
-//         <textarea name="candidates"/>
-//       </div>
-//     );
-//   }
-// }
-
-// class MakeScheduleButton extends React.Component {
-//   render () {
-//     return (
-//       <div>
-//         <input type="submit" value="Create" />
-//       </div>
-//     );
-//   }
-// }
+class Candidates extends React.Component {
+  render() {
+    let candidates = document.getElementById('candidates').value;
+    return (
+      <div>
+        <p>Candidates</p>
+        <input type="text" value={candidates} readOnly />
+      </div>
+    );
+  }
+}
 
 class Schedule extends React.Component {
   render() {
     return (
       <div>
         <ScheduleName />
+        <Url />
+        <Candidates />
       </div>
     );
   }

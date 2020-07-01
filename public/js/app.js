@@ -65862,61 +65862,75 @@ var ScheduleName = /*#__PURE__*/function (_React$Component) {
   }]);
 
   return ScheduleName;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component); // class Memo extends React.Component {
-//   render() {
-//     return (
-//       <div>
-//         <p className="input-title">Memo (optional)</p>
-//         <textarea name="memo" />
-//       </div>
-//     );
-//   }
-// }
-// class Calender extends React.Component {
-//   render () {
-//     return (
-//       <div>
-//         <p className="input-title">Calender</p>
-//       </div>
-//     );
-//   }
-// }
-// class CandidatesList extends React.Component {
-//   render () {
-//     return (
-//       <div>
-//         <p className="input-title">Candidates List</p>
-//         <textarea name="candidates"/>
-//       </div>
-//     );
-//   }
-// }
-// class MakeScheduleButton extends React.Component {
-//   render () {
-//     return (
-//       <div>
-//         <input type="submit" value="Create" />
-//       </div>
-//     );
-//   }
-// }
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
+var Url = /*#__PURE__*/function (_React$Component2) {
+  _inherits(Url, _React$Component2);
 
-var Schedule = /*#__PURE__*/function (_React$Component2) {
-  _inherits(Schedule, _React$Component2);
+  var _super2 = _createSuper(Url);
 
-  var _super2 = _createSuper(Schedule);
+  function Url() {
+    _classCallCheck(this, Url);
+
+    return _super2.apply(this, arguments);
+  }
+
+  _createClass(Url, [{
+    key: "render",
+    value: function render() {
+      var url = document.getElementById('url').value;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "url"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: url,
+        readOnly: true
+      }));
+    }
+  }]);
+
+  return Url;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var Candidates = /*#__PURE__*/function (_React$Component3) {
+  _inherits(Candidates, _React$Component3);
+
+  var _super3 = _createSuper(Candidates);
+
+  function Candidates() {
+    _classCallCheck(this, Candidates);
+
+    return _super3.apply(this, arguments);
+  }
+
+  _createClass(Candidates, [{
+    key: "render",
+    value: function render() {
+      var candidates = document.getElementById('candidates').value;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Candidates"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        value: candidates,
+        readOnly: true
+      }));
+    }
+  }]);
+
+  return Candidates;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var Schedule = /*#__PURE__*/function (_React$Component4) {
+  _inherits(Schedule, _React$Component4);
+
+  var _super4 = _createSuper(Schedule);
 
   function Schedule() {
     _classCallCheck(this, Schedule);
 
-    return _super2.apply(this, arguments);
+    return _super4.apply(this, arguments);
   }
 
   _createClass(Schedule, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ScheduleName, null));
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ScheduleName, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Url, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Candidates, null));
     }
   }]);
 
