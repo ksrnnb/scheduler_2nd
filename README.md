@@ -79,6 +79,25 @@ Access denied for user 'root'@'localhost' (using password: NO) (SQL: select * fr
 mysql> SET PASSWORD FOR
     -> 'root'@'localhost' = PASSWORD('password');
 ```
+## 主キーと外部キー
+Eloquentには主キーや外部キーに暗黙のルールがある。
+リレーションを使うとき（hasOneとか）、特に指定しない場合は、`_id`をつけた名前を外部キーとする。また、親カラムの主キーは`id`になる。これをオーバーライドしたい場合は、以下のように指定する。
+```php
+return $this->hasOne('App\Phone', 'foreign_key', 'local_key');
+```
+
+## timestamps
+特に指定しない場合は、`timestamps`が自動で生成されるので、モデルで無効にしてやる必要がある。
+```php
+public $timestamps = false;
+```
+
+## Pivot
+中間テーブルを使用する場合はPivotを使うらしい。
+Modelの代わりにPivotを使用すると、テーブル名が自動で割り当てられるので、指定する必要がある。
+```php
+protected $tables = 'availabilities';
+```
 
 ## Factoryを使用
 ```php
