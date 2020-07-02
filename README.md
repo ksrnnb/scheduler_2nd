@@ -81,29 +81,45 @@ mysql> SET PASSWORD FOR
 ```
 
 ## Factoryを使用
+```php
 $users = factory(App\User::class, 3)->create();
-で、3つできる。複数モデルの生成にcreateを使用する場合、返すのはインスタンスのコレクションなので、eachでそれぞれに対するコールバックがかける。
-
+```
+で、3つできる。複数モデルの生成に`create`を使用する場合、返すのはインスタンスのコレクションなので、eachでそれぞれに対するコールバックがかける。
+```php
 $users = factory(App\User::class, 3)
            ->create()
            ->each(function ($u) {
                 $u->posts()->save(factory(App\Post::class)->make());
             });
+```
 
-posts()はhasMany()でリレーションづけたやつ。違うページに載ってた。
-https://readouble.com/laravel/7.x/ja/eloquent-relationships.html
+上の例の`posts()`は`hasMany()`でリレーションづけたやつ。違うページに載ってた。
+[ドキュメント](https://readouble.com/laravel/7.x/ja/eloquent-relationships.html)
+```php
 public function posts()
 {
     return $this->hasMany('App\Post');
 }
+```
 
-saveはそのモデルを保存。
-https://readouble.com/laravel/7.x/ja/eloquent-relationships.html#the-save-method
+[save](https://readouble.com/laravel/7.x/ja/eloquent-relationships.html#the-save-method)はそのモデルを保存。
 
-createは作成してsaveメソッドも実行する。
+
+[create](https://readouble.com/laravel/7.x/ja/database-testing.html#using-factories)は作成してsaveメソッドも実行する（データベースに保存される。）
 引数がある場合は、その属性をオーバーライドする。引数に、普通の配列も指定できる。
-https://readouble.com/laravel/7.x/ja/database-testing.html#using-factories
 
 
-makeはインスタンスの生成
+makeはインスタンスの生成。保存はされないっぽい。
+
+## hasManyのときの取り出し方
+[ドキュメント](https://readouble.com/laravel/7.x/ja/eloquent-relationships.html#one-to-many)を参照。
+`hasMany`の場合は、プロパティでモデルのコレクションが得られることに注意。
+以下の例で`App\Post::find(1)->comments()`とすると、オブジェクトが返ってきて、`foreach`で各要素が取り出せない。
+```php
+$comments = App\Post::find(1)->comments;
+
+foreach ($comments as $comment) {
+    //
+}
+```
 

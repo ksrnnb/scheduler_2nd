@@ -16,12 +16,17 @@ class User extends Authenticatable
 
 
     public function schedule() {
-        return $this->belongsTo('App\Schedule', 'scheduleId');
+        return $this->belongsTo('App\Schedule', 'scheduleId', 'scheduleId');
     }
 
     public function availabilities() {
-        return $this->hasMany('App\Availability');
+        return $this->hasMany('App\Availability', 'userId', 'userId');
     }
+
+    // public function candidates() {
+    //     return $this->belongsToMany('App\Candidate', 'availabilities', 'userId', 'candidateId');
+
+    // }
 
     // use Notifiable;
 
