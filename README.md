@@ -142,3 +142,8 @@ foreach ($comments as $comment) {
 }
 ```
 
+## コントローラでモデルを使用するとき
+ふつうに`App\Model名::where`とかやろうとすると、`App\Http\Controllers\App\モデル名`のクラスがみつからない、というエラーが発生する。
+名前空間が`namespace App\Http\Controllers;`と指定されているため。
+
+コントローラでモデルを使用するときは、`use App\モデル名`として、`モデル名::where`のように使う。

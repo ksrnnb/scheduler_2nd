@@ -65904,12 +65904,9 @@ var Candidates = /*#__PURE__*/function (_React$Component3) {
   _createClass(Candidates, [{
     key: "render",
     value: function render() {
-      var candidates = document.getElementById('candidates').value;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Candidates"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        value: candidates,
-        readOnly: true
-      }));
+      var candidates = document.getElementsByClassName('candidates');
+      console.log(candidates);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Candidates"));
     }
   }]);
 

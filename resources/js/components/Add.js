@@ -25,12 +25,14 @@ class Url extends React.Component {
 }
 
 class Candidates extends React.Component {
+
   render() {
-    let candidates = document.getElementById('candidates').value;
+    let candidates = document.getElementsByClassName('candidates');
+    console.log(candidates);
     return (
       <div>
         <p>Candidates</p>
-        <input type="text" value={candidates} readOnly />
+        <textarea />
       </div>
     );
   }

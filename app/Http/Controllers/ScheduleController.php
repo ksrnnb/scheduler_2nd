@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Schedule;
+use App\Candidate;
 
 class ScheduleController extends Controller
 {
@@ -20,18 +22,28 @@ class ScheduleController extends Controller
 
     public function add(Request $request) {
         
-        $scheduleId = $request->query('id');
+        $queryId = $request->query('id');
 
-        // Need to validate id is uuid or not.
-        $params = array(
-            'scheduleId' => $scheduleId,
-            'scheduleName' => 'Schedule NAME',
-            'url' => url()->full(),
-            'candidates' => '2020-07-01',
-        );
+        $schedule = Schedule::where('scheduleUuid', $queryId)->first();
 
-        if (isset($scheduleId)) {
-            return view('add', ['id' => $scheduleId, 'params' => $params]);
+        if(isset($schedule)) {
+            
+            $candidatesObjects = Candidate::where('scheduleId', $schedule->scheduleId)->get();
+
+            $candidatesArray = [];
+
+            foreach($candidatesObjects as $candidatesObject) {
+                array_push($candidatesArray, $candidatesObject);
+            }
+
+            $params = array(
+                'scheduleId' => $queryId,
+                'scheduleName' => $schedule->scheduleName,
+                'url' => url()->full(),
+                'candidates' => $candidatesArray,
+            );
+
+            return view('add', ['id' => $queryId, 'params' => $params]);
         } else {
             return redirect('/');
         }
