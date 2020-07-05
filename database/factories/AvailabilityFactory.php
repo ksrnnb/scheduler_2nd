@@ -8,6 +8,6 @@ use Faker\Generator as Faker;
 $factory->define(Availability::class, function (Faker $faker) {
 
     return [
-        'availability' => $faker->numberBetween(1, 3),
+        'availability' => $faker->numberBetween(0, 2),
     ];
 });

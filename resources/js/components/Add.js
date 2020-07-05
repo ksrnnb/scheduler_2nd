@@ -42,9 +42,7 @@ class Schedule extends React.Component {
   render() {
     return (
       <div>
-        <ScheduleName />
-        <Url />
-        <Candidates />
+        
       </div>
     );
   }

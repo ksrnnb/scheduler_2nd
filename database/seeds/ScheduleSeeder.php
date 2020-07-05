@@ -23,6 +23,7 @@ class ScheduleSeeder extends Seeder
             foreach($candidates as $candidate) {
                 factory(App\Availability::class)->create(
                     array(
+                        'scheduleId' => $schedule->scheduleId,
                         'userId' => $user['userId'],
                         'candidateId' => $candidate['candidateId'],
                     )

@@ -14,6 +14,7 @@ class CreateAvailabilitiesTable extends Migration
     public function up()
     {
         Schema::create('availabilities', function (Blueprint $table) {
+            $table->integer('scheduleId');
             $table->integer('candidateId');
             $table->integer('userId');
             $table->string('availability');
