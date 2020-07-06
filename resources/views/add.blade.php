@@ -21,25 +21,31 @@
       @foreach($params['candidates'] as $candidateId => $candidate)
         <tr>
           <td>{{$candidate}}</td>
-          {{-- 
-          @foreach($params['countAvailabilities'] as $countAvailability)
+          @foreach($params['countAvailabilities']['candidate' . $candidateId] as $countAvailability)
             <td>{{$countAvailability}}</td>
           @endforeach
-          --}}
-          <td></td>
-          <td></td>
-          <td></td>
 
           @foreach($params['availabilities'][$candidateId] as $availability)
-            <td>{{$availability}}</td>
+            @switch($availability)
+              @case(0)
+                <td>○</td>
+                @break
+              
+              @case(1)
+                <td>△</td>
+                @break
+
+              @case(2)
+                <td>×</td>
+                @break
+
+            @endswitch
           @endforeach
+          
         </tr>
       @endforeach
     </table>
   </div>
-
-  {{var_dump($params['availabilities'])}}
-
 
 
   <div id="add"></div>

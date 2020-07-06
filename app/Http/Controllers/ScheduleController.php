@@ -9,6 +9,8 @@ use App\User;
 use App\Candidate;
 use App\Availability;
 
+use Illuminate\Support\Facades\Log;
+
 class ScheduleController extends Controller
 {
 
@@ -38,7 +40,7 @@ class ScheduleController extends Controller
 
             $candidatesArray = [];
             $availabilitiesArray = [];
-            $countAvailabilities = [0, 0, 0];
+            $countAvailabilities = [];
 
             foreach($candidates as $candidate) {
                 $candidatesArray[$candidate->candidateId] = $candidate->candidateDate;
@@ -49,9 +51,15 @@ class ScheduleController extends Controller
             }
 
             foreach($candidates as $candidate) {
+                $temp = [0, 0, 0];
                 foreach($availabilitiesArray[$candidate->candidateId] as $availability) {
-                    $countAvailabilities[$availability] += 1;
+                    $temp[$availability] += 1;
                 }
+                $countAvailabilities = array_merge($countAvailabilities, [
+                    'candidate' . $candidate->candidateId => $temp,
+                ]);
+                Log::debug($countAvailabilities);
+                // $countAvailabilities = [0 => 'hogehoge'];
             }
 
             
