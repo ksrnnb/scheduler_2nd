@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="{{asset('css/app.css')}}">
   <title>Scheduler</title>
 </head>
 <body>
-  <p class="header">Scheduler</p>
-    @yield('body')
-  <p class="footer">ksrnnb</p>
+  <div class="container">
+    <p class="header">Scheduler</p>
+      @yield('body')
+    <p class="footer">ksrnnb</p>
+  </div>
 </body>
 </html>

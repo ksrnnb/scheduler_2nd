@@ -1,56 +1,41 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-class ScheduleName extends React.Component {
-  render() {
-    let scheduleName = document.getElementById('scheduleName').value;
-    return (
-      <div>
-        <p>{scheduleName}</p>
-      </div>
-    );
-  }
-}
-
-class Url extends React.Component {
-  render() {
-    let url = document.getElementById('url').value;
-    return (
-      <div>
-        <p>url</p>
-        <input type="text" value={url} readOnly />
-      </div>
-    );
-  }
-}
+import { divide } from 'lodash';
 
 class Candidates extends React.Component {
 
+  getTrElements(candidates) {
+
+    return Array.prototype.map.call(candidates, function(candidate) {
+      return <tr key={candidate.name}><td>{candidate.name}</td><td>○</td><td>△</td><td>×</td></tr>;
+    });
+
+  }
+
   render() {
     let candidates = document.getElementsByClassName('candidates');
-    console.log(candidates);
+
     return (
       <div>
-        <p>Candidates</p>
-        <textarea />
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Date</th><th></th><th></th><th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.getTrElements(candidates)}
+          </tbody>
+        </table>
       </div>
     );
   }
 }
 
-class Schedule extends React.Component {
-  render() {
-    return (
-      <div>
-        
-      </div>
-    );
-  }
-}
 
 if (document.getElementById('add')) {
   ReactDOM.render(
-  <Schedule />,
+  <Candidates />,
     document.getElementById('add')
   );
 }

@@ -65817,6 +65817,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -65842,100 +65844,43 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var ScheduleName = /*#__PURE__*/function (_React$Component) {
-  _inherits(ScheduleName, _React$Component);
 
-  var _super = _createSuper(ScheduleName);
+var Candidates = /*#__PURE__*/function (_React$Component) {
+  _inherits(Candidates, _React$Component);
 
-  function ScheduleName() {
-    _classCallCheck(this, ScheduleName);
-
-    return _super.apply(this, arguments);
-  }
-
-  _createClass(ScheduleName, [{
-    key: "render",
-    value: function render() {
-      var scheduleName = document.getElementById('scheduleName').value;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, scheduleName));
-    }
-  }]);
-
-  return ScheduleName;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-var Url = /*#__PURE__*/function (_React$Component2) {
-  _inherits(Url, _React$Component2);
-
-  var _super2 = _createSuper(Url);
-
-  function Url() {
-    _classCallCheck(this, Url);
-
-    return _super2.apply(this, arguments);
-  }
-
-  _createClass(Url, [{
-    key: "render",
-    value: function render() {
-      var url = document.getElementById('url').value;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "url"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        value: url,
-        readOnly: true
-      }));
-    }
-  }]);
-
-  return Url;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-var Candidates = /*#__PURE__*/function (_React$Component3) {
-  _inherits(Candidates, _React$Component3);
-
-  var _super3 = _createSuper(Candidates);
+  var _super = _createSuper(Candidates);
 
   function Candidates() {
     _classCallCheck(this, Candidates);
 
-    return _super3.apply(this, arguments);
+    return _super.apply(this, arguments);
   }
 
   _createClass(Candidates, [{
+    key: "getTrElements",
+    value: function getTrElements(candidates) {
+      return Array.prototype.map.call(candidates, function (candidate) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+          key: candidate.name
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, candidate.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u25CB"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u25B3"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\xD7"));
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var candidates = document.getElementsByClassName('candidates');
       console.log(candidates);
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Candidates"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", null));
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        className: "table"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, this.getTrElements(candidates))));
     }
   }]);
 
   return Candidates;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-var Schedule = /*#__PURE__*/function (_React$Component4) {
-  _inherits(Schedule, _React$Component4);
-
-  var _super4 = _createSuper(Schedule);
-
-  function Schedule() {
-    _classCallCheck(this, Schedule);
-
-    return _super4.apply(this, arguments);
-  }
-
-  _createClass(Schedule, [{
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
-    }
-  }]);
-
-  return Schedule;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
 if (document.getElementById('add')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Schedule, null), document.getElementById('add'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Candidates, null), document.getElementById('add'));
 }
 
 /***/ }),
