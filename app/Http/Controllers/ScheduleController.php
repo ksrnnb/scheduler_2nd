@@ -58,8 +58,8 @@ class ScheduleController extends Controller
                 $countAvailabilities = array_merge($countAvailabilities, [
                     'candidate' . $candidate->candidateId => $temp,
                 ]);
-                Log::debug($countAvailabilities);
-                // $countAvailabilities = [0 => 'hogehoge'];
+                // Log::debug($countAvailabilities);
+                
             }
 
             

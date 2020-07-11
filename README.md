@@ -147,3 +147,8 @@ foreach ($comments as $comment) {
 名前空間が`namespace App\Http\Controllers;`と指定されているため。
 
 コントローラでモデルを使用するときは、`use App\モデル名`として、`モデル名::where`のように使う。
+
+## bootstrapでテーブルのtd, thがCenterにこない
+`npm run watch`するたびにapp.cssが更新されるから、app.cssを編集しても無駄。
+`<table>`タグのクラスに`text-center`つければCenterにくるようになった。
+あとは、`<th>`や`<td>`の子要素に`<div>`を作って`text-align: center`という方法も。。。

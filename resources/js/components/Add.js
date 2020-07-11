@@ -6,21 +6,25 @@ class Candidates extends React.Component {
 
   getTrElements(candidates) {
 
+    // I use map because forEach returns undefined
     return Array.prototype.map.call(candidates, function(candidate) {
-      return <tr key={candidate.name}><td>{candidate.name}</td><td>○</td><td>△</td><td>×</td></tr>;
+      // need to use key
+      return <tr key={candidate.name} scope="row"><td>{candidate.name}</td><td onClick={() => alert('Hey')}>○</td><td>△</td><td>×</td></tr>;
     });
 
   }
 
   render() {
+    // const or let ??
     let candidates = document.getElementsByClassName('candidates');
 
     return (
       <div>
-        <table className="table">
+        {/* Need to adjust table width later */}
+        <table className="table-bordered text-center" style={{width: "80%"}}>
           <thead>
             <tr>
-              <th>Date</th><th></th><th></th><th></th>
+              <th>Date</th><th scope="col"></th><th scope="col"></th><th scope="col"></th>
             </tr>
           </thead>
           <tbody>

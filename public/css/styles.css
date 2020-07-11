@@ -1,3 +1,7 @@
 td {
   text-align: center;
 }
+
+.selected {
+  background-color: rgba(65, 105, 255, 0.4);
+}

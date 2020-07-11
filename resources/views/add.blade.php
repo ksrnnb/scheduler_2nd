@@ -12,13 +12,19 @@
 </div>
 
 <div style="margin-top:30pt">
-  <table class="table">
-    <th>Date</th><th>○</th><th>△</th><th>×</th>
-    @foreach($params['users'] as $user)
-      <th>{{$user->userName}}</th>
-    @endforeach
+<!-- Need to adjust table width later -->
+  <table class="table-bordered text-center" style="width: 80%;">
+
+    <tr>
+      <th>Date</th><th scope="col">○</th><th scope="col">△</th><th scope="col">×</th>
+      @foreach($params['users'] as $user)
+      <!-- Need to modify link -->
+        <th scope="col"><a href="/editUser" method="GET">{{$user->userName}}</a></th>
+      @endforeach
+    </tr>
+    
     @foreach($params['candidates'] as $candidateId => $candidate)
-      <tr>
+      <tr scope="row">
         <td>{{$candidate}}</td>
         @foreach($params['countAvailabilities']['candidate' . $candidateId] as $countAvailability)
           <td>{{$countAvailability}}</td>
@@ -51,10 +57,10 @@
     @csrf
     <p>Input availabilities</p>
     <p>User name</p>
-    <input type="text" name="userName">
+    <input type="text" name="userName" required>
     <p>Candidates</p>
     @foreach($params['candidates'] as $candidateId => $candidate)
-      <input type="hidden" class="candidates"name="{{$candidateId}}">
+      <input type="hidden" class="candidates" name="{{$candidate}}">
     @endforeach
     <div id="add"></div>  
 
