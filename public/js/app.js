@@ -65845,33 +65845,72 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var Candidates = /*#__PURE__*/function (_React$Component) {
-  _inherits(Candidates, _React$Component);
+var GetTableRows = /*#__PURE__*/function (_React$Component) {
+  _inherits(GetTableRows, _React$Component);
 
-  var _super = _createSuper(Candidates);
+  var _super = _createSuper(GetTableRows);
 
-  function Candidates() {
-    _classCallCheck(this, Candidates);
+  function GetTableRows(props) {
+    var _this;
 
-    return _super.apply(this, arguments);
+    _classCallCheck(this, GetTableRows);
+
+    _this = _super.call(this, props); // これでいい？　あとcandidatesも欲しい。state？
+
+    _this.handleClick = _this.props.onClick.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
-  _createClass(Candidates, [{
-    key: "getTrElements",
-    value: function getTrElements(candidates) {
-      // I use map because forEach returns undefined
-      return Array.prototype.map.call(candidates, function (candidate) {
+  _createClass(GetTableRows, [{
+    key: "render",
+    value: function render() {
+      // console.log(this.props.onClick);
+      // this.handleClick = this.props.onClick.bind(this);
+      var rows = Array.prototype.map.call(this.props.candidates, function (candidate) {
         // need to use key
+        //ここでthis.props.onClickやるとpropsがundefined...意味わからん
+        // return <tr key={candidate.name} scope="row"><td>{candidate.name}</td><td onClick={this.props.onClick}>○</td><td>△</td><td>×</td></tr>;
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: candidate.name,
           scope: "row"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, candidate.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-          onClick: function onClick() {
-            return alert('Hey');
-          }
-        }, "\u25CB"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u25B3"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\xD7"));
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, candidate.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u25CB"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\u25B3"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "\xD7"));
       });
+      return rows;
     }
+  }]);
+
+  return GetTableRows;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var Candidates = /*#__PURE__*/function (_React$Component2) {
+  _inherits(Candidates, _React$Component2);
+
+  var _super2 = _createSuper(Candidates);
+
+  function Candidates(props) {
+    var _this2;
+
+    _classCallCheck(this, Candidates);
+
+    _this2 = _super2.call(this, props); // bind is necessary...
+
+    _this2.handleClick = _this2.handleClick.bind(_assertThisInitialized(_this2));
+    return _this2;
+  }
+
+  _createClass(Candidates, [{
+    key: "handleClick",
+    value: function handleClick() {
+      alert('Hey');
+    } // もうちょい良い書き方あるはず、、、
+    // getTrElements(candidates) {
+    //   // I use map because forEach returns undefined
+    //   return Array.prototype.map.call(candidates, function(candidate) {
+    //     // need to use key
+    //     return <tr key={candidate.name} scope="row"><td>{candidate.name}</td><td onClick={handleClick}>○</td><td>△</td><td>×</td></tr>;
+    //   });
+    // }
+
   }, {
     key: "render",
     value: function render() {
@@ -65888,7 +65927,10 @@ var Candidates = /*#__PURE__*/function (_React$Component) {
         scope: "col"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, this.getTrElements(candidates))));
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(GetTableRows, {
+        onClick: this.handleClick,
+        candidates: candidates
+      }))));
     }
   }]);
 
