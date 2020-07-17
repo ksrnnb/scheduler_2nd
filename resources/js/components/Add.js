@@ -2,25 +2,63 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { divide } from 'lodash';
 
+class GetTableData extends React.Component {
+  constructor(props) {
+    super(props);
+
+    // handleClickをどう扱うか、、、親コンポーネントからもってくるべき？
+    this.handleClick = this.props.onClick.bind(this);
+    this.state = {
+      availability: this.props.availability,
+    }
+  }
+
+
+  // handleClick(symbolIndex) {
+  //   this.setState({
+  //     availability: symbolIndex,
+  //   });
+  // }
+
+  render() {
+
+    const symbols = ['○', '△', '×'];
+    const handleClick = this.handleClick;
+    const availability = this.availability;
+    
+    const tableData = symbols.map((symbol, index) => {
+
+      if (availability === index) {
+        //クリックしたらselectedが変わるようにするにはどうしたらいい？？
+        return <td key={index} onClick={handleClick} className="selected">{symbol}</td>;
+      } else {
+        return <td key={index} onClick={handleClick}>{symbol}</td>;
+      }
+    });
+
+    return tableData;
+  }
+
+  
+}
 
 class GetTableRows extends React.Component {
   constructor(props) {
     super(props);
-
-    // これでいい？　あとcandidatesも欲しい。state？
+    this.candidates = this.props.candidates;
     this.handleClick = this.props.onClick.bind(this);
-  }
 
+    this.availabilities = Array(this.candidates.length).fill(0);
+
+  }
   render() {
 
-    
-    // console.log(this.props.onClick);
-    // this.handleClick = this.props.onClick.bind(this);
-    const rows = Array.prototype.map.call(this.props.candidates, function(candidate) {
+    const handleClick = this.handleClick;
+    const availabilities = this.availabilities;
+
+    const rows = Array.prototype.map.call(this.candidates, function(candidate, index) {
       // need to use key
-      //ここでthis.props.onClickやるとpropsがundefined...意味わからん
-      // return <tr key={candidate.name} scope="row"><td>{candidate.name}</td><td onClick={this.props.onClick}>○</td><td>△</td><td>×</td></tr>;
-      return <tr key={candidate.name} scope="row"><td>{candidate.name}</td><td>○</td><td>△</td><td>×</td></tr>;
+      return <tr key={candidate.name} scope="row"><td>{candidate.name}</td><GetTableData onClick={handleClick} availability={availabilities[index]}/></tr>;
     });
 
     return rows;
@@ -37,20 +75,9 @@ class Candidates extends React.Component {
   }
 
   handleClick() {
-    alert('Hey');
+    alert('hey');
   }
 
-
-// もうちょい良い書き方あるはず、、、
-  // getTrElements(candidates) {
-
-  //   // I use map because forEach returns undefined
-  //   return Array.prototype.map.call(candidates, function(candidate) {
-  //     // need to use key
-  //     return <tr key={candidate.name} scope="row"><td>{candidate.name}</td><td onClick={handleClick}>○</td><td>△</td><td>×</td></tr>;
-  //   });
-
-  // }
 
   render() {
     // const or let ??
@@ -66,7 +93,6 @@ class Candidates extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {/* {this.getTrElements(candidates)} */}
             <GetTableRows onClick={this.handleClick} candidates={candidates}/>
           </tbody>
         </table>
