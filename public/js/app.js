@@ -65858,9 +65858,6 @@ var GetTableData = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props); // handleClickをどう扱うか、、、親コンポーネントからもってくるべき？
 
     _this.handleClick = _this.props.onClick.bind(_assertThisInitialized(_this));
-    _this.state = {
-      availability: _this.props.availability
-    };
     return _this;
   } // handleClick(symbolIndex) {
   //   this.setState({
@@ -65874,19 +65871,24 @@ var GetTableData = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var symbols = ['○', '△', '×'];
       var handleClick = this.handleClick;
-      var availability = this.availability;
-      var tableData = symbols.map(function (symbol, index) {
-        if (availability === index) {
+      var rowIndex = this.props.rowIndex;
+      var availability = this.props.availability;
+      var tableData = symbols.map(function (symbol, symbolIndex) {
+        if (availability === symbolIndex) {
           //クリックしたらselectedが変わるようにするにはどうしたらいい？？
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-            key: index,
-            onClick: handleClick,
+            key: symbolIndex,
+            onClick: function onClick() {
+              return handleClick(rowIndex, symbolIndex);
+            },
             className: "selected"
           }, symbol);
         } else {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-            key: index,
-            onClick: handleClick
+            key: symbolIndex,
+            onClick: function onClick() {
+              return handleClick(rowIndex, symbolIndex);
+            }
           }, symbol);
         }
       });
@@ -65910,7 +65912,6 @@ var GetTableRows = /*#__PURE__*/function (_React$Component2) {
     _this2 = _super2.call(this, props);
     _this2.candidates = _this2.props.candidates;
     _this2.handleClick = _this2.props.onClick.bind(_assertThisInitialized(_this2));
-    _this2.availabilities = Array(_this2.candidates.length).fill(0);
     return _this2;
   }
 
@@ -65918,7 +65919,7 @@ var GetTableRows = /*#__PURE__*/function (_React$Component2) {
     key: "render",
     value: function render() {
       var handleClick = this.handleClick;
-      var availabilities = this.availabilities;
+      var availabilities = this.props.availabilities;
       var rows = Array.prototype.map.call(this.candidates, function (candidate, index) {
         // need to use key
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
@@ -65926,7 +65927,8 @@ var GetTableRows = /*#__PURE__*/function (_React$Component2) {
           scope: "row"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, candidate.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(GetTableData, {
           onClick: handleClick,
-          availability: availabilities[index]
+          availability: availabilities[index],
+          rowIndex: index
         }));
       });
       return rows;
@@ -65946,7 +65948,11 @@ var Candidates = /*#__PURE__*/function (_React$Component3) {
 
     _classCallCheck(this, Candidates);
 
-    _this3 = _super3.call(this, props); // bind is necessary...
+    _this3 = _super3.call(this, props);
+    _this3.candidates = document.getElementsByClassName('candidates');
+    _this3.state = {
+      availabilities: Array(_this3.candidates.length).fill(0)
+    }; // bind is necessary...
 
     _this3.handleClick = _this3.handleClick.bind(_assertThisInitialized(_this3));
     return _this3;
@@ -65954,14 +65960,19 @@ var Candidates = /*#__PURE__*/function (_React$Component3) {
 
   _createClass(Candidates, [{
     key: "handleClick",
-    value: function handleClick() {
-      alert('hey');
+    value: function handleClick(rowIndex, symbolIndex) {
+      var availabilities = this.state.availabilities.slice();
+      availabilities[rowIndex] = symbolIndex;
+      this.setState({
+        availabilities: availabilities
+      });
     }
   }, {
     key: "render",
     value: function render() {
       // const or let ??
-      var candidates = document.getElementsByClassName('candidates');
+      // const candidates = document.getElementsByClassName('candidates');
+      var candidates = this.candidates;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "table-bordered text-center",
         style: {
@@ -65975,7 +65986,8 @@ var Candidates = /*#__PURE__*/function (_React$Component3) {
         scope: "col"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(GetTableRows, {
         onClick: this.handleClick,
-        candidates: candidates
+        candidates: candidates,
+        availabilities: this.state.availabilities
       }))));
     }
   }]);
