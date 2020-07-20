@@ -162,3 +162,16 @@ foreach ($comments as $comment) {
 ## cache
 毎回、キャッシュ削除するのがめんどい。`<meta>`でキャッシュしないように設定したら、やらなくて済むようになった。
 [リンク](https://stackoverflow.com/questions/51207570/how-to-clear-browser-cache-in-reactjs)を参照。
+
+## stateの配列の一部を更新したい
+`slice()`で配列つくって、一部を変更。
+そのあと`setState()`で更新する。
+```javascript
+handleClick(rowIndex, symbolIndex) {
+    const availabilities = this.state.availabilities.slice();
+    availabilities[rowIndex] = symbolIndex;
+    this.setState({
+      availabilities: availabilities,
+    });
+  }
+```

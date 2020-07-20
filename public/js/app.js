@@ -65845,89 +65845,61 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var GetTableData = /*#__PURE__*/function (_React$Component) {
-  _inherits(GetTableData, _React$Component);
+function TableData(props) {
+  var symbols = ['○', '△', '×'];
+  var handleClick = props.onClick;
+  var rowIndex = props.rowIndex;
+  var availability = props.availability;
+  var tableData = symbols.map(function (symbol, symbolIndex) {
+    // availability is string...
+    if (availability == symbolIndex) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        key: symbolIndex,
+        onClick: function onClick() {
+          return handleClick(rowIndex, symbolIndex);
+        },
+        className: "selected"
+      }, symbol);
+    } else {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        key: symbolIndex,
+        onClick: function onClick() {
+          return handleClick(rowIndex, symbolIndex);
+        }
+      }, symbol);
+    }
+  });
+  return tableData;
+}
 
-  var _super = _createSuper(GetTableData);
+var TableRows = /*#__PURE__*/function (_React$Component) {
+  _inherits(TableRows, _React$Component);
 
-  function GetTableData(props) {
+  var _super = _createSuper(TableRows);
+
+  function TableRows(props) {
     var _this;
 
-    _classCallCheck(this, GetTableData);
+    _classCallCheck(this, TableRows);
 
-    _this = _super.call(this, props); // handleClickをどう扱うか、、、親コンポーネントからもってくるべき？
-
+    _this = _super.call(this, props);
+    _this.candidates = _this.props.candidates;
     _this.handleClick = _this.props.onClick.bind(_assertThisInitialized(_this));
     return _this;
-  } // handleClick(symbolIndex) {
-  //   this.setState({
-  //     availability: symbolIndex,
-  //   });
-  // }
-
-
-  _createClass(GetTableData, [{
-    key: "render",
-    value: function render() {
-      var symbols = ['○', '△', '×'];
-      var handleClick = this.handleClick;
-      var rowIndex = this.props.rowIndex;
-      var availability = this.props.availability;
-      var tableData = symbols.map(function (symbol, symbolIndex) {
-        if (availability === symbolIndex) {
-          //クリックしたらselectedが変わるようにするにはどうしたらいい？？
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-            key: symbolIndex,
-            onClick: function onClick() {
-              return handleClick(rowIndex, symbolIndex);
-            },
-            className: "selected"
-          }, symbol);
-        } else {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-            key: symbolIndex,
-            onClick: function onClick() {
-              return handleClick(rowIndex, symbolIndex);
-            }
-          }, symbol);
-        }
-      });
-      return tableData;
-    }
-  }]);
-
-  return GetTableData;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-var GetTableRows = /*#__PURE__*/function (_React$Component2) {
-  _inherits(GetTableRows, _React$Component2);
-
-  var _super2 = _createSuper(GetTableRows);
-
-  function GetTableRows(props) {
-    var _this2;
-
-    _classCallCheck(this, GetTableRows);
-
-    _this2 = _super2.call(this, props);
-    _this2.candidates = _this2.props.candidates;
-    _this2.handleClick = _this2.props.onClick.bind(_assertThisInitialized(_this2));
-    return _this2;
   }
 
-  _createClass(GetTableRows, [{
+  _createClass(TableRows, [{
     key: "render",
     value: function render() {
       var handleClick = this.handleClick;
-      var availabilities = this.props.availabilities;
       var rows = Array.prototype.map.call(this.candidates, function (candidate, index) {
         // need to use key
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: candidate.name,
           scope: "row"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, candidate.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(GetTableData, {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, candidate.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TableData, {
           onClick: handleClick,
-          availability: availabilities[index],
+          availability: candidate.value,
           rowIndex: index
         }));
       });
@@ -65935,44 +65907,48 @@ var GetTableRows = /*#__PURE__*/function (_React$Component2) {
     }
   }]);
 
-  return GetTableRows;
+  return TableRows;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-var Candidates = /*#__PURE__*/function (_React$Component3) {
-  _inherits(Candidates, _React$Component3);
+var Candidates = /*#__PURE__*/function (_React$Component2) {
+  _inherits(Candidates, _React$Component2);
 
-  var _super3 = _createSuper(Candidates);
+  var _super2 = _createSuper(Candidates);
 
   function Candidates(props) {
-    var _this3;
+    var _this2;
 
     _classCallCheck(this, Candidates);
 
-    _this3 = _super3.call(this, props);
-    _this3.candidates = document.getElementsByClassName('candidates');
-    _this3.state = {
-      availabilities: Array(_this3.candidates.length).fill(0)
+    _this2 = _super2.call(this, props);
+    _this2.candidates = document.getElementsByClassName('candidates'); // initial input value = 0
+
+    Array.prototype.map.call(_this2.candidates, function (candidate) {
+      return candidate.value = 0;
+    });
+    _this2.state = {
+      candidates: document.getElementsByClassName('candidates')
     }; // bind is necessary...
 
-    _this3.handleClick = _this3.handleClick.bind(_assertThisInitialized(_this3));
-    return _this3;
+    _this2.handleClick = _this2.handleClick.bind(_assertThisInitialized(_this2));
+    return _this2;
   }
 
   _createClass(Candidates, [{
     key: "handleClick",
     value: function handleClick(rowIndex, symbolIndex) {
-      var availabilities = this.state.availabilities.slice();
-      availabilities[rowIndex] = symbolIndex;
+      var candidates = this.state.candidates; // update class .selected and input value
+
+      candidates[rowIndex].value = symbolIndex;
       this.setState({
-        availabilities: availabilities
+        candidates: candidates
       });
     }
   }, {
     key: "render",
     value: function render() {
       // const or let ??
-      // const candidates = document.getElementsByClassName('candidates');
-      var candidates = this.candidates;
+      var candidates = this.state.candidates;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "table-bordered text-center",
         style: {
@@ -65984,10 +65960,9 @@ var Candidates = /*#__PURE__*/function (_React$Component3) {
         scope: "col"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(GetTableRows, {
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TableRows, {
         onClick: this.handleClick,
-        candidates: candidates,
-        availabilities: this.state.availabilities
+        candidates: candidates
       }))));
     }
   }]);

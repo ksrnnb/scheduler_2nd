@@ -2,37 +2,27 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { divide } from 'lodash';
 
-class GetTableData extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleClick = this.props.onClick.bind(this);
-  }
-
-  render() {
-
-    const symbols = ['○', '△', '×'];
-    const handleClick = this.handleClick;
-    const rowIndex = this.props.rowIndex;
-    const availability = this.props.availability;
-    
-    const tableData = symbols.map((symbol, symbolIndex) => {
-
-      if (availability === symbolIndex) {
-        
-        return <td key={symbolIndex} onClick={() => handleClick(rowIndex, symbolIndex)} className="selected">{symbol}</td>;
-      } else {
-        return <td key={symbolIndex} onClick={() => handleClick(rowIndex, symbolIndex)}>{symbol}</td>;
-      }
-    });
-
-    return tableData;
-  }
-
+function TableData(props) {
+  const symbols = ['○', '△', '×'];
+  const handleClick = props.onClick;
+  const rowIndex = props.rowIndex;
+  const availability = props.availability;
   
+  const tableData = symbols.map((symbol, symbolIndex) => {
+
+    // availability is string...
+    if (availability == symbolIndex) {
+
+      return <td key={symbolIndex} onClick={() => handleClick(rowIndex, symbolIndex)} className="selected">{symbol}</td>;
+    } else {
+      return <td key={symbolIndex} onClick={() => handleClick(rowIndex, symbolIndex)}>{symbol}</td>;
+    }
+  });
+
+  return tableData;
 }
 
-class GetTableRows extends React.Component {
+class TableRows extends React.Component {
   constructor(props) {
     super(props);
     this.candidates = this.props.candidates;
@@ -41,11 +31,10 @@ class GetTableRows extends React.Component {
   render() {
 
     const handleClick = this.handleClick;
-    const availabilities = this.props.availabilities;
 
     const rows = Array.prototype.map.call(this.candidates, function(candidate, index) {
       // need to use key
-      return <tr key={candidate.name} scope="row"><td>{candidate.name}</td><GetTableData onClick={handleClick} availability={availabilities[index]} rowIndex={index} /></tr>;
+      return <tr key={candidate.name} scope="row"><td>{candidate.name}</td><TableData onClick={handleClick} availability={candidate.value} rowIndex={index} /></tr>;
     });
 
     return rows;
@@ -58,9 +47,14 @@ class Candidates extends React.Component {
     super(props);
 
     this.candidates = document.getElementsByClassName('candidates');
+    
+    // initial input value = 0
+    Array.prototype.map.call(this.candidates, candidate => {
+      return candidate.value = 0;
+    });
 
     this.state = {
-      availabilities: Array(this.candidates.length).fill(0),
+      candidates: document.getElementsByClassName('candidates')
     };
 
     // bind is necessary...
@@ -68,18 +62,20 @@ class Candidates extends React.Component {
   }
 
   handleClick(rowIndex, symbolIndex) {
-    const availabilities = this.state.availabilities.slice();
-    availabilities[rowIndex] = symbolIndex;
+    const candidates = this.state.candidates;
+
+    // update class .selected and input value
+    candidates[rowIndex].value = symbolIndex;
+
     this.setState({
-      availabilities: availabilities,
+      candidates: candidates,
     });
   }
 
 
   render() {
     // const or let ??
-    // const candidates = document.getElementsByClassName('candidates');
-    const candidates = this.candidates;
+    const candidates = this.state.candidates;
 
     return (
       <div>
@@ -91,7 +87,7 @@ class Candidates extends React.Component {
             </tr>
           </thead>
           <tbody>
-            <GetTableRows onClick={this.handleClick} candidates={candidates} availabilities={this.state.availabilities}/>
+            <TableRows onClick={this.handleClick} candidates={candidates}/>
           </tbody>
         </table>
       </div>
