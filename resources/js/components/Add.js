@@ -34,7 +34,7 @@ class TableRows extends React.Component {
 
     const rows = Array.prototype.map.call(this.candidates, function(candidate, index) {
       // need to use key
-      return <tr key={candidate.name} scope="row"><td>{candidate.name}</td><TableData onClick={handleClick} availability={candidate.value} rowIndex={index} /></tr>;
+      return <tr key={candidate.name} scope="row"><td>{candidate.dataset.date}</td><TableData onClick={handleClick} availability={candidate.value} rowIndex={index} /></tr>;
     });
 
     return rows;

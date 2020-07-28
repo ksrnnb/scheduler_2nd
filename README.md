@@ -175,3 +175,12 @@ handleClick(rowIndex, symbolIndex) {
     });
   }
 ```
+
+## array_filterの使い方
+`array_filter`で条件を満たす配列を返す。以下のように、第三引数に`ARRAY_FILTER_USE_BOTH`を指定すると、キーと値を利用できる。
+以下の`$form`は配列。
+```php
+$candidatesArray = array_filter($form, function($value, $key) {
+  return (is_int($key));
+  }, ARRAY_FILTER_USE_BOTH);
+```

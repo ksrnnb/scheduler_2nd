@@ -65897,7 +65897,7 @@ var TableRows = /*#__PURE__*/function (_React$Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: candidate.name,
           scope: "row"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, candidate.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TableData, {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, candidate.dataset.date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TableData, {
           onClick: handleClick,
           availability: candidate.value,
           rowIndex: index

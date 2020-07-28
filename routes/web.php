@@ -20,6 +20,7 @@ Route::get('/', 'ScheduleController@index');
 Route::post('/', 'ScheduleController@create');
 
 Route::get('/add', 'ScheduleController@add');
+Route::post('/add', 'ScheduleController@update');
 
 
 

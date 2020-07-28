@@ -65,9 +65,10 @@ class ScheduleController extends Controller
             
 
             $params = array(
+                'scheduleId' => $schedule->scheduleId,
                 'scheduleName' => $schedule->scheduleName,
                 'users' => $users,
-                'url' => url()->full(),
+                'uuid' => $queryId,
                 'candidates' => $candidatesArray,
                 'availabilities' => $availabilitiesArray,
                 'countAvailabilities' => $countAvailabilities,
@@ -78,4 +79,42 @@ class ScheduleController extends Controller
             return redirect('/');
         }
     }
+
+    public function update(Request $request) {
+
+        // $queryId = ...
+        $form = $request->all();
+        unset($form['_token']);
+
+        // get candidates associative array
+        // $candidateId => $symbol (integer)
+        $candidatesArray = array_filter($form, function($value, $key) {
+            return (is_int($key));
+        }, ARRAY_FILTER_USE_BOTH);
+
+        $scheduleId = $form["scheduleId"];
+
+        if (!isset($form["userId"])) {
+            $user = [
+                "userId" => NULL,
+                "userName" => $form["userName"],
+            ];
+        }
+
+        function registerUser($scheduleId, $user) {
+            return '<p>' . var_dump($user) . '</p>';
+        }
+
+        function registerAvaialbility($scheduleId, $user, $candidatesArray) {
+            
+        }
+
+        registerUser($scheduleId, $user);
+
+        return '<p>' . var_dump($form) . '</p>';
+
+        
+
+    }
+
 }

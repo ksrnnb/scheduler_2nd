@@ -8,7 +8,7 @@
 </div>
 <div>
   <p>URL</p>
-  <p>{{$params['url']}}</p>
+  <p>{{request()->fullUrl()}}</p>
 </div>
 
 <div style="margin-top:30pt">
@@ -53,14 +53,15 @@
 </div>
 
 <div>
-  <form action="add" method="post">
+  <form action="/add?id={{$params['uuid']}}" method="post">
     @csrf
+    <input type="hidden" name="scheduleId" value="{{$params['scheduleId']}}">
     <p>Input availabilities</p>
     <p>User name</p>
     <input type="text" name="userName" required>
     <p>Candidates</p>
     @foreach($params['candidates'] as $candidateId => $candidate)
-      <input type="hidden" class="candidates" name="{{$candidate}}">
+      <input type="hidden" data-date="{{$candidate}}" class="candidates" name="{{$candidateId}}">
     @endforeach
     <div id="add"></div>  
 
