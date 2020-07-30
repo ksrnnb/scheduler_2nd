@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable
 {
-
+    protected $guarded = ['userId'];
+    
     protected $primaryKey = 'userId';
     public $timestamps = false;
 

@@ -184,3 +184,11 @@ $candidatesArray = array_filter($form, function($value, $key) {
   return (is_int($key));
   }, ARRAY_FILTER_USE_BOTH);
 ```
+
+## よくわからんエラー
+"Add [scheduleId] to fillable property to allow mass assignment on [モデル]."
+
+対策としては以下を記述。なんで急にこれが必要になったのかが理解できない。。。
+```php
+protected $guarded = [];
+```

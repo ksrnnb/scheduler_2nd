@@ -98,18 +98,65 @@ class ScheduleController extends Controller
             $user = [
                 "userId" => NULL,
                 "userName" => $form["userName"],
+                "scheduleId" => $scheduleId,
+            ];
+        } else {
+            $user = [
+                "userId" => $form["userId"],
+                "userName" => $form["userName"],
+                "scheduleId" => $scheduleId,
             ];
         }
 
-        function registerUser($scheduleId, $user) {
-            return '<p>' . var_dump($user) . '</p>';
+        function registerUser($user) {
+            if ($user["userId"]) {
+                // たぶんこれでいける。。。？
+                User::find($user["userId"])->save($user);
+                return NULL;    //ちゃんと返す？
+            } else {
+                unset($user["userId"]);
+                $schedule = Schedule::find($user["scheduleId"]);
+                $userInstance = $schedule->users()->create($user);
+                // return $userInstance["userId"];
+                return $userInstance;
+            }
         }
 
-        function registerAvaialbility($scheduleId, $user, $candidatesArray) {
-            
+        function registerAvaialbility($user, $candidatesArray) {
+            $test = [];
+            foreach($candidatesArray as $id => $availability) {
+                $array = [
+                    "scheduleId" => $user["scheduleId"],
+                    "userId" => $user["userId"],
+                    "candidateId" => $id,
+                    "availability" => $availability,
+                ];
+                // return var_dump($array);
+                // return var_dump($user);
+
+                array_push($test, $array);
+
+                // $user->availabilities()->create($array);
+                // return var_dump($array);
+                Availability::create($array);
+                // $a_model = new Availability;
+                // $a_model->create($a_array);
+            }
+
+            return var_dump($test);
         }
 
-        registerUser($scheduleId, $user);
+        // $userId = registerUser($user);
+        $userInstance = registerUser($user);
+
+        // if(is_null($user["userId"])) {
+        //     $user["userId"] = $userId;
+        // }
+
+        // return '<p>' . var_dump($user) . '</p>';
+
+        registerAvaialbility($userInstance, $candidatesArray);
+        // registerAvaialbility($user, $candidatesArray);
 
         return '<p>' . var_dump($form) . '</p>';
 

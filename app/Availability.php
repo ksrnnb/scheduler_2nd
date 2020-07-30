@@ -9,6 +9,8 @@ class Availability extends Model
 // class Availability extends Pivot
 {
     //
+    // protected $fillable = ['userId'];
+    protected $guarded = [];
     public $timestamps = false;
     // protected $tables = 'availabilities';
     
