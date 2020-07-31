@@ -61,7 +61,7 @@
     <input type="text" name="userName" required>
     <p>Candidates</p>
     @foreach($params['candidates'] as $candidateId => $candidate)
-      <input type="hidden" data-date="{{$candidate}}" class="candidates" name="{{$candidateId}}">
+      <input type="hidden" data-date="{{$candidate}}" class="candidates" name="{{'candidate_' . $candidateId}}">
     @endforeach
     <div id="add"></div>  
 

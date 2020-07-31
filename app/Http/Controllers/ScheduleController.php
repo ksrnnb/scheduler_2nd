@@ -58,11 +58,8 @@ class ScheduleController extends Controller
                 $countAvailabilities = array_merge($countAvailabilities, [
                     'candidate' . $candidate->candidateId => $temp,
                 ]);
-                // Log::debug($countAvailabilities);
                 
             }
-
-            
 
             $params = array(
                 'scheduleId' => $schedule->scheduleId,
@@ -82,15 +79,38 @@ class ScheduleController extends Controller
 
     public function update(Request $request) {
 
-        // $queryId = ...
         $form = $request->all();
         unset($form['_token']);
 
-        // get candidates associative array
-        // $candidateId => $symbol (integer)
-        $candidatesArray = array_filter($form, function($value, $key) {
-            return (is_int($key));
-        }, ARRAY_FILTER_USE_BOTH);
+        /*
+            $form 
+            'scheduleId' => integer,
+            'userName' => string,
+            'candidate_*' => 0 or 1 or 2,
+            'id' => uuid
+        */
+
+        $validateRule = [
+            'scheduleId' => 'required|integer|min:1',
+            'userName' => 'required|string',
+            'id' => 'required|uuid',
+        ];
+
+        $candidatesArray = [];
+        foreach($form as $key => $value) {
+            if (preg_match('/candidate_[1-9][0-9]*/', $key)) {
+                
+                $candidateId = (int)explode('_', $key)[1];
+                $candidatesArray[$candidateId] = $value;
+
+                // adding validation rule
+                $validateRule['candidate_' . $candidateId] = 'integer|between:0,2';
+            }
+        }
+
+        // Validation
+        // return redirectにしてるからエラーあっても現状ではリダイレクトするだけ。
+        $request->validate($validateRule);
 
         $scheduleId = $form["scheduleId"];
 
@@ -117,7 +137,7 @@ class ScheduleController extends Controller
                 unset($user["userId"]);
                 $schedule = Schedule::find($user["scheduleId"]);
                 $userInstance = $schedule->users()->create($user);
-                // return $userInstance["userId"];
+
                 return $userInstance;
             }
         }
@@ -131,37 +151,21 @@ class ScheduleController extends Controller
                     "candidateId" => $id,
                     "availability" => $availability,
                 ];
-                // return var_dump($array);
-                // return var_dump($user);
 
-                array_push($test, $array);
-
-                // $user->availabilities()->create($array);
-                // return var_dump($array);
                 Availability::create($array);
-                // $a_model = new Availability;
-                // $a_model->create($a_array);
+
             }
 
-            return var_dump($test);
         }
 
-        // $userId = registerUser($user);
         $userInstance = registerUser($user);
 
-        // if(is_null($user["userId"])) {
-        //     $user["userId"] = $userId;
-        // }
-
-        // return '<p>' . var_dump($user) . '</p>';
-
         registerAvaialbility($userInstance, $candidatesArray);
-        // registerAvaialbility($user, $candidatesArray);
 
-        return '<p>' . var_dump($form) . '</p>';
+        // return view('')
+        return redirect('/add?id=' . $form["id"]);
 
-        
-
+    
     }
 
 }
