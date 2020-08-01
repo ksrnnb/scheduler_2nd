@@ -130,9 +130,9 @@ class ScheduleController extends Controller
 
         function registerUser($user) {
             if ($user["userId"]) {
-                // たぶんこれでいける。。。？
-                User::find($user["userId"])->save($user);
-                return NULL;    //ちゃんと返す？
+                // ここ修正必要。。。
+                $userInstance = User::find($user["userId"])->save($user);
+                return $userInstance;
             } else {
                 unset($user["userId"]);
                 $schedule = Schedule::find($user["scheduleId"]);

@@ -19,7 +19,7 @@
       <th>Date</th><th scope="col">○</th><th scope="col">△</th><th scope="col">×</th>
       @foreach($params['users'] as $user)
       <!-- Need to modify link -->
-        <th scope="col"><a href="/editUser" method="GET">{{$user->userName}}</a></th>
+        <th scope="col"><a class="users" data-id="{{$user['userId']}}" href="#input-title" method="GET">{{$user->userName}}</a></th>
       @endforeach
     </tr>
     
@@ -56,9 +56,11 @@
   <form action="/add?id={{$params['uuid']}}" method="post">
     @csrf
     <input type="hidden" name="scheduleId" value="{{$params['scheduleId']}}">
-    <p>Input availabilities</p>
+    
+    <p id="input-title">Input availabilities</p>
     <p>User name</p>
-    <input type="text" name="userName" required>
+    <input type="hidden" id="user-id" name="userId" required>
+    <input type="text" id="user-name" name="userName" required>
     <p>Candidates</p>
     @foreach($params['candidates'] as $candidateId => $candidate)
       <input type="hidden" data-date="{{$candidate}}" class="candidates" name="{{'candidate_' . $candidateId}}">
@@ -70,5 +72,6 @@
 </div>
 
 <script src="{{asset('js/app.js')}}"></script>
+<script src="{{asset('js/user.js')}}"></script>
 
 @endsection
