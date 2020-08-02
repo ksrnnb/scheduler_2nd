@@ -25,6 +25,18 @@ class Memo extends React.Component {
 
 class Calender extends React.Component {
 
+  handleClick(e) {
+  
+    e.target.classList.toggle('selected');
+
+    // if (e.target.classList.contains('selected')) {
+    //   e.target.classList.remove('selected');
+    // } else {
+    //   e.target.classList.add('selected');
+    // }
+    
+  }
+
   render () {
 
     const weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -33,13 +45,10 @@ class Calender extends React.Component {
     let year = today.getFullYear();
     let month = today.getMonth();
 
-    // const monthBeginDay = new Date(year, month, 1).getDate();
     const monthEndDay = new Date(year, month + 1, 0).getDate();
 
     const lastMonthEndDay = new Date(year, month, 0).getDate();
     const lastMonthEndWeek = new Date(year, month, 0).getDay();
-
-    console.debug(lastMonthEndDay);
 
     const weeksTableData = [];
 
@@ -51,7 +60,7 @@ class Calender extends React.Component {
 
     let date = 1;
 
-    // こんなかんじ？
+
     for (let row = 0; row < 6; row++) {
 
       const tableData = [];
@@ -64,11 +73,11 @@ class Calender extends React.Component {
             tableData.push(<td key={key} className="disable">{lastMonthEndDay - lastMonthEndWeek + week}</td>);
             continue;
           } else {
-            tableData.push(<td key={key}>{date}</td>);
+            tableData.push(<td onClick={this.handleClick} key={key}>{date}</td>);
           }
         } else {
           if (date <= lastMonthEndDay) {
-            tableData.push(<td key={key}>{date}</td>)
+            tableData.push(<td onClick={this.handleClick} key={key}>{date}</td>)
           } else {
             tableData.push(<td key={key} className="disable">{date - monthEndDay}</td>)
           }

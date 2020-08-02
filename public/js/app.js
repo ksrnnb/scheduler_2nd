@@ -66078,17 +66078,26 @@ var Calender = /*#__PURE__*/function (_React$Component3) {
   }
 
   _createClass(Calender, [{
+    key: "handleClick",
+    value: function handleClick(e) {
+      console.log(e.target); // e.target.classList.toggle('selected');
+
+      if (e.target.classList.contains('selected')) {
+        e.target.classList.remove('selected');
+      } else {
+        e.target.classList.add('selected');
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
       var today = new Date();
       var year = today.getFullYear();
-      var month = today.getMonth(); // const monthBeginDay = new Date(year, month, 1).getDate();
-
+      var month = today.getMonth();
       var monthEndDay = new Date(year, month + 1, 0).getDate();
       var lastMonthEndDay = new Date(year, month, 0).getDate();
       var lastMonthEndWeek = new Date(year, month, 0).getDay();
-      console.debug(lastMonthEndDay);
       var weeksTableData = [];
       weeks.forEach(function (week) {
         weeksTableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
@@ -66096,7 +66105,7 @@ var Calender = /*#__PURE__*/function (_React$Component3) {
         }, week));
       });
       var dateTableRowData = [];
-      var date = 1; // こんなかんじ？
+      var date = 1;
 
       for (var row = 0; row < 6; row++) {
         var tableData = [];
@@ -66113,12 +66122,14 @@ var Calender = /*#__PURE__*/function (_React$Component3) {
               continue;
             } else {
               tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+                onClick: this.handleClick,
                 key: key
               }, date));
             }
           } else {
             if (date <= lastMonthEndDay) {
               tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+                onClick: this.handleClick,
                 key: key
               }, date));
             } else {
