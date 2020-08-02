@@ -79,6 +79,39 @@ class ScheduleController extends Controller
 
     public function update(Request $request) {
 
+        function registerUser($user) {
+            if ($user["userId"]) {
+
+                $userInstance = User::find($user["userId"]);
+                $updateColumn = ["userName" => $user["userName"]];
+                $userInstance->fill($updateColumn)->save();
+
+                return $userInstance;
+            } else {
+                unset($user["userId"]);
+                $schedule = Schedule::find($user["scheduleId"]);
+                $userInstance = $schedule->users()->create($user);
+
+                return $userInstance;
+            }
+        }
+
+        function registerAvaialbility($user, $candidatesArray) {
+
+            foreach($candidatesArray as $id => $availability) {
+                $array = [
+                    "scheduleId" => $user["scheduleId"],
+                    "userId" => $user["userId"],
+                    "candidateId" => $id,
+                    "availability" => $availability,
+                ];
+
+                Availability::create($array);
+
+            }
+
+        }
+
         $form = $request->all();
         unset($form['_token']);
 
@@ -112,50 +145,18 @@ class ScheduleController extends Controller
         // return redirectにしてるからエラーあっても現状ではリダイレクトするだけ。
         $request->validate($validateRule);
 
-        $scheduleId = $form["scheduleId"];
-
         if (!isset($form["userId"])) {
             $user = [
                 "userId" => NULL,
                 "userName" => $form["userName"],
-                "scheduleId" => $scheduleId,
+                "scheduleId" => $form["scheduleId"],
             ];
         } else {
             $user = [
                 "userId" => $form["userId"],
                 "userName" => $form["userName"],
-                "scheduleId" => $scheduleId,
+                "scheduleId" => $form["scheduleId"],
             ];
-        }
-
-        function registerUser($user) {
-            if ($user["userId"]) {
-                // ここ修正必要。。。
-                $userInstance = User::find($user["userId"])->save($user);
-                return $userInstance;
-            } else {
-                unset($user["userId"]);
-                $schedule = Schedule::find($user["scheduleId"]);
-                $userInstance = $schedule->users()->create($user);
-
-                return $userInstance;
-            }
-        }
-
-        function registerAvaialbility($user, $candidatesArray) {
-            $test = [];
-            foreach($candidatesArray as $id => $availability) {
-                $array = [
-                    "scheduleId" => $user["scheduleId"],
-                    "userId" => $user["userId"],
-                    "candidateId" => $id,
-                    "availability" => $availability,
-                ];
-
-                Availability::create($array);
-
-            }
-
         }
 
         $userInstance = registerUser($user);

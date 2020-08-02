@@ -67,7 +67,7 @@
     @endforeach
     <div id="add"></div>  
 
-    <input type="submit" value="Add user">
+    <input type="submit" id="submit-button" value="Add user">
   </form>
 </div>
 

@@ -5,3 +5,8 @@ td {
 .selected {
   background-color: rgba(65, 105, 255, 0.4);
 }
+
+#input-title {
+  margin-top: 50pt;
+  font-size: 30pt;
+}
