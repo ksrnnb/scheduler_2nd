@@ -66032,7 +66032,8 @@ var ScheduleName = /*#__PURE__*/function (_React$Component) {
         className: "input-title"
       }, "Schedule Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
-        name: "scheduleName"
+        name: "scheduleName",
+        required: true
       }));
     }
   }]);
@@ -66079,9 +66080,66 @@ var Calender = /*#__PURE__*/function (_React$Component3) {
   _createClass(Calender, [{
     key: "render",
     value: function render() {
+      var weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      var today = new Date();
+      var year = today.getFullYear();
+      var month = today.getMonth(); // const monthBeginDay = new Date(year, month, 1).getDate();
+
+      var monthEndDay = new Date(year, month + 1, 0).getDate();
+      var lastMonthEndDay = new Date(year, month, 0).getDate();
+      var lastMonthEndWeek = new Date(year, month, 0).getDay();
+      console.debug(lastMonthEndDay);
+      var weeksTableData = [];
+      weeks.forEach(function (week) {
+        weeksTableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          key: week
+        }, week));
+      });
+      var dateTableRowData = [];
+      var date = 1; // こんなかんじ？
+
+      for (var row = 0; row < 6; row++) {
+        var tableData = [];
+
+        for (var week = 0; week < 7; week++) {
+          var key = 'key' + row + '_' + week;
+
+          if (row === 0) {
+            if (week <= lastMonthEndWeek) {
+              tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+                key: key,
+                className: "disable"
+              }, lastMonthEndDay - lastMonthEndWeek + week));
+              continue;
+            } else {
+              tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+                key: key
+              }, date));
+            }
+          } else {
+            if (date <= lastMonthEndDay) {
+              tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+                key: key
+              }, date));
+            } else {
+              tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+                key: key,
+                className: "disable"
+              }, date - monthEndDay));
+            }
+          }
+
+          date++;
+        }
+
+        dateTableRowData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+          key: row
+        }, tableData));
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "input-title"
-      }, "Calender"));
+      }, "Calender"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, year, "/", month + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, weeksTableData)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, dateTableRowData)));
     }
   }]);
 
@@ -66105,7 +66163,9 @@ var CandidatesList = /*#__PURE__*/function (_React$Component4) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "input-title"
       }, "Candidates List"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-        name: "candidates"
+        name: "candidates",
+        required: true,
+        readOnly: true
       }));
     }
   }]);
