@@ -194,7 +194,7 @@ protected $guarded = [];
 ```
 
 
-## stateを関数の中でSetしたい
+## stateを関数の中で扱いたい
 以下のように書くと、`handleClick`の中でのthisは`handleClick`自身となってしまう。
 かといって、アロー関数で書こうとすると、エラーがでてしまう。→`render()`内で`bind`してやることで解決した。
 ```javascript
