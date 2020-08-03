@@ -192,3 +192,22 @@ $candidatesArray = array_filter($form, function($value, $key) {
 ```php
 protected $guarded = [];
 ```
+
+
+## stateを関数の中でSetしたい
+以下のように書くと、`handleClick`の中でのthisは`handleClick`自身となってしまう。
+かといって、アロー関数で書こうとすると、エラーがでてしまう。→`render()`内で`bind`してやることで解決した。
+```javascript
+class Schedule extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      list: []
+    };
+  }
+
+  handleClick(e) {
+    const list = this.state.list;
+  }
+```

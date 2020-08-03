@@ -66071,24 +66071,17 @@ var Calender = /*#__PURE__*/function (_React$Component3) {
 
   var _super3 = _createSuper(Calender);
 
-  function Calender() {
+  function Calender(props) {
+    var _this;
+
     _classCallCheck(this, Calender);
 
-    return _super3.apply(this, arguments);
+    _this = _super3.call(this, props);
+    _this.handleClick = _this.props.onClick.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(Calender, [{
-    key: "handleClick",
-    value: function handleClick(e) {
-      console.log(e.target); // e.target.classList.toggle('selected');
-
-      if (e.target.classList.contains('selected')) {
-        e.target.classList.remove('selected');
-      } else {
-        e.target.classList.add('selected');
-      }
-    }
-  }, {
     key: "render",
     value: function render() {
       var weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -66104,50 +66097,55 @@ var Calender = /*#__PURE__*/function (_React$Component3) {
           key: week
         }, week));
       });
-      var dateTableRowData = [];
-      var date = 1;
+      var dateTableRowData = []; // block scope (date)
 
-      for (var row = 0; row < 6; row++) {
-        var tableData = [];
+      {
+        var date = 1;
+        var yearMonth = year + '/' + (month + 1) + '/';
 
-        for (var week = 0; week < 7; week++) {
-          var key = 'key' + row + '_' + week;
+        for (var row = 0; row < 6; row++) {
+          var tableData = [];
 
-          if (row === 0) {
-            if (week <= lastMonthEndWeek) {
-              tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-                key: key,
-                className: "disable"
-              }, lastMonthEndDay - lastMonthEndWeek + week));
-              continue;
+          for (var week = 0; week < 7; week++) {
+            var key = 'key' + row + '_' + week;
+
+            if (row === 0) {
+              if (week <= lastMonthEndWeek) {
+                tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+                  key: key,
+                  className: "disable"
+                }, lastMonthEndDay - lastMonthEndWeek + week));
+                continue;
+              } else {
+                tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+                  onClick: this.handleClick,
+                  "data-date": yearMonth + date,
+                  key: key
+                }, date));
+              }
             } else {
-              tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-                onClick: this.handleClick,
-                key: key
-              }, date));
+              if (date <= lastMonthEndDay) {
+                tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+                  onClick: this.handleClick,
+                  "data-date": yearMonth + date,
+                  key: key
+                }, date));
+              } else {
+                tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+                  key: key,
+                  className: "disable"
+                }, date - monthEndDay));
+              }
             }
-          } else {
-            if (date <= lastMonthEndDay) {
-              tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-                onClick: this.handleClick,
-                key: key
-              }, date));
-            } else {
-              tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-                key: key,
-                className: "disable"
-              }, date - monthEndDay));
-            }
+
+            date++;
           }
 
-          date++;
+          dateTableRowData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+            key: row
+          }, tableData));
         }
-
-        dateTableRowData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-          key: row
-        }, tableData));
       }
-
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "input-title"
       }, "Calender"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, year, "/", month + 1), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, weeksTableData)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, dateTableRowData)));
@@ -66171,12 +66169,23 @@ var CandidatesList = /*#__PURE__*/function (_React$Component4) {
   _createClass(CandidatesList, [{
     key: "render",
     value: function render() {
+      var weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      var candidates = this.props.list.map(function (candidate) {
+        var d = new Date(candidate);
+        var month = d.getMonth();
+        var date = d.getDate();
+        var day = d.getDay();
+        return month + '/' + date + ' (' + weeks[day] + ')';
+      });
+      var list = candidates.join('\n');
+      console.log(list);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "input-title"
       }, "Candidates List"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         name: "candidates",
         required: true,
-        readOnly: true
+        readOnly: true,
+        value: list
       }));
     }
   }]);
@@ -66213,16 +66222,56 @@ var Schedule = /*#__PURE__*/function (_React$Component6) {
 
   var _super6 = _createSuper(Schedule);
 
-  function Schedule() {
+  function Schedule(props) {
+    var _this2;
+
     _classCallCheck(this, Schedule);
 
-    return _super6.apply(this, arguments);
+    _this2 = _super6.call(this, props);
+    _this2.state = {
+      list: []
+    };
+    return _this2;
   }
 
   _createClass(Schedule, [{
+    key: "handleClick",
+    value: function handleClick(e) {
+      var list = this.state.list.slice();
+      var td = e.target;
+      var date = td.dataset.date;
+
+      if (td.classList.contains('selected')) {
+        td.classList.remove('selected');
+        list = list.filter(function (item) {
+          return item != date;
+        });
+      } else {
+        td.classList.add('selected');
+        list.push(date);
+        list.sort(function (a, b) {
+          return new Date(a) - new Date(b);
+        });
+
+        if (list.length > 2) {
+          console.log(new Date(list[0]) - new Date(list[1]));
+          console.log(new Date(list[0]) > new Date(list[1]));
+        }
+      }
+
+      this.setState({
+        list: list
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ScheduleName, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Memo, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Calender, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CandidatesList, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MakeScheduleButton, null));
+      var handleClick = this.handleClick.bind(this);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ScheduleName, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Memo, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Calender, {
+        onClick: handleClick
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CandidatesList, {
+        list: this.state.list
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MakeScheduleButton, null));
     }
   }]);
 

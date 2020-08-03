@@ -25,16 +25,9 @@ class Memo extends React.Component {
 
 class Calender extends React.Component {
 
-  handleClick(e) {
-  
-    e.target.classList.toggle('selected');
-
-    // if (e.target.classList.contains('selected')) {
-    //   e.target.classList.remove('selected');
-    // } else {
-    //   e.target.classList.add('selected');
-    // }
-    
+  constructor(props) {
+    super(props);
+    this.handleClick = this.props.onClick.bind(this);
   }
 
   render () {
@@ -58,38 +51,42 @@ class Calender extends React.Component {
 
     const dateTableRowData = [];
 
-    let date = 1;
+    // block scope (date)
+    {
+      let date = 1;
 
+      const yearMonth = year + '/' + (month + 1) + '/';
+      
+      for (let row = 0; row < 6; row++) {
 
-    for (let row = 0; row < 6; row++) {
+        const tableData = [];
 
-      const tableData = [];
+        for (let week = 0; week < 7; week++) {
+          const key = 'key' + row + '_' + week;
 
-      for (let week = 0; week < 7; week++) {
-        const key = 'key' + row + '_' + week;
+          if (row === 0) {
 
-        if (row === 0) {
-          if (week <= lastMonthEndWeek) {
-            tableData.push(<td key={key} className="disable">{lastMonthEndDay - lastMonthEndWeek + week}</td>);
-            continue;
+            if (week <= lastMonthEndWeek) {
+              
+              tableData.push(<td key={key} className="disable">{lastMonthEndDay - lastMonthEndWeek + week}</td>);
+              continue;
+            } else {
+              tableData.push(<td onClick={this.handleClick} data-date={yearMonth + date} key={key}>{date}</td>);
+            }
           } else {
-            tableData.push(<td onClick={this.handleClick} key={key}>{date}</td>);
+            if (date <= lastMonthEndDay) {
+              tableData.push(<td onClick={this.handleClick} data-date={yearMonth + date} key={key}>{date}</td>)
+            } else {
+              tableData.push(<td key={key} className="disable">{date - monthEndDay}</td>)
+            }
           }
-        } else {
-          if (date <= lastMonthEndDay) {
-            tableData.push(<td onClick={this.handleClick} key={key}>{date}</td>)
-          } else {
-            tableData.push(<td key={key} className="disable">{date - monthEndDay}</td>)
-          }
+          date++;
         }
-        date++;
+
+        dateTableRowData.push(<tr key={row}>{tableData}</tr>);
+
       }
-
-      dateTableRowData.push(<tr key={row}>{tableData}</tr>);
-
     }
-
-
 
     return (
       <div>
@@ -111,11 +108,24 @@ class Calender extends React.Component {
 }
 
 class CandidatesList extends React.Component {
+
   render () {
+    const weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    let candidates = this.props.list.map(candidate => {
+      const d = new Date(candidate);
+      const month = d.getMonth();
+      const date = d.getDate();
+      const day = d.getDay();
+      return month + '/' + date + ' (' + weeks[day] + ')'; 
+    }
+      );
+    const list = candidates.join('\n');
+    console.log(list);
     return (
       <div>
         <p className="input-title">Candidates List</p>
-        <textarea name="candidates" required readOnly />
+        <textarea name="candidates" required readOnly value={list}/>
       </div>
     );
   }
@@ -132,13 +142,53 @@ class MakeScheduleButton extends React.Component {
 }
 
 class Schedule extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      list: []
+    };
+  }
+
+  handleClick(e) {
+
+    let list = this.state.list.slice();
+
+    const td = e.target;
+    const date = td.dataset.date;
+
+    if (td.classList.contains('selected')) {
+      td.classList.remove('selected');
+      list = list.filter(item => {
+        return item != date;
+      });
+    } else {
+      td.classList.add('selected');
+      list.push(date);
+      list.sort((a, b) => new Date(a) - new Date(b));
+
+      if (list.length > 2) {
+        console.log(new Date(list[0]) - new Date(list[1]));
+        console.log(new Date(list[0]) > new Date(list[1]));
+      }
+    }
+
+    this.setState({
+      list: list
+    });
+    
+  }
+
   render() {
+
+    const handleClick = this.handleClick.bind(this);
+
     return (
       <div>
         <ScheduleName />
         <Memo />
-        <Calender />
-        <CandidatesList />
+        <Calender onClick={handleClick}/>
+        <CandidatesList list={this.state.list}/>
         <MakeScheduleButton />
       </div>
     );
