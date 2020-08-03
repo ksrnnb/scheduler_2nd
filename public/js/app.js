@@ -66014,15 +66014,85 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var ScheduleName = /*#__PURE__*/function (_React$Component) {
-  _inherits(ScheduleName, _React$Component);
+var Schedule = /*#__PURE__*/function (_React$Component) {
+  _inherits(Schedule, _React$Component);
 
-  var _super = _createSuper(ScheduleName);
+  var _super = _createSuper(Schedule);
+
+  function Schedule(props) {
+    var _this;
+
+    _classCallCheck(this, Schedule);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      list: []
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Schedule, [{
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      // this.state.list: array
+      if (this.state.list.length) {} else {
+        alert('Need to select candidates from calender.');
+        e.preventDefault();
+      }
+    }
+  }, {
+    key: "handleClick",
+    value: function handleClick(e) {
+      var list = this.state.list.slice();
+      var td = e.target;
+      var date = td.dataset.date;
+
+      if (td.classList.contains('selected')) {
+        td.classList.remove('selected');
+        list = list.filter(function (item) {
+          return item != date;
+        });
+      } else {
+        td.classList.add('selected');
+        list.push(date);
+        list.sort(function (a, b) {
+          return new Date(a) - new Date(b);
+        });
+      }
+
+      this.setState({
+        list: list
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      // const handleClick = this.handleClick.bind(this);
+      // const handleSubmit = this.handleSubmit.bind(this);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ScheduleName, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Memo, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Calender, {
+        onClick: this.handleClick
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CandidatesList, {
+        list: this.state.list
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MakeScheduleButton, {
+        handleSubmit: this.handleSubmit
+      }));
+    }
+  }]);
+
+  return Schedule;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var ScheduleName = /*#__PURE__*/function (_React$Component2) {
+  _inherits(ScheduleName, _React$Component2);
+
+  var _super2 = _createSuper(ScheduleName);
 
   function ScheduleName() {
     _classCallCheck(this, ScheduleName);
 
-    return _super.apply(this, arguments);
+    return _super2.apply(this, arguments);
   }
 
   _createClass(ScheduleName, [{
@@ -66041,15 +66111,15 @@ var ScheduleName = /*#__PURE__*/function (_React$Component) {
   return ScheduleName;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-var Memo = /*#__PURE__*/function (_React$Component2) {
-  _inherits(Memo, _React$Component2);
+var Memo = /*#__PURE__*/function (_React$Component3) {
+  _inherits(Memo, _React$Component3);
 
-  var _super2 = _createSuper(Memo);
+  var _super3 = _createSuper(Memo);
 
   function Memo() {
     _classCallCheck(this, Memo);
 
-    return _super2.apply(this, arguments);
+    return _super3.apply(this, arguments);
   }
 
   _createClass(Memo, [{
@@ -66066,19 +66136,19 @@ var Memo = /*#__PURE__*/function (_React$Component2) {
   return Memo;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-var Calender = /*#__PURE__*/function (_React$Component3) {
-  _inherits(Calender, _React$Component3);
+var Calender = /*#__PURE__*/function (_React$Component4) {
+  _inherits(Calender, _React$Component4);
 
-  var _super3 = _createSuper(Calender);
+  var _super4 = _createSuper(Calender);
 
   function Calender(props) {
-    var _this;
+    var _this2;
 
     _classCallCheck(this, Calender);
 
-    _this = _super3.call(this, props);
-    _this.handleClick = _this.props.onClick.bind(_assertThisInitialized(_this));
-    return _this;
+    _this2 = _super4.call(this, props);
+    _this2.handleClick = _this2.props.onClick.bind(_assertThisInitialized(_this2));
+    return _this2;
   }
 
   _createClass(Calender, [{
@@ -66155,15 +66225,15 @@ var Calender = /*#__PURE__*/function (_React$Component3) {
   return Calender;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-var CandidatesList = /*#__PURE__*/function (_React$Component4) {
-  _inherits(CandidatesList, _React$Component4);
+var CandidatesList = /*#__PURE__*/function (_React$Component5) {
+  _inherits(CandidatesList, _React$Component5);
 
-  var _super4 = _createSuper(CandidatesList);
+  var _super5 = _createSuper(CandidatesList);
 
   function CandidatesList() {
     _classCallCheck(this, CandidatesList);
 
-    return _super4.apply(this, arguments);
+    return _super5.apply(this, arguments);
   }
 
   _createClass(CandidatesList, [{
@@ -66178,7 +66248,6 @@ var CandidatesList = /*#__PURE__*/function (_React$Component4) {
         return month + '/' + date + ' (' + weeks[day] + ')';
       });
       var list = candidates.join('\n');
-      console.log(list);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "input-title"
       }, "Candidates List"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
@@ -66193,15 +66262,15 @@ var CandidatesList = /*#__PURE__*/function (_React$Component4) {
   return CandidatesList;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-var MakeScheduleButton = /*#__PURE__*/function (_React$Component5) {
-  _inherits(MakeScheduleButton, _React$Component5);
+var MakeScheduleButton = /*#__PURE__*/function (_React$Component6) {
+  _inherits(MakeScheduleButton, _React$Component6);
 
-  var _super5 = _createSuper(MakeScheduleButton);
+  var _super6 = _createSuper(MakeScheduleButton);
 
-  function MakeScheduleButton() {
+  function MakeScheduleButton(props) {
     _classCallCheck(this, MakeScheduleButton);
 
-    return _super5.apply(this, arguments);
+    return _super6.call(this, props);
   }
 
   _createClass(MakeScheduleButton, [{
@@ -66209,73 +66278,13 @@ var MakeScheduleButton = /*#__PURE__*/function (_React$Component5) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
-        value: "Create"
+        value: "Create",
+        onClick: this.props.handleSubmit
       }));
     }
   }]);
 
   return MakeScheduleButton;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-var Schedule = /*#__PURE__*/function (_React$Component6) {
-  _inherits(Schedule, _React$Component6);
-
-  var _super6 = _createSuper(Schedule);
-
-  function Schedule(props) {
-    var _this2;
-
-    _classCallCheck(this, Schedule);
-
-    _this2 = _super6.call(this, props);
-    _this2.state = {
-      list: []
-    };
-    return _this2;
-  }
-
-  _createClass(Schedule, [{
-    key: "handleClick",
-    value: function handleClick(e) {
-      var list = this.state.list.slice();
-      var td = e.target;
-      var date = td.dataset.date;
-
-      if (td.classList.contains('selected')) {
-        td.classList.remove('selected');
-        list = list.filter(function (item) {
-          return item != date;
-        });
-      } else {
-        td.classList.add('selected');
-        list.push(date);
-        list.sort(function (a, b) {
-          return new Date(a) - new Date(b);
-        });
-
-        if (list.length > 2) {
-          console.log(new Date(list[0]) - new Date(list[1]));
-          console.log(new Date(list[0]) > new Date(list[1]));
-        }
-      }
-
-      this.setState({
-        list: list
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var handleClick = this.handleClick.bind(this);
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ScheduleName, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Memo, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Calender, {
-        onClick: handleClick
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CandidatesList, {
-        list: this.state.list
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MakeScheduleButton, null));
-    }
-  }]);
-
-  return Schedule;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 if (document.getElementById('index')) {

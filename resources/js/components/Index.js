@@ -1,6 +1,73 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+class Schedule extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      list: []
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleSubmit(e) {
+
+    // this.state.list: array
+    if (this.state.list.length) {
+      
+    } else {
+      alert('Need to select candidates from calender.')
+      e.preventDefault();
+    }
+  }
+
+  handleClick(e) {
+
+    let list = this.state.list.slice();
+
+    const td = e.target;
+    const date = td.dataset.date;
+
+    if (td.classList.contains('selected')) {
+      td.classList.remove('selected');
+      list = list.filter(item => {
+        return item != date;
+      });
+    } else {
+      td.classList.add('selected');
+      list.push(date);
+      list.sort((a, b) => new Date(a) - new Date(b));
+    }
+
+    this.setState({
+      list: list
+    });
+    
+  }
+
+  render() {
+
+    // const handleClick = this.handleClick.bind(this);
+    // const handleSubmit = this.handleSubmit.bind(this);
+
+    return (
+      <div>
+        <ScheduleName />
+        <Memo />
+        {/* <Calender onClick={handleClick}/>
+        <CandidatesList list={this.state.list}/>
+        <MakeScheduleButton handleSubmit={handleSubmit}/> */}
+        <Calender onClick={this.handleClick}/>
+        <CandidatesList list={this.state.list}/>
+        <MakeScheduleButton handleSubmit={this.handleSubmit}/>
+      </div>
+    );
+  }
+}
+
+
 class ScheduleName extends React.Component {
   render() {
     return (
@@ -118,10 +185,10 @@ class CandidatesList extends React.Component {
       const date = d.getDate();
       const day = d.getDay();
       return month + '/' + date + ' (' + weeks[day] + ')'; 
-    }
-      );
+    });
+
     const list = candidates.join('\n');
-    console.log(list);
+
     return (
       <div>
         <p className="input-title">Candidates List</p>
@@ -132,68 +199,22 @@ class CandidatesList extends React.Component {
 }
 
 class MakeScheduleButton extends React.Component {
-  render () {
-    return (
-      <div>
-        <input type="submit" value="Create" />
-      </div>
-    );
-  }
-}
-
-class Schedule extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      list: []
-    };
   }
 
-  handleClick(e) {
-
-    let list = this.state.list.slice();
-
-    const td = e.target;
-    const date = td.dataset.date;
-
-    if (td.classList.contains('selected')) {
-      td.classList.remove('selected');
-      list = list.filter(item => {
-        return item != date;
-      });
-    } else {
-      td.classList.add('selected');
-      list.push(date);
-      list.sort((a, b) => new Date(a) - new Date(b));
-
-      if (list.length > 2) {
-        console.log(new Date(list[0]) - new Date(list[1]));
-        console.log(new Date(list[0]) > new Date(list[1]));
-      }
-    }
-
-    this.setState({
-      list: list
-    });
-    
-  }
-
-  render() {
-
-    const handleClick = this.handleClick.bind(this);
+  render () {
 
     return (
       <div>
-        <ScheduleName />
-        <Memo />
-        <Calender onClick={handleClick}/>
-        <CandidatesList list={this.state.list}/>
-        <MakeScheduleButton />
+        <input type="submit" value="Create" onClick={this.props.handleSubmit}/>
       </div>
     );
   }
 }
+
+
 
 if (document.getElementById('index')) {
   ReactDOM.render(
