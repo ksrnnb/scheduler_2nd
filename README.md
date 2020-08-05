@@ -211,3 +211,7 @@ class Schedule extends React.Component {
     const list = this.state.list;
   }
 ```
+
+## フォーム送信後の改行文字
+phpでtextareaで改行を含んだ文字を送った時、改行コードは`\r\n`となることに注意。
+そのため、`\n`で`explode`しても、文字列の最後に`\r`が含まれてしまって、想定どおりに動かなくなった。念のため`trim`しとくほうがいい？

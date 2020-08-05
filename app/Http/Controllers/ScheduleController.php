@@ -18,10 +18,42 @@ class ScheduleController extends Controller
         return view('index');
     }
 
-    public function create() {
+    public function create(Request $request) {
         //Need to validate and registrate data
-        $scheduleId = Str::uuid();
-        return redirect('/add?id=' . $scheduleId);
+        $form = $request->all();
+        unset($form['_token']);
+
+        $uuid = Str::uuid();
+
+        $schedule = [
+            'scheduleName' => $form['scheduleName'],
+            'scheduleUuid' => $uuid,
+        ];
+
+        $scheduleInstance = Schedule::create($schedule);
+
+        // need to use "" for \n
+        // フォーム送信された改行は\r\nらしい。→trimで除く必要あり。
+        $c = explode("\n", $form["candidates"]);
+        $c = array_map('trim', $c);
+
+        $candidates = [];
+
+        foreach($c as $candidateDate) {
+            $candidates[] = ['candidateDate' => $candidateDate];
+        }
+
+        /*
+        $candidates: array (size=2)
+                    [
+                        ['candidateDate' => '8/18(Tue)'],
+                        ['candidateDate' => '8/25(Tue)'],
+                    ]
+        */
+
+        $scheduleInstance->candidates()->createMany($candidates);
+
+        return redirect('/add?id=' . $uuid);
     }
 
     public function add(Request $request) {
@@ -36,6 +68,7 @@ class ScheduleController extends Controller
             
             $candidates = Candidate::where('scheduleId', $schedule->scheduleId)->orderBy('CandidateDate', 'asc')->get();
 
+            // 通常、スケジュール作成時はempty...
             $availabilities = Availability::where('scheduleId', $schedule->scheduleId)->get();
 
             $candidatesArray = [];
@@ -49,6 +82,8 @@ class ScheduleController extends Controller
             foreach($availabilities as $availability) {
                 $availabilitiesArray[$availability->candidateId][$availability->userId] = $availability->availability;
             }
+
+            var_dump($availabilitiesArray);
 
             foreach($candidates as $candidate) {
                 $temp = [0, 0, 0];

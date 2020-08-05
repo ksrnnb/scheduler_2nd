@@ -49,16 +49,9 @@ class Schedule extends React.Component {
 
   render() {
 
-    // const handleClick = this.handleClick.bind(this);
-    // const handleSubmit = this.handleSubmit.bind(this);
-
     return (
       <div>
         <ScheduleName />
-        <Memo />
-        {/* <Calender onClick={handleClick}/>
-        <CandidatesList list={this.state.list}/>
-        <MakeScheduleButton handleSubmit={handleSubmit}/> */}
         <Calender onClick={this.handleClick}/>
         <CandidatesList list={this.state.list}/>
         <MakeScheduleButton handleSubmit={this.handleSubmit}/>
@@ -74,17 +67,6 @@ class ScheduleName extends React.Component {
       <div>
         <p className="input-title">Schedule Name</p>
         <input type="text" name="scheduleName" required />
-      </div>
-    );
-  }
-}
-
-class Memo extends React.Component {
-  render() {
-    return (
-      <div>
-        <p className="input-title">Memo (optional)</p>
-        <textarea name="memo" />
       </div>
     );
   }
@@ -181,7 +163,7 @@ class CandidatesList extends React.Component {
 
     let candidates = this.props.list.map(candidate => {
       const d = new Date(candidate);
-      const month = d.getMonth();
+      const month = d.getMonth() + 1;
       const date = d.getDate();
       const day = d.getDay();
       return month + '/' + date + ' (' + weeks[day] + ')'; 
@@ -192,7 +174,7 @@ class CandidatesList extends React.Component {
     return (
       <div>
         <p className="input-title">Candidates List</p>
-        <textarea name="candidates" required readOnly value={list}/>
+        <textarea name="candidates" readOnly value={list}/>
       </div>
     );
   }

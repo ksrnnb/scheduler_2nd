@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
 {
+    protected $guarded = ['scheduleId'];
     protected $primaryKey = 'scheduleId';
     public $timestamps = false;
     //
