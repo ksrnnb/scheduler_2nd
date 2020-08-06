@@ -14,6 +14,89 @@ use Illuminate\Support\Facades\Log;
 class ScheduleController extends Controller
 {
 
+    public function displayCandidates($schedule, $queryId) {
+
+        $users = User::where('scheduleId', $schedule->scheduleId)->orderBy('userId', 'asc')->get();
+            
+        $candidates = Candidate::where('scheduleId', $schedule->scheduleId)->orderBy('candidateId', 'asc')->get();
+
+        $availabilities = Availability::where('scheduleId', $schedule->scheduleId)->get();
+
+        $candidatesArray = [];
+        $availabilitiesArray = [];
+        $countAvailabilities = [];
+
+        foreach($candidates as $candidate) {
+            $candidatesArray[$candidate->candidateId] = $candidate->candidateDate;
+        }
+
+        /*
+            $candidatesArray
+            array(n) sorted by candidate date
+                array (candidateId) => (candidateDate)
+                integer 1 => string 'mm/dd (day)',
+                integer 2 => string 'mm/dd (day)',
+        */
+
+        // When schedule has been made...
+        if (! $availabilities->isEmpty()) {
+            foreach($availabilities as $availability) {
+                $availabilitiesArray[$availability->candidateId][$availability->userId] = $availability->availability;
+            }
+
+            foreach($candidates as $candidate) {
+                $temp = [0, 0, 0];
+                foreach($availabilitiesArray[$candidate->candidateId] as $availability) {
+                    $temp[$availability] += 1;
+                }
+                $countAvailabilities = array_merge($countAvailabilities, [
+                    'candidate' . $candidate->candidateId => $temp,
+                ]);
+                
+            }
+        //  When schedule has been made...
+        } else {
+            foreach($candidates as $candidate) {
+                $id = $candidate->candidateId;
+                $countAvailabilities = array_merge($countAvailabilities, [
+                    'candidate' . $candidate->candidateId => [0, 0, 0]
+                ]);
+                $availabilitiesArray[$id] = [];
+            }
+        }
+
+        /*
+            $availabilitiesArray
+            array(n)(m) 
+                (candidateId) => array( (userId) => (availability) )
+                integer 1 => array( integer 1 => string '0', integer 2 => ... )
+                integer 2 => ...
+        */
+
+        // foreach($candidates as $candidate) {
+        //     $temp = [0, 0, 0];
+        //     foreach($availabilitiesArray[$candidate->candidateId] as $availability) {
+        //         $temp[$availability] += 1;
+        //     }
+        //     $countAvailabilities = array_merge($countAvailabilities, [
+        //         'candidate' . $candidate->candidateId => $temp,
+        //     ]);
+            
+        // }
+
+        $params = array(
+            'scheduleId' => $schedule->scheduleId,
+            'scheduleName' => $schedule->scheduleName,
+            'users' => $users,
+            'uuid' => $queryId,
+            'candidates' => $candidatesArray,
+            'availabilities' => $availabilitiesArray,
+            'countAvailabilities' => $countAvailabilities,
+        );
+
+        return view('add', ['id' => $queryId, 'params' => $params]);
+    }
+
     public function index() {
         return view('index');
     }
@@ -64,49 +147,8 @@ class ScheduleController extends Controller
 
         if(isset($schedule)) {
 
-            $users = User::where('scheduleId', $schedule->scheduleId)->orderBy('userId', 'asc')->get();
-            
-            $candidates = Candidate::where('scheduleId', $schedule->scheduleId)->orderBy('CandidateDate', 'asc')->get();
+            return $this->displayCandidates($schedule, $queryId);
 
-            // 通常、スケジュール作成時はempty...
-            $availabilities = Availability::where('scheduleId', $schedule->scheduleId)->get();
-
-            $candidatesArray = [];
-            $availabilitiesArray = [];
-            $countAvailabilities = [];
-
-            foreach($candidates as $candidate) {
-                $candidatesArray[$candidate->candidateId] = $candidate->candidateDate;
-            }
-
-            foreach($availabilities as $availability) {
-                $availabilitiesArray[$availability->candidateId][$availability->userId] = $availability->availability;
-            }
-
-            var_dump($availabilitiesArray);
-
-            foreach($candidates as $candidate) {
-                $temp = [0, 0, 0];
-                foreach($availabilitiesArray[$candidate->candidateId] as $availability) {
-                    $temp[$availability] += 1;
-                }
-                $countAvailabilities = array_merge($countAvailabilities, [
-                    'candidate' . $candidate->candidateId => $temp,
-                ]);
-                
-            }
-
-            $params = array(
-                'scheduleId' => $schedule->scheduleId,
-                'scheduleName' => $schedule->scheduleName,
-                'users' => $users,
-                'uuid' => $queryId,
-                'candidates' => $candidatesArray,
-                'availabilities' => $availabilitiesArray,
-                'countAvailabilities' => $countAvailabilities,
-            );
-
-            return view('add', ['id' => $queryId, 'params' => $params]);
         } else {
             return redirect('/');
         }
