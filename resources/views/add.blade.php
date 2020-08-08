@@ -4,7 +4,7 @@
 <p>add page</p>
 
 <div>
-  <p>{{$params['scheduleName']}}</p>
+  <p><a href="/edit?id={{$params['uuid']}}">{{$params['scheduleName']}}</a></p>
 </div>
 <div>
   <p>URL</p>

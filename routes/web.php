@@ -19,9 +19,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'ScheduleController@index');
 Route::post('/', 'ScheduleController@create');
 
-Route::get('/add', 'ScheduleController@add');
-Route::post('/add', 'ScheduleController@update');
+Route::get('/add', 'UserController@add');
+Route::post('/add', 'UserController@create');
 
+Route::get('/edit', 'ScheduleController@edit');
+// Rout::get('/edit', 'ScheduleController@');
+
+Route::get('delete', 'ScheduleController@delete');
 
 
 // Route::get('/test', function() {
