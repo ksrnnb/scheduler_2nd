@@ -54,7 +54,7 @@ class ScheduleController extends Controller
                 ]);
                 
             }
-        //  When schedule has been made...
+        //  When schedule has not been made...
         } else {
             foreach($candidates as $candidate) {
                 $id = $candidate->candidateId;
@@ -72,17 +72,6 @@ class ScheduleController extends Controller
                 integer 1 => array( integer 1 => string '0', integer 2 => ... )
                 integer 2 => ...
         */
-
-        // foreach($candidates as $candidate) {
-        //     $temp = [0, 0, 0];
-        //     foreach($availabilitiesArray[$candidate->candidateId] as $availability) {
-        //         $temp[$availability] += 1;
-        //     }
-        //     $countAvailabilities = array_merge($countAvailabilities, [
-        //         'candidate' . $candidate->candidateId => $temp,
-        //     ]);
-            
-        // }
 
         $params = array(
             'scheduleId' => $schedule->scheduleId,
