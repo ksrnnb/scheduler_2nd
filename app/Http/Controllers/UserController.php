@@ -25,7 +25,7 @@ class UserController extends Controller
             return view('add', ['params' => $params]);
 
         } else {
-            return redirect('/');
+            return view('error');
         }
     }
 

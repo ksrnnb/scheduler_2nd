@@ -20,6 +20,10 @@ class CreateUsersTable extends Migration
             $table->integer('scheduleId');
             // $table->timestamps();
         });
+
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->foreignId('scheduleId')->references('scheduleId')->on('schedules')->onDelete('cascade');
+        // });
     }
 
     /**

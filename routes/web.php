@@ -26,6 +26,7 @@ Route::get('/edit', 'ScheduleController@edit');
 Route::post('/edit', 'ScheduleController@update');
 
 Route::get('delete', 'ScheduleController@delete');
+Route::post('delete', 'ScheduleController@remove');
 
 Route::get('error', 'ScheduleController@error');
 

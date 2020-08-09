@@ -99,15 +99,29 @@ class ScheduleController extends Controller
 
         if(isset($schedule)) {
 
-            $params = [
-                'scheduleName' => $schedule->scheduleName,
-                'uuid' => $queryId,
-            ];
+            $this->deleteSchedule($schedule);
 
-            return view('delete', ['params' => $params]);
+            return view('delete');
+
 
         } else {
             return view('error');
         }
     }
+
+    public function deleteSchedule($schedule) {
+
+        $users = $schedule->users();
+        $candidates = $schedule->candidates();
+
+        $users->each(function($user) {
+            $user->availabilities()->delete();
+        });
+        
+        $users->delete();
+        $candidates->delete();
+
+        $schedule->delete();
+    }
+
 }
