@@ -23,9 +23,11 @@ Route::get('/add', 'UserController@add');
 Route::post('/add', 'UserController@create');
 
 Route::get('/edit', 'ScheduleController@edit');
-// Rout::get('/edit', 'ScheduleController@');
+Route::post('/edit', 'ScheduleController@update');
 
 Route::get('delete', 'ScheduleController@delete');
+
+Route::get('error', 'ScheduleController@error');
 
 
 // Route::get('/test', function() {

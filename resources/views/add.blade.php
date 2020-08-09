@@ -3,6 +3,10 @@
 @section('body')
 <p>add page</p>
 
+@if(isset($params['message']))
+<p>{{$params['message']}}</p>
+@endif
+
 <div>
   <p><a href="/edit?id={{$params['uuid']}}">{{$params['scheduleName']}}</a></p>
 </div>

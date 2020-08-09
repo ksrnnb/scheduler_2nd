@@ -77114,9 +77114,7 @@ var Schedule = /*#__PURE__*/function (_React$Component) {
       // https://ja.reactjs.org/docs/events.html#event-pooling
       e.persist();
       var year = this.state.today.year;
-      var month = this.state.today.month; // e.targetだと何も返ってこないときがあった。なんで？
-
-      console.log(e);
+      var month = this.state.today.month; // e.targetだと何も返ってこないときがあった。なんでかは分からん。
 
       if (e.currentTarget.id === 'left-arrow') {
         month--;

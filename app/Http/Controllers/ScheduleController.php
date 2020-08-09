@@ -72,8 +72,24 @@ class ScheduleController extends Controller
             return view('edit', ['params' => $params]);
 
         } else {
-            return redirect('/');
+            return view('error');
         }
+    }
+
+    public function update(Request $request) {
+        $queryId = $request->query('id');
+
+        $schedule = Schedule::where('scheduleUuid', $queryId)->first();
+        $scheduleName = $request->all()['scheduleName'];
+
+        $schedule->fill(['scheduleName' => $scheduleName])->save();
+
+        $params = User::getParamsForAddPage($schedule, $queryId);
+        
+        $params = array_merge(['message' => 'Schedule name has changed.'], $params);
+
+        return view('add', ['params' => $params]);
+
     }
     
     public function delete(Request $request) {
@@ -87,10 +103,11 @@ class ScheduleController extends Controller
                 'scheduleName' => $schedule->scheduleName,
                 'uuid' => $queryId,
             ];
+
             return view('delete', ['params' => $params]);
 
         } else {
-            return redirect('/');
+            return view('error');
         }
     }
 }
