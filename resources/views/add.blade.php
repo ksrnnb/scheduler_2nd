@@ -71,7 +71,8 @@
     @endforeach
     <div id="add"></div>  
 
-    <input type="submit" id="submit-button" value="Add user">
+    <input type="submit" id="submit-button" name="add" value="Add user">
+    <input type="submit" id="submit-button" name="delete" value="Delete user">
   </form>
 </div>
 

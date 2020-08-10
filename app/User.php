@@ -8,10 +8,6 @@ use Illuminate\Notifications\Notifiable;
 
 use Illuminate\Database\Eloquent\Model;
 
-// use App\Schedule;
-// use App\Candidate;
-// use App\Availability;
-
 class User extends Authenticatable
 {
     protected $guarded = ['userId'];
@@ -26,6 +22,51 @@ class User extends Authenticatable
 
     public function availabilities() {
         return $this->hasMany('App\Availability', 'userId', 'userId');
+    }
+
+    public static function registerUser($user) {
+        if ($user["userId"]) {
+
+            $userInstance = User::find($user["userId"]);
+            $updateColumn = ["userName" => $user["userName"]];
+            $userInstance->fill($updateColumn)->save();
+
+            return $userInstance;
+        } else {
+            unset($user["userId"]);
+            $schedule = Schedule::find($user["scheduleId"]);
+            $userInstance = $schedule->users()->create($user);
+
+            return $userInstance;
+        }
+    }
+
+    public static function registerAvaialbility($user, $candidatesArray) {
+
+        foreach($candidatesArray as $id => $availability) {
+            $array = [
+                "scheduleId" => $user["scheduleId"],
+                "userId" => $user["userId"],
+                "candidateId" => $id,
+                "availability" => $availability,
+            ];
+
+            Availability::create($array);
+
+        }
+
+    }
+
+    public static function deleteUser($form) {
+        
+        $id = $form["userId"];
+        if (isset($id)) {
+            $user = User::find($id);
+            $user->delete();
+
+            $user->availabilities()->delete();
+        }
+
     }
 
     public static function getParamsForAddPage($schedule) {
