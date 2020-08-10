@@ -8,9 +8,9 @@ use Illuminate\Notifications\Notifiable;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Schedule;
-use App\Candidate;
-use App\Availability;
+// use App\Schedule;
+// use App\Candidate;
+// use App\Availability;
 
 class User extends Authenticatable
 {
