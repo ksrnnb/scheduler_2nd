@@ -72,7 +72,7 @@ class ScheduleController extends Controller
             return view('edit', ['params' => $params]);
 
         } else {
-            return view('error');
+            return redirect('error');
         }
     }
 
@@ -105,8 +105,12 @@ class ScheduleController extends Controller
 
 
         } else {
-            return view('error');
+            return redirect('error');
         }
+    }
+
+    public function error(Request $request) {
+        return view('error');
     }
 
     public function deleteSchedule($schedule) {

@@ -25,7 +25,7 @@ class UserController extends Controller
             return view('add', ['params' => $params]);
 
         } else {
-            return view('error');
+            return redirect('error');
         }
     }
 
@@ -46,9 +46,14 @@ class UserController extends Controller
 
         if ($request->input('delete')) {
 
-            User::deleteUser($form);
+            $isDeleted = User::deleteUser($form);
+
+            if (! $isDeleted) {
+                return redirect('/error');
+            }
+
             
-        } else {
+        } elseif ($request->input('add')) {
 
             $validateRule = [
                 'scheduleId' => 'required|integer|min:1',

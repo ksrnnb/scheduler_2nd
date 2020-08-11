@@ -25,9 +25,9 @@ Route::post('/add', 'UserController@create');
 Route::get('/edit', 'ScheduleController@edit');
 Route::post('/edit', 'ScheduleController@update');
 
-Route::get('delete', 'ScheduleController@delete');
+Route::get('/delete', 'ScheduleController@delete');
 
-Route::get('error', 'ScheduleController@error');
+Route::get('/error', 'ScheduleController@error');
 
 
 // Route::get('/test', function() {

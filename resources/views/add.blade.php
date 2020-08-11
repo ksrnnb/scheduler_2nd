@@ -72,7 +72,7 @@
     <div id="add"></div>  
 
     <input type="submit" id="submit-button" name="add" value="Add user">
-    <input type="submit" id="submit-button" name="delete" value="Delete user">
+    <input type="submit" class="display-none" id="delete-button" name="delete" value="Delete user">
   </form>
 </div>
 

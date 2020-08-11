@@ -38,6 +38,11 @@ class ScheduleTest extends DuskTestCase
                     ->press('Add user')
                     ->assertSee('test_user2');
 
+            // delete user
+            $browser->clickLink('test_user2')
+                    ->press('Delete user')
+                    ->assertDontSee('test_user2');
+
             // update schedule name
             $browser->clickLink('test')
                     ->type('scheduleName', 'test2')

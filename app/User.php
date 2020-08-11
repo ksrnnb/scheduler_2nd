@@ -65,6 +65,9 @@ class User extends Authenticatable
             $user->delete();
 
             $user->availabilities()->delete();
+            return true;
+        } else {
+            return false;
         }
 
     }
