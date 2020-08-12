@@ -77216,7 +77216,8 @@ var Calender = /*#__PURE__*/function (_React$Component3) {
       var weeksTableData = [];
       weeks.forEach(function (week) {
         weeksTableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-          key: week
+          key: week,
+          className: week
         }, week));
       });
       var dateTableRowData = []; // block scope (date)
@@ -77235,7 +77236,7 @@ var Calender = /*#__PURE__*/function (_React$Component3) {
               if (week <= lastMonthEndWeek) {
                 tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
                   key: key,
-                  className: "disable"
+                  className: "disable " + weeks[week]
                 }, lastMonthEndDay - lastMonthEndWeek + week));
                 continue;
               } else {
@@ -77243,7 +77244,7 @@ var Calender = /*#__PURE__*/function (_React$Component3) {
                 var classSelected = isSelected(fullDate) ? 'selected' : null;
                 tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
                   onClick: this.handleClick,
-                  className: classSelected,
+                  className: classSelected + ' ' + weeks[week],
                   "data-date": fullDate,
                   key: key
                 }, date));
@@ -77256,14 +77257,14 @@ var Calender = /*#__PURE__*/function (_React$Component3) {
 
                 tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
                   onClick: this.handleClick,
-                  className: _classSelected,
+                  className: _classSelected + ' ' + weeks[week],
                   "data-date": _fullDate,
                   key: key
                 }, date));
               } else {
                 tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
                   key: key,
-                  className: "disable"
+                  className: "disable " + weeks[week]
                 }, date - monthEndDay));
               }
             }

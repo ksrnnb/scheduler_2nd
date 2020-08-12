@@ -10,6 +10,18 @@ td {
   display: none;
 }
 
+.disable {
+  opacity: 0.5;
+}
+
+.Sun {
+  color: red;
+}
+
+.Sat {
+  color: blue;
+}
+
 #input-title {
   margin-top: 50pt;
   font-size: 30pt;

@@ -69,7 +69,7 @@ class Schedule extends React.Component {
     let month = this.state.today.month;
 
     // e.targetだと何も返ってこないときがあった。なんでかは分からん。
-    
+
     if (e.currentTarget.id === 'left-arrow') {
       month--;
     } else if (e.currentTarget.id === 'right-arrow') {
@@ -145,7 +145,7 @@ class Calender extends React.Component {
     const weeksTableData = [];
 
     weeks.forEach(week => {
-      weeksTableData.push(<td key={week}>{week}</td>);
+      weeksTableData.push(<td key={week} className={week}>{week}</td>);
     });
 
     const dateTableRowData = [];
@@ -166,20 +166,20 @@ class Calender extends React.Component {
           if (row === 0) {
 
             if (week <= lastMonthEndWeek) {
-              tableData.push(<td key={key} className="disable">{lastMonthEndDay - lastMonthEndWeek + week}</td>);
+              tableData.push(<td key={key} className={"disable " + weeks[week]}>{lastMonthEndDay - lastMonthEndWeek + week}</td>);
               continue;
             } else {
               const fullDate = yearMonth + date;
               let classSelected = isSelected(fullDate) ? 'selected' : null;
-              tableData.push(<td onClick={this.handleClick} className={classSelected} data-date={fullDate} key={key}>{date}</td>);
+              tableData.push(<td onClick={this.handleClick} className={classSelected + ' ' + weeks[week]} data-date={fullDate} key={key}>{date}</td>);
             }
           } else {
             if (date <= lastMonthEndDay) {
               const fullDate = yearMonth + date;
               let classSelected = isSelected(fullDate) ? 'selected' : null;
-              tableData.push(<td onClick={this.handleClick} className={classSelected} data-date={fullDate} key={key}>{date}</td>)
+              tableData.push(<td onClick={this.handleClick} className={classSelected + ' ' + weeks[week]} data-date={fullDate} key={key}>{date}</td>)
             } else {
-              tableData.push(<td key={key} className="disable">{date - monthEndDay}</td>)
+              tableData.push(<td key={key} className={"disable " + weeks[week]}>{date - monthEndDay}</td>)
             }
           }
           date++;
