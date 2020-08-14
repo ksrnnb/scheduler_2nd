@@ -17,7 +17,7 @@
 
 <div style="margin-top:30pt">
 <!-- Need to adjust table width later -->
-  <table class="table-bordered text-center" style="width: 80%;">
+  <table class="table-bordered text-center" style="width: 100%;">
 
     <tr>
       <th>Date</th><th scope="col">○</th><th scope="col">△</th><th scope="col">×</th>

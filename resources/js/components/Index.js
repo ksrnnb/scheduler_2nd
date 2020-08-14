@@ -191,11 +191,10 @@ class Calender extends React.Component {
     }
 
     return (
-      <div>
-        <p className="input-title">Calender</p>
+      <div id="calender-container">
         <h2>
           <FontAwesomeIcon id="left-arrow" className="arrow" icon={faAngleDoubleLeft} onClick={this.arrowClick} />
-          {' ' + year}/{(month + 1) + ' '}
+          <span id="current-month">{' ' + year}/{(month + 1) + ' '}</span>
           <FontAwesomeIcon id="right-arrow" className="arrow" icon={faAngleDoubleRight} onClick={this.arrowClick} />
         </h2>
         <table>
@@ -247,7 +246,7 @@ class MakeScheduleButton extends React.Component {
 
     return (
       <div>
-        <input type="submit" value="Create" onClick={this.props.handleSubmit}/>
+        <input className="btn btn-primary" type="submit" value="Create schedule" onClick={this.props.handleSubmit}/>
       </div>
     );
   }

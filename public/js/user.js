@@ -9,13 +9,31 @@ const submit_button = document.getElementById('submit-button');
 
 const delete_button = document.getElementById('delete-button');
 
+function unescapeUserName (str) {
+
+  const patterns = {
+          '&lt;': '<',
+          '&gt;': '>',
+          '&amp;': '&',
+          '&quot;': '"',
+          '&#x27;': '\'',
+          '&#x60;': '`',
+  }
+
+  return str.replace(/&(lt|gt|amp|quot|#x27|#x60);/g, (match) => {
+    return patterns[match];
+  });
+
+}
+
 // action of clicking user name
 Array.prototype.forEach.call(users, (user) => {
 
   const user_id = user.dataset.id;
 
   user.addEventListener('click', () => {
-    user_name.value = user.innerHTML;
+
+    user_name.value = unescapeUserName(user.innerHTML);
     user_id_element.value = user_id;
     submit_button.value = "Update user";
     

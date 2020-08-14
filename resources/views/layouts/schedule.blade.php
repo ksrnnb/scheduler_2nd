@@ -9,7 +9,7 @@
   <title>Scheduler</title>
 </head>
 <body>
-  <div class="container">
+  <div id="top-container">
     <p class="header"><a href="/">Scheduler</a></p>
       @yield('body')
     <p class="footer">ksrnnb</p>

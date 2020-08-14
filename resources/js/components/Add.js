@@ -80,7 +80,7 @@ class Candidates extends React.Component {
     return (
       <div>
         {/* Need to adjust table width later */}
-        <table className="table-bordered text-center" style={{width: "80%"}}>
+        <table className="table-bordered text-center" style={{width: "100%"}}>
           <thead>
             <tr>
               <th>Date</th><th scope="col"></th><th scope="col"></th><th scope="col"></th>
