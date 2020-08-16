@@ -1,10 +1,10 @@
 @extends('layouts.schedule')
 
 @section('body')
-<p>Error page</p>
+<h3>Error page</h3>
 
 <div>
-  <p>An unexpected error has occurred!</p>
+  <p class="mb-3">An unexpected error has occurred!</p>
 </div>
 
 

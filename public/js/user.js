@@ -9,6 +9,8 @@ const submit_button = document.getElementById('submit-button');
 
 const delete_button = document.getElementById('delete-button');
 
+const reset_button = document.getElementById('reset-button');
+
 function unescapeUserName (str) {
 
   const patterns = {
@@ -43,10 +45,7 @@ Array.prototype.forEach.call(users, (user) => {
 
 });
 
-
-const input_title = document.getElementById('input-title');
-
-input_title.addEventListener('click', () => {
+reset_button.addEventListener('click', () => {
   submit_button.value = "Add user";
   user_name.value = "";
   user_id_element.value = "";

@@ -107,7 +107,7 @@ class ScheduleName extends React.Component {
     return (
       <div>
         <p className="input-title">Schedule Name</p>
-        <input type="text" name="scheduleName" required />
+        <input type="text" className="w-100" name="scheduleName" required />
       </div>
     );
   }
@@ -170,14 +170,14 @@ class Calender extends React.Component {
               continue;
             } else {
               const fullDate = yearMonth + date;
-              let classSelected = isSelected(fullDate) ? 'selected' : null;
-              tableData.push(<td onClick={this.handleClick} className={classSelected + ' ' + weeks[week]} data-date={fullDate} key={key}>{date}</td>);
+              let classSelected = isSelected(fullDate) ? ' selected ' : ' ';
+              tableData.push(<td onClick={this.handleClick} className={'able' + classSelected + weeks[week]} data-date={fullDate} key={key}>{date}</td>);
             }
           } else {
             if (date <= lastMonthEndDay) {
               const fullDate = yearMonth + date;
-              let classSelected = isSelected(fullDate) ? 'selected' : null;
-              tableData.push(<td onClick={this.handleClick} className={classSelected + ' ' + weeks[week]} data-date={fullDate} key={key}>{date}</td>)
+              let classSelected = isSelected(fullDate) ? ' selected ' : ' ';
+              tableData.push(<td onClick={this.handleClick} className={'able' + classSelected + weeks[week]} data-date={fullDate} key={key}>{date}</td>)
             } else {
               tableData.push(<td key={key} className={"disable " + weeks[week]}>{date - monthEndDay}</td>)
             }
@@ -230,7 +230,7 @@ class CandidatesList extends React.Component {
     return (
       <div>
         <p className="input-title">Candidates List</p>
-        <textarea name="candidates" readOnly value={list}/>
+        <textarea name="candidates" className="w-100" readOnly value={list}/>
       </div>
     );
   }
@@ -246,7 +246,7 @@ class MakeScheduleButton extends React.Component {
 
     return (
       <div>
-        <input className="btn btn-primary" type="submit" value="Create schedule" onClick={this.props.handleSubmit}/>
+        <input className="btn btn-outline-primary" type="submit" value="Create schedule" onClick={this.props.handleSubmit}/>
       </div>
     );
   }

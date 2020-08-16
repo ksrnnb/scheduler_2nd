@@ -1,10 +1,10 @@
 @extends('layouts.schedule')
 
 @section('body')
-<p>delete page</p>
 
 <div>
   <p>Schedule has deleted.</p>
+  <p class="mb-3">Return to <a href="/">Top Page</a>.</p>
 </div>
 
 

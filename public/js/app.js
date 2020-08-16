@@ -76888,14 +76888,15 @@ function TableData(props) {
         onClick: function onClick() {
           return handleClick(rowIndex, symbolIndex);
         },
-        className: "selected"
+        className: "selected able"
       }, symbol);
     } else {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         key: symbolIndex,
         onClick: function onClick() {
           return handleClick(rowIndex, symbolIndex);
-        }
+        },
+        className: "able"
       }, symbol);
     }
   });
@@ -77169,6 +77170,7 @@ var ScheduleName = /*#__PURE__*/function (_React$Component2) {
         className: "input-title"
       }, "Schedule Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
+        className: "w-100",
         name: "scheduleName",
         required: true
       }));
@@ -77241,10 +77243,10 @@ var Calender = /*#__PURE__*/function (_React$Component3) {
                 continue;
               } else {
                 var fullDate = yearMonth + date;
-                var classSelected = isSelected(fullDate) ? 'selected' : null;
+                var classSelected = isSelected(fullDate) ? ' selected ' : ' ';
                 tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
                   onClick: this.handleClick,
-                  className: classSelected + ' ' + weeks[week],
+                  className: 'able' + classSelected + weeks[week],
                   "data-date": fullDate,
                   key: key
                 }, date));
@@ -77253,11 +77255,11 @@ var Calender = /*#__PURE__*/function (_React$Component3) {
               if (date <= lastMonthEndDay) {
                 var _fullDate = yearMonth + date;
 
-                var _classSelected = isSelected(_fullDate) ? 'selected' : null;
+                var _classSelected = isSelected(_fullDate) ? ' selected ' : ' ';
 
                 tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
                   onClick: this.handleClick,
-                  className: _classSelected + ' ' + weeks[week],
+                  className: 'able' + _classSelected + weeks[week],
                   "data-date": _fullDate,
                   key: key
                 }, date));
@@ -77284,7 +77286,7 @@ var Calender = /*#__PURE__*/function (_React$Component3) {
         className: "arrow",
         icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faAngleDoubleLeft"],
         onClick: this.arrowClick
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         id: "current-month"
       }, ' ' + year, "/", month + 1 + ' '), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"], {
         id: "right-arrow",
@@ -77325,6 +77327,7 @@ var CandidatesList = /*#__PURE__*/function (_React$Component4) {
         className: "input-title"
       }, "Candidates List"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         name: "candidates",
+        className: "w-100",
         readOnly: true,
         value: list
       }));
@@ -77349,7 +77352,7 @@ var MakeScheduleButton = /*#__PURE__*/function (_React$Component5) {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "btn btn-primary",
+        className: "btn btn-outline-primary",
         type: "submit",
         value: "Create schedule",
         onClick: this.props.handleSubmit

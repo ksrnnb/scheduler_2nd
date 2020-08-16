@@ -22,12 +22,12 @@ class ScheduleTest extends DuskTestCase
                     ->clickAtXPath('//td[contains(@data-date, "14")]')
                     ->clickAtXPath('//td[contains(@data-date, "15")]')
                     ->clickAtXPath('//td[contains(@data-date, "16")]')
-                    ->press('Create')
+                    ->press('Create schedule')
                     ->assertPathIs('/');
 
             // create schedule
             $browser->type('scheduleName', 'test')
-                    ->press('Create')
+                    ->press('Create schedule')
                     ->assertPathIs('/add');
 
             // add user
@@ -47,7 +47,7 @@ class ScheduleTest extends DuskTestCase
             $browser->clickLink('test')
                     ->type('scheduleName', 'test2')
                     ->press('Update')
-                    ->assertSee('Schedule name has changed.');
+                    ->assertSee('test2');
 
             // delete schedule
             $browser->clickLink('test')

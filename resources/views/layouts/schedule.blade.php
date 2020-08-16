@@ -9,10 +9,18 @@
   <title>Scheduler</title>
 </head>
 <body>
+  <div id="header" class="mb-3">
+    <nav class="navbar navbar-dark sticky-top bg-primary">
+      <a class="navbar-brand" href="/">Scheduler</a>
+    </nav>
+  </div>
   <div id="top-container">
-    <p class="header"><a href="/">Scheduler</a></p>
-      @yield('body')
-    <p class="footer">ksrnnb</p>
+    @yield('body')
+  </div>
+  <div id="footer">
+    <nav class="navbar navbar-dark sticky-top bg-primary">
+      <p class="text-white">This application has made by <a class="link" href="https://github.com/ksrnnb">@ksrnnb</a></p>
+    </nav> 
   </div>
 </body>
 </html>

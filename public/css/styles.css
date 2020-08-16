@@ -16,6 +16,8 @@ p {
 
 input {
   margin-bottom: 30pt;
+  display: inline-block;
+  width: 100%;
 }
 
 textarea {
@@ -26,6 +28,17 @@ textarea {
 h2 {
   text-align: center;
   font-size: 18pt;
+}
+
+.link {
+  color: white;
+
+}
+
+.able:hover {
+  cursor: pointer;
+  background-color: lightgrey;
+  opacity: 0.5;
 }
 
 .btn {
@@ -52,11 +65,22 @@ h2 {
   color: blue;
 }
 
-/* #calender-container {
-  display: inline-block;
-} */
 #top-container {
   display: inline-block;
+}
+
+@media (max-width: 500px) {
+  #top-container {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+  }
+}
+
+@media (min-width: 500px) {
+  #top-container {
+    padding-left: 50px;
+  }
 }
 
 #current-month {
@@ -66,5 +90,5 @@ h2 {
 
 #input-title {
   margin-top: 50pt;
-  font-size: 30pt;
+  font-size: 24pt;
 }

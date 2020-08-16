@@ -82,13 +82,30 @@ class ScheduleController extends Controller
         $schedule = Schedule::where('scheduleUuid', $queryId)->first();
         $scheduleName = $request->all()['scheduleName'];
 
-        $schedule->fill(['scheduleName' => $scheduleName])->save();
-
-        $params = User::getParamsForAddPage($schedule, $queryId);
+        if ($request->input('update')) {
+            
+            $schedule->fill(['scheduleName' => $scheduleName])->save();
+    
+            return redirect()->action('UserController@add', ['id' => $queryId]);
         
-        $params = array_merge(['message' => 'Schedule name has changed.'], $params);
+        } elseif ($request->input('delete')) {
 
-        return view('add', ['params' => $params]);
+            if(isset($schedule)) {
+
+                $this->deleteSchedule($schedule);
+
+                return view('delete');
+
+
+            } else {
+                return redirect('error');
+            }
+
+        } else {
+            // var_dump($request->input());
+            return redirect('error');
+        }
+
 
     }
     

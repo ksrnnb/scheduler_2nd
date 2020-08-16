@@ -1,18 +1,18 @@
 @extends('layouts.schedule')
 
 @section('body')
-<p>add page</p>
 
 @if(isset($params['message']))
 <p>{{$params['message']}}</p>
 @endif
 
 <div>
-  <p><a href="/edit?id={{$params['uuid']}}">{{$params['scheduleName']}}</a></p>
+  <p>Schedule Name</p>
+  <p class="h2"><a href="/edit?id={{$params['uuid']}}">{{$params['scheduleName']}}</a></p>
 </div>
 <div>
-  <p>URL</p>
-  <p>{{request()->fullUrl()}}</p>
+  <p class="mt-4">Schedule URL</p>
+  {{request()->fullUrl()}}
 </div>
 
 <div style="margin-top:30pt">
@@ -71,9 +71,11 @@
     @endforeach
     <div id="add"></div>  
 
-    <input type="submit" id="submit-button" name="add" value="Add user">
-    <input type="submit" class="display-none" id="delete-button" name="delete" value="Delete user">
+    <input type="submit" id="submit-button" class="btn btn-outline-primary" name="add" value="Add user">
+    <input type="submit" id="delete-button" class="btn btn-outline-danger display-none" name="delete" value="Delete user">
   </form>
+  <button id="reset-button" class="btn btn-outline-success w-100 mb-5">Reset input information</button>
+
 </div>
 
 <script src="{{asset('js/app.js')}}"></script>

@@ -13,9 +13,9 @@ function TableData(props) {
     // availability is string...
     if (availability == symbolIndex) {
 
-      return <td key={symbolIndex} onClick={() => handleClick(rowIndex, symbolIndex)} className="selected">{symbol}</td>;
+      return <td key={symbolIndex} onClick={() => handleClick(rowIndex, symbolIndex)} className="selected able">{symbol}</td>;
     } else {
-      return <td key={symbolIndex} onClick={() => handleClick(rowIndex, symbolIndex)}>{symbol}</td>;
+      return <td key={symbolIndex} onClick={() => handleClick(rowIndex, symbolIndex)} className="able">{symbol}</td>;
     }
   });
 
