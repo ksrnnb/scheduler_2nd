@@ -76941,45 +76941,76 @@ var TableRows = /*#__PURE__*/function (_React$Component) {
   return TableRows;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-var Candidates = /*#__PURE__*/function (_React$Component2) {
-  _inherits(Candidates, _React$Component2);
+function AddButton() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "submit",
+    id: "submit-button",
+    className: "btn btn-outline-primary",
+    name: "add",
+    value: "Add user"
+  });
+}
 
-  var _super2 = _createSuper(Candidates);
+function DeleteButton(props) {
+  var hidden = props.ishidden ? ' display-none' : '';
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "submit",
+    id: "delete-button",
+    className: "btn btn-outline-danger" + hidden,
+    name: "delete",
+    value: "Delete user"
+  });
+}
 
-  function Candidates(props) {
+var ResetButton = /*#__PURE__*/function (_React$Component2) {
+  _inherits(ResetButton, _React$Component2);
+
+  var _super2 = _createSuper(ResetButton);
+
+  function ResetButton(props) {
     var _this2;
 
-    _classCallCheck(this, Candidates);
+    _classCallCheck(this, ResetButton);
 
     _this2 = _super2.call(this, props);
-    _this2.candidates = document.getElementsByClassName('candidates'); // initial input value = 0
-
-    Array.prototype.map.call(_this2.candidates, function (candidate) {
-      return candidate.value = 0;
-    });
-    _this2.state = {
-      candidates: document.getElementsByClassName('candidates')
-    }; // bind is necessary...
-
-    _this2.handleClick = _this2.handleClick.bind(_assertThisInitialized(_this2));
+    _this2.resetClick = _this2.props.onClick.bind(_assertThisInitialized(_this2));
     return _this2;
   }
 
-  _createClass(Candidates, [{
-    key: "handleClick",
-    value: function handleClick(rowIndex, symbolIndex) {
-      var candidates = this.state.candidates; // update class .selected and input value
-
-      candidates[rowIndex].value = symbolIndex;
-      this.setState({
-        candidates: candidates
-      });
+  _createClass(ResetButton, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "reset-button",
+        className: "btn btn-outline-success w-100 mb-5",
+        onClick: this.resetClick
+      }, "Reset input information");
     }
-  }, {
+  }]);
+
+  return ResetButton;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var Candidates = /*#__PURE__*/function (_React$Component3) {
+  _inherits(Candidates, _React$Component3);
+
+  var _super3 = _createSuper(Candidates);
+
+  function Candidates(props) {
+    var _this3;
+
+    _classCallCheck(this, Candidates);
+
+    _this3 = _super3.call(this, props);
+    _this3.handleClick = _this3.props.handleClick.bind(_assertThisInitialized(_this3));
+    return _this3;
+  }
+
+  _createClass(Candidates, [{
     key: "render",
     value: function render() {
       // const or let ??
-      var candidates = this.state.candidates;
+      var candidates = this.props.candidates;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "table-bordered text-center",
         style: {
@@ -77001,8 +77032,119 @@ var Candidates = /*#__PURE__*/function (_React$Component2) {
   return Candidates;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
+var UserName = /*#__PURE__*/function (_React$Component4) {
+  _inherits(UserName, _React$Component4);
+
+  var _super4 = _createSuper(UserName);
+
+  function UserName(props) {
+    _classCallCheck(this, UserName);
+
+    return _super4.call(this, props);
+  }
+
+  _createClass(UserName, [{
+    key: "render",
+    value: function render() {
+      var userId = this.props.userId;
+      var userName = this.props.userName;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "hidden",
+        id: "user-id",
+        name: "userId",
+        value: userId
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        id: "user-name",
+        name: "userName",
+        required: true
+      }));
+    }
+  }]);
+
+  return UserName;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var UserAddForm = /*#__PURE__*/function (_React$Component5) {
+  _inherits(UserAddForm, _React$Component5);
+
+  var _super5 = _createSuper(UserAddForm);
+
+  function UserAddForm(props) {
+    var _this4;
+
+    _classCallCheck(this, UserAddForm);
+
+    _this4 = _super5.call(this, props);
+    var candidates = document.getElementsByClassName('candidates'); // initial input value = 0
+
+    Array.prototype.map.call(candidates, function (candidate) {
+      return candidate.value = 0;
+    });
+    _this4.state = {
+      candidates: candidates,
+      ishidden: true,
+      userId: '',
+      userName: ''
+    }; // bind is necessary...
+
+    _this4.handleClick = _this4.handleClick.bind(_assertThisInitialized(_this4));
+    _this4.resetClick = _this4.resetClick.bind(_assertThisInitialized(_this4));
+    return _this4;
+  }
+
+  _createClass(UserAddForm, [{
+    key: "resetClick",
+    value: function resetClick(e) {
+      e.preventDefault();
+      var candidates = this.state.candidates;
+      Array.prototype.map.call(candidates, function (candidate) {
+        return candidate.value = 0;
+      }); // this.resetUser();
+
+      this.setState({
+        candidates: candidates,
+        ishidden: true,
+        userId: '',
+        userName: ''
+      });
+    }
+  }, {
+    key: "handleClick",
+    value: function handleClick(rowIndex, symbolIndex) {
+      var candidates = this.state.candidates; // update class .selected and input value
+
+      candidates[rowIndex].value = symbolIndex;
+      this.setState({
+        candidates: candidates
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var candidates = this.state.candidates;
+      var userName = this.state.userName;
+      var userId = this.state.userId;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UserName, {
+        userName: userName,
+        userId: userId
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Candidates, {
+        handleClick: this.handleClick,
+        candidates: candidates
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AddButton, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DeleteButton, {
+        ishidden: this.state.ishidden
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ResetButton, {
+        onClick: this.resetClick,
+        candidates: candidates
+      }));
+    }
+  }]);
+
+  return UserAddForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
 if (document.getElementById('add')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Candidates, null), document.getElementById('add'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UserAddForm, null), document.getElementById('add'));
 }
 
 /***/ }),

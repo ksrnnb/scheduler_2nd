@@ -63,18 +63,17 @@
     
     <p id="input-title">Input availabilities</p>
     <p>User name</p>
-    <input type="hidden" id="user-id" name="userId" required>
-    <input type="text" id="user-name" name="userName" required>
+    <!-- <input type="hidden" id="user-id" name="userId" required>
+    <input type="text" id="user-name" name="userName" required> -->
     <p>Candidates</p>
     @foreach($params['candidates'] as $candidateId => $candidate)
       <input type="hidden" data-date="{{$candidate}}" class="candidates" name="{{'candidate_' . $candidateId}}">
     @endforeach
+
+    <!-- React -->
     <div id="add"></div>  
 
-    <input type="submit" id="submit-button" class="btn btn-outline-primary" name="add" value="Add user">
-    <input type="submit" id="delete-button" class="btn btn-outline-danger display-none" name="delete" value="Delete user">
   </form>
-  <button id="reset-button" class="btn btn-outline-success w-100 mb-5">Reset input information</button>
 
 </div>
 

@@ -45,11 +45,11 @@ Array.prototype.forEach.call(users, (user) => {
 
 });
 
-reset_button.addEventListener('click', () => {
-  submit_button.value = "Add user";
-  user_name.value = "";
-  user_id_element.value = "";
+// reset_button.addEventListener('click', () => {
+//   submit_button.value = "Add user";
+//   user_name.value = "";
+//   user_id_element.value = "";
 
-  delete_button.classList.add('display-none');
+//   delete_button.classList.add('display-none');
 
-});
+// });
