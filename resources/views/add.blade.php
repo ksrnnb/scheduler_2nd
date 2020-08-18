@@ -15,8 +15,13 @@
   {{request()->fullUrl()}}
 </div>
 
-<div style="margin-top:30pt">
+<div>
 <!-- Need to adjust table width later -->
+
+    <p id="users">{{json_encode($params['users'])}}</p>
+    <p id="candidates">{{json_encode($params['candidates'])}}</p>
+    <p class="mb-5" id="availabilities">{{json_encode($params['availabilities'])}}</p>
+
   <table class="table-bordered text-center" style="width: 100%;">
 
     <tr>
@@ -62,10 +67,6 @@
     <input type="hidden" name="scheduleId" value="{{$params['scheduleId']}}">
     
     <p id="input-title">Input availabilities</p>
-    <p>User name</p>
-    <!-- <input type="hidden" id="user-id" name="userId" required>
-    <input type="text" id="user-name" name="userName" required> -->
-    <p>Candidates</p>
     @foreach($params['candidates'] as $candidateId => $candidate)
       <input type="hidden" data-date="{{$candidate}}" class="candidates" name="{{'candidate_' . $candidateId}}">
     @endforeach

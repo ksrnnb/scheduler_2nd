@@ -77011,11 +77011,8 @@ var Candidates = /*#__PURE__*/function (_React$Component3) {
     value: function render() {
       // const or let ??
       var candidates = this.props.candidates;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-        className: "table-bordered text-center",
-        style: {
-          width: "100%"
-        }
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Candidates"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        className: "table-bordered text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -77038,9 +77035,13 @@ var UserName = /*#__PURE__*/function (_React$Component4) {
   var _super4 = _createSuper(UserName);
 
   function UserName(props) {
+    var _this4;
+
     _classCallCheck(this, UserName);
 
-    return _super4.call(this, props);
+    _this4 = _super4.call(this, props);
+    _this4.onChange = _this4.props.onChange;
+    return _this4;
   }
 
   _createClass(UserName, [{
@@ -77048,7 +77049,7 @@ var UserName = /*#__PURE__*/function (_React$Component4) {
     value: function render() {
       var userId = this.props.userId;
       var userName = this.props.userName;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "User Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "hidden",
         id: "user-id",
         name: "userId",
@@ -77057,6 +77058,8 @@ var UserName = /*#__PURE__*/function (_React$Component4) {
         type: "text",
         id: "user-name",
         name: "userName",
+        value: userName,
+        onChange: this.onChange,
         required: true
       }));
     }
@@ -77065,35 +77068,185 @@ var UserName = /*#__PURE__*/function (_React$Component4) {
   return UserName;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-var UserAddForm = /*#__PURE__*/function (_React$Component5) {
-  _inherits(UserAddForm, _React$Component5);
+var AvailabilitiesTable = /*#__PURE__*/function (_React$Component5) {
+  _inherits(AvailabilitiesTable, _React$Component5);
 
-  var _super5 = _createSuper(UserAddForm);
+  var _super5 = _createSuper(AvailabilitiesTable);
+
+  function AvailabilitiesTable(props) {
+    var _this5;
+
+    _classCallCheck(this, AvailabilitiesTable);
+
+    _this5 = _super5.call(this, props);
+    _this5.userNameTableHeader = _this5.userNameTableHeader.bind(_assertThisInitialized(_this5));
+    _this5.availabilitiesTableData = _this5.availabilitiesTableData.bind(_assertThisInitialized(_this5));
+    return _this5;
+  }
+
+  _createClass(AvailabilitiesTable, [{
+    key: "userNameTableHeader",
+    value: function userNameTableHeader() {
+      var tableHeader = [];
+      this.props.users.forEach(function (user) {
+        tableHeader.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+          key: user.userId,
+          scope: "col"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          className: "users",
+          "data-id": user.userId,
+          href: "#input-title",
+          method: "GET"
+        }, user.userName)));
+      });
+      return tableHeader;
+    }
+  }, {
+    key: "getAvailability",
+    value: function getAvailability(availabilities, i) {
+      var tableData = []; // availabilities: [{userId: availability, userId: availability, ...}]
+
+      var availabilitiesObj = availabilities[i];
+      var availabilitiesArray = Object.values(availabilitiesObj);
+      availabilitiesArray.forEach(function (availability, j) {
+        var symbol;
+
+        switch (availability) {
+          case '0':
+            symbol = '○';
+            break;
+
+          case '1':
+            symbol = '△';
+            break;
+
+          case '2':
+            symbol = '×';
+            break;
+        }
+
+        tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          key: i + '_' + j
+        }, symbol));
+      });
+      return tableData;
+    }
+  }, {
+    key: "availabilitiesTableData",
+    value: function availabilitiesTableData() {
+      var _this6 = this;
+
+      var tableData = [];
+      var candidates = this.props.candidates;
+      var availabilities = this.props.availabilities;
+      candidates.forEach(function (candidate, i) {
+        tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+          key: candidate + '_' + i,
+          scope: "row"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, candidate), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "1"), _this6.getAvailability(availabilities, i)));
+      });
+      return tableData;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        className: "table-bordered text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u25CB"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\u25B3"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        scope: "col"
+      }, "\xD7"), this.userNameTableHeader()), this.availabilitiesTableData()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null));
+    }
+  }]);
+
+  return AvailabilitiesTable;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var UserAddForm = /*#__PURE__*/function (_React$Component6) {
+  _inherits(UserAddForm, _React$Component6);
+
+  var _super6 = _createSuper(UserAddForm);
 
   function UserAddForm(props) {
-    var _this4;
+    var _this7;
 
     _classCallCheck(this, UserAddForm);
 
-    _this4 = _super5.call(this, props);
-    var candidates = document.getElementsByClassName('candidates'); // initial input value = 0
+    _this7 = _super6.call(this, props);
+    var candidates = document.getElementsByClassName('candidates');
+    var usersNode = document.getElementById('users');
+    var candidatesNode = document.getElementById('candidates');
+    var availabilitiesNode = document.getElementById('availabilities');
+    var usersObj = JSON.parse(usersNode.innerHTML);
+    var candidatesObj = JSON.parse(candidatesNode.innerHTML);
+    var availabilitiesObj = JSON.parse(availabilitiesNode.innerHTML);
+    _this7.users = Object.values(usersObj);
+    _this7.candidatesDate = Object.values(candidatesObj);
+    _this7.availabilities = Object.values(availabilitiesObj); /////// //////
+    // const node = document.getElementById('availabilities');
+    // const obj = JSON.parse(node.innerHTML);
+    // this.availabilities = Object.values(obj).map(values => {
+    //   return values;
+    // });
+    // setTimeout( () => {
+    //   node.parentNode.removeChild(node);
+    // }, 1);
+    // const users = document.getElementsByClassName('users');
+    // Array.prototype.forEach.call(users, user => {
+    //   user.addEventListener('click', () => {
+    //       const userName = this.unescapeUserName(user.innerHTML);
+    //       const userId = user.userId;
+    //       submit_button.value = "Update user";
+    //       const candidates = this.state.candidates;
+    //       Array.prototype.map.call(candidates, (key, candidate) => {
+    //         return candidate.value = this.availabilities[key][userId];
+    //       });
+    //       this.setState({
+    //         candidates: candidate,
+    //         ishidden: true,
+    //         userName: userName,
+    //         userId: userId,
+    //       })
+    //     });
+    // });
+    ///////////////
+    // initial input value = 0
 
     Array.prototype.map.call(candidates, function (candidate) {
       return candidate.value = 0;
     });
-    _this4.state = {
+    _this7.state = {
       candidates: candidates,
       ishidden: true,
       userId: '',
       userName: ''
     }; // bind is necessary...
 
-    _this4.handleClick = _this4.handleClick.bind(_assertThisInitialized(_this4));
-    _this4.resetClick = _this4.resetClick.bind(_assertThisInitialized(_this4));
-    return _this4;
+    _this7.handleClick = _this7.handleClick.bind(_assertThisInitialized(_this7));
+    _this7.resetClick = _this7.resetClick.bind(_assertThisInitialized(_this7));
+    _this7.onChangeUserName = _this7.onChangeUserName.bind(_assertThisInitialized(_this7));
+    return _this7;
   }
 
   _createClass(UserAddForm, [{
+    key: "unescapeUserName",
+    value: function unescapeUserName(str) {
+      var patterns = {
+        '&lt;': '<',
+        '&gt;': '>',
+        '&amp;': '&',
+        '&quot;': '"',
+        '&#x27;': '\'',
+        '&#x60;': '`'
+      };
+      return str.replace(/&(lt|gt|amp|quot|#x27|#x60);/g, function (match) {
+        return patterns[match];
+      });
+    }
+  }, {
     key: "resetClick",
     value: function resetClick(e) {
       e.preventDefault();
@@ -77120,14 +77273,24 @@ var UserAddForm = /*#__PURE__*/function (_React$Component5) {
       });
     }
   }, {
+    key: "onChangeUserName",
+    value: function onChangeUserName(e) {
+      this.setState({
+        userName: e.target.value
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var candidates = this.state.candidates;
-      var userName = this.state.userName;
-      var userId = this.state.userId;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UserName, {
-        userName: userName,
-        userId: userId
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AvailabilitiesTable, {
+        users: this.users,
+        candidates: this.candidatesDate,
+        availabilities: this.availabilities
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UserName, {
+        userName: this.state.userName,
+        userId: this.state.userId,
+        onChange: this.onChangeUserName
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Candidates, {
         handleClick: this.handleClick,
         candidates: candidates

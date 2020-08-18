@@ -75,8 +75,9 @@ class Candidates extends React.Component {
     const candidates = this.props.candidates;
     return (
       <div>
+        <p>Candidates</p>
         {/* Need to adjust table width later */}
-        <table className="table-bordered text-center" style={{width: "100%"}}>
+        <table className="table-bordered text-center">
           <thead>
             <tr>
               <th>Date</th><th scope="col"></th><th scope="col"></th><th scope="col"></th>
@@ -95,6 +96,8 @@ class UserName extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.onChange = this.props.onChange;
   }
 
   render() {
@@ -103,10 +106,97 @@ class UserName extends React.Component {
 
     return (
       <div>
-        
-        {/* <input type="hidden" id="user-id" name="userId" value={userId}/>
-        <input type="text" id="user-name" name="userName" value={userName} required /> */}
+        <p>User Name</p>
+        <input type="hidden" id="user-id" name="userId" value={userId}/>
+        <input type="text" id="user-name" name="userName" value={userName} onChange={this.onChange} required />
       </div>
+    );
+  }
+}
+
+class AvailabilitiesTable extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.userNameTableHeader = this.userNameTableHeader.bind(this);
+    this.availabilitiesTableData = this.availabilitiesTableData.bind(this);
+  }
+
+  userNameTableHeader() {
+    const tableHeader = [];
+
+    this.props.users.forEach(user => {
+      tableHeader.push(<th key={user.userId} scope="col"><a className="users" data-id={user.userId} href="#input-title" method="GET">{user.userName}</a></th>);
+    });
+
+    return tableHeader;
+  }
+
+  getAvailability(availabilities, i) {
+
+    const tableData = [];
+
+    // availabilities: [{userId: availability, userId: availability, ...}]
+    const availabilitiesObj = availabilities[i];
+    const availabilitiesArray = Object.values(availabilitiesObj);
+
+
+    availabilitiesArray.forEach((availability, j) => {
+
+      let symbol;
+
+      switch (availability) {
+        case '0':
+          symbol = '○';
+          break;
+        case '1':
+          symbol = '△';
+          break;
+        case '2':
+          symbol = '×';
+          break;
+      }
+
+      tableData.push(<td key={i + '_' + j}>{symbol}</td>);
+    });
+
+    return tableData;
+  }
+
+  availabilitiesTableData() {
+    const tableData = [];
+    const candidates = this.props.candidates;
+    const availabilities = this.props.availabilities;
+
+    candidates.forEach((candidate, i) => {
+      tableData.push(<tr key={candidate + '_' + i} scope="row">
+        <td>{candidate}</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        {this.getAvailability(availabilities, i)}
+      </tr>);
+    });
+
+    return tableData;
+  }
+
+  render() {
+
+    return (
+    <table className="table-bordered text-center">
+      <thead>
+        <tr>
+        <th>Date</th><th scope="col">○</th><th scope="col">△</th><th scope="col">×</th>
+        {this.userNameTableHeader()}
+        </tr>
+        {this.availabilitiesTableData()}
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
     );
   }
 }
@@ -117,7 +207,61 @@ class UserAddForm extends React.Component {
     super(props);
 
     const candidates = document.getElementsByClassName('candidates');
+   
+    const usersNode = document.getElementById('users');
+    const candidatesNode = document.getElementById('candidates');
+    const availabilitiesNode = document.getElementById('availabilities');
+
+    const usersObj = JSON.parse(usersNode.innerHTML);
+    const candidatesObj = JSON.parse(candidatesNode.innerHTML);
+    const availabilitiesObj = JSON.parse(availabilitiesNode.innerHTML);
+
+    this.users = Object.values(usersObj);
+    this.candidatesDate = Object.values(candidatesObj);
+    this.availabilities = Object.values(availabilitiesObj);
+   
+   /////// //////
+   
+    // const node = document.getElementById('availabilities');
+
+    // const obj = JSON.parse(node.innerHTML);
     
+    // this.availabilities = Object.values(obj).map(values => {
+    //   return values;
+    // });
+
+    // setTimeout( () => {
+    //   node.parentNode.removeChild(node);
+    // }, 1);
+
+    // const users = document.getElementsByClassName('users');
+    
+    // Array.prototype.forEach.call(users, user => {
+      
+    //   user.addEventListener('click', () => {
+
+    //       const userName = this.unescapeUserName(user.innerHTML);
+    //       const userId = user.userId;
+    //       submit_button.value = "Update user";
+
+    //       const candidates = this.state.candidates;
+
+    //       Array.prototype.map.call(candidates, (key, candidate) => {
+    //         return candidate.value = this.availabilities[key][userId];
+    //       });
+
+    //       this.setState({
+    //         candidates: candidate,
+    //         ishidden: true,
+    //         userName: userName,
+    //         userId: userId,
+    //       })
+      
+    //     });
+    // });
+
+    ///////////////
+
     // initial input value = 0
     Array.prototype.map.call(candidates, candidate => {
       return candidate.value = 0;
@@ -133,6 +277,24 @@ class UserAddForm extends React.Component {
     // bind is necessary...
     this.handleClick = this.handleClick.bind(this);
     this.resetClick = this.resetClick.bind(this);
+    this.onChangeUserName = this.onChangeUserName.bind(this);
+  }
+
+  unescapeUserName (str) {
+
+    const patterns = {
+            '&lt;': '<',
+            '&gt;': '>',
+            '&amp;': '&',
+            '&quot;': '"',
+            '&#x27;': '\'',
+            '&#x60;': '`',
+    }
+
+    return str.replace(/&(lt|gt|amp|quot|#x27|#x60);/g, (match) => {
+      return patterns[match];
+    });
+
   }
 
   resetClick(e) {
@@ -164,14 +326,19 @@ class UserAddForm extends React.Component {
     });
   }
 
+  onChangeUserName(e) {
+    this.setState({
+      userName: e.target.value
+    });
+  }
+
 
   render() {
     const candidates = this.state.candidates;
-    const userName = this.state.userName;
-    const userId = this.state.userId;
     return (
       <div>
-        <UserName userName={userName} userId={userId}/>
+        <AvailabilitiesTable users={this.users} candidates={this.candidatesDate} availabilities={this.availabilities}/>
+        <UserName userName={this.state.userName} userId={this.state.userId} onChange={this.onChangeUserName}/>
         <Candidates handleClick={this.handleClick} candidates={candidates}/>
         <AddButton />
         <DeleteButton ishidden={this.state.ishidden} />
