@@ -121,26 +121,63 @@ class AvailabilitiesTable extends React.Component {
 
     this.userNameTableHeader = this.userNameTableHeader.bind(this);
     this.availabilitiesTableData = this.availabilitiesTableData.bind(this);
+    this.getAvailability = this.getAvailability.bind(this);
+    this.userClick = this.props.userClick.bind(this);
+    // this.countAvailability();
   }
+
+  countAvailability() {
+
+    // availabilities: {candidateId:{userId: availability, userId: availability, ...}, ...}
+    const availabilities = this.props.availabilities;
+    const temp = [];
+    Object.keys(availabilities).forEach(key => {
+      // console.log('key: ' + key);
+      // console.log('value: ' + availabilities[key]);
+      // console.log(availabilities[key]);
+      Object.keys(availabilities[key]).forEach(userId => {
+        temp[userId] += availabilities[key][userId] + '-';
+      })
+    });
+
+    console.log(temp);
+    // const availabilitiesObj = availabilities[i];
+    // const availabilitiesArray = Object.values(availabilitiesObj);
+
+    // //<td>count 0</td><td>count 1</td><td>count 2</td>
+    // tableData.push(this.getTableDataForCountAvailabilities(availabilitiesArray));
+  }
+
 
   userNameTableHeader() {
     const tableHeader = [];
 
     this.props.users.forEach(user => {
-      tableHeader.push(<th key={user.userId} scope="col"><a className="users" data-id={user.userId} href="#input-title" method="GET">{user.userName}</a></th>);
+      tableHeader.push(<th key={user.userId} scope="col"><a className="users" data-id={user.userId} href="#input-title" method="GET" onClick={this.userClick}>{user.userName}</a></th>);
     });
 
     return tableHeader;
+  }
+
+  getTableDataForCountAvailabilities(availabilitiesArray) {
+    const tableData = [];
+    for (let i = 0; i < 3; i++) {
+      const count = availabilitiesArray.filter(x => x == i).length;
+      tableData.push(<td key={'CA_' + i}>{count}</td>);
+    }
+    return tableData;
   }
 
   getAvailability(availabilities, i) {
 
     const tableData = [];
 
-    // availabilities: [{userId: availability, userId: availability, ...}]
+    // availabilitiesObj: [{userId: availability, userId: availability, ...}]
     const availabilitiesObj = availabilities[i];
     const availabilitiesArray = Object.values(availabilitiesObj);
 
+    //<td>count 0</td><td>count 1</td><td>count 2</td>
+    tableData.push(this.getTableDataForCountAvailabilities(availabilitiesArray));
 
     availabilitiesArray.forEach((availability, j) => {
 
@@ -172,9 +209,9 @@ class AvailabilitiesTable extends React.Component {
     candidates.forEach((candidate, i) => {
       tableData.push(<tr key={candidate + '_' + i} scope="row">
         <td>{candidate}</td>
+        {/* <td>1</td>
         <td>1</td>
-        <td>1</td>
-        <td>1</td>
+        <td>1</td> */}
         {this.getAvailability(availabilities, i)}
       </tr>);
     });
@@ -278,6 +315,18 @@ class UserAddForm extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.resetClick = this.resetClick.bind(this);
     this.onChangeUserName = this.onChangeUserName.bind(this);
+    this.userClick = this.userClick.bind(this);
+  }
+
+  userClick(e) {
+    const userId = e.target.dataset.id;
+    const userName = e.target.innerHTML;
+
+    this.setState({
+      ishidden: false,
+      userId,
+      userName,
+    });
   }
 
   unescapeUserName (str) {
@@ -337,7 +386,8 @@ class UserAddForm extends React.Component {
     const candidates = this.state.candidates;
     return (
       <div>
-        <AvailabilitiesTable users={this.users} candidates={this.candidatesDate} availabilities={this.availabilities}/>
+        <AvailabilitiesTable users={this.users} candidates={this.candidatesDate} availabilities={this.availabilities} userClick={this.userClick}/>
+        <p id="input-title">Input availabilities</p>
         <UserName userName={this.state.userName} userId={this.state.userId} onChange={this.onChangeUserName}/>
         <Candidates handleClick={this.handleClick} candidates={candidates}/>
         <AddButton />

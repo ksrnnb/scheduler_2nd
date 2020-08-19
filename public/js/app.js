@@ -77081,12 +77081,38 @@ var AvailabilitiesTable = /*#__PURE__*/function (_React$Component5) {
     _this5 = _super5.call(this, props);
     _this5.userNameTableHeader = _this5.userNameTableHeader.bind(_assertThisInitialized(_this5));
     _this5.availabilitiesTableData = _this5.availabilitiesTableData.bind(_assertThisInitialized(_this5));
+    _this5.getAvailability = _this5.getAvailability.bind(_assertThisInitialized(_this5));
+    _this5.userClick = _this5.props.userClick.bind(_assertThisInitialized(_this5));
+
+    _this5.countAvailability();
+
     return _this5;
   }
 
   _createClass(AvailabilitiesTable, [{
+    key: "countAvailability",
+    value: function countAvailability() {
+      // availabilities: {candidateId:{userId: availability, userId: availability, ...}, ...}
+      var availabilities = this.props.availabilities;
+      var temp = [];
+      Object.keys(availabilities).forEach(function (key) {
+        // console.log('key: ' + key);
+        // console.log('value: ' + availabilities[key]);
+        // console.log(availabilities[key]);
+        Object.keys(availabilities[key]).forEach(function (userId) {
+          temp[userId] += availabilities[key][userId] + '-';
+        });
+      });
+      console.log(temp); // const availabilitiesObj = availabilities[i];
+      // const availabilitiesArray = Object.values(availabilitiesObj);
+      // //<td>count 0</td><td>count 1</td><td>count 2</td>
+      // tableData.push(this.getTableDataForCountAvailabilities(availabilitiesArray));
+    }
+  }, {
     key: "userNameTableHeader",
     value: function userNameTableHeader() {
+      var _this6 = this;
+
       var tableHeader = [];
       this.props.users.forEach(function (user) {
         tableHeader.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -77096,18 +77122,41 @@ var AvailabilitiesTable = /*#__PURE__*/function (_React$Component5) {
           className: "users",
           "data-id": user.userId,
           href: "#input-title",
-          method: "GET"
+          method: "GET",
+          onClick: _this6.userClick
         }, user.userName)));
       });
       return tableHeader;
     }
   }, {
+    key: "getTableDataForCountAvailabilities",
+    value: function getTableDataForCountAvailabilities(availabilitiesArray) {
+      var tableData = [];
+
+      var _loop = function _loop(i) {
+        var count = availabilitiesArray.filter(function (x) {
+          return x == i;
+        }).length;
+        tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          key: 'CA_' + i
+        }, count));
+      };
+
+      for (var i = 0; i < 3; i++) {
+        _loop(i);
+      }
+
+      return tableData;
+    }
+  }, {
     key: "getAvailability",
     value: function getAvailability(availabilities, i) {
-      var tableData = []; // availabilities: [{userId: availability, userId: availability, ...}]
+      var tableData = []; // availabilitiesObj: [{userId: availability, userId: availability, ...}]
 
       var availabilitiesObj = availabilities[i];
-      var availabilitiesArray = Object.values(availabilitiesObj);
+      var availabilitiesArray = Object.values(availabilitiesObj); //<td>count 0</td><td>count 1</td><td>count 2</td>
+
+      tableData.push(this.getTableDataForCountAvailabilities(availabilitiesArray));
       availabilitiesArray.forEach(function (availability, j) {
         var symbol;
 
@@ -77134,7 +77183,7 @@ var AvailabilitiesTable = /*#__PURE__*/function (_React$Component5) {
   }, {
     key: "availabilitiesTableData",
     value: function availabilitiesTableData() {
-      var _this6 = this;
+      var _this7 = this;
 
       var tableData = [];
       var candidates = this.props.candidates;
@@ -77143,7 +77192,7 @@ var AvailabilitiesTable = /*#__PURE__*/function (_React$Component5) {
         tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
           key: candidate + '_' + i,
           scope: "row"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, candidate), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "1"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "1"), _this6.getAvailability(availabilities, i)));
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, candidate), _this7.getAvailability(availabilities, i)));
       });
       return tableData;
     }
@@ -77171,11 +77220,11 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
   var _super6 = _createSuper(UserAddForm);
 
   function UserAddForm(props) {
-    var _this7;
+    var _this8;
 
     _classCallCheck(this, UserAddForm);
 
-    _this7 = _super6.call(this, props);
+    _this8 = _super6.call(this, props);
     var candidates = document.getElementsByClassName('candidates');
     var usersNode = document.getElementById('users');
     var candidatesNode = document.getElementById('candidates');
@@ -77183,9 +77232,9 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
     var usersObj = JSON.parse(usersNode.innerHTML);
     var candidatesObj = JSON.parse(candidatesNode.innerHTML);
     var availabilitiesObj = JSON.parse(availabilitiesNode.innerHTML);
-    _this7.users = Object.values(usersObj);
-    _this7.candidatesDate = Object.values(candidatesObj);
-    _this7.availabilities = Object.values(availabilitiesObj); /////// //////
+    _this8.users = Object.values(usersObj);
+    _this8.candidatesDate = Object.values(candidatesObj);
+    _this8.availabilities = Object.values(availabilitiesObj); /////// //////
     // const node = document.getElementById('availabilities');
     // const obj = JSON.parse(node.innerHTML);
     // this.availabilities = Object.values(obj).map(values => {
@@ -77218,20 +77267,32 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
     Array.prototype.map.call(candidates, function (candidate) {
       return candidate.value = 0;
     });
-    _this7.state = {
+    _this8.state = {
       candidates: candidates,
       ishidden: true,
       userId: '',
       userName: ''
     }; // bind is necessary...
 
-    _this7.handleClick = _this7.handleClick.bind(_assertThisInitialized(_this7));
-    _this7.resetClick = _this7.resetClick.bind(_assertThisInitialized(_this7));
-    _this7.onChangeUserName = _this7.onChangeUserName.bind(_assertThisInitialized(_this7));
-    return _this7;
+    _this8.handleClick = _this8.handleClick.bind(_assertThisInitialized(_this8));
+    _this8.resetClick = _this8.resetClick.bind(_assertThisInitialized(_this8));
+    _this8.onChangeUserName = _this8.onChangeUserName.bind(_assertThisInitialized(_this8));
+    _this8.userClick = _this8.userClick.bind(_assertThisInitialized(_this8));
+    return _this8;
   }
 
   _createClass(UserAddForm, [{
+    key: "userClick",
+    value: function userClick(e) {
+      var userId = e.target.dataset.id;
+      var userName = e.target.innerHTML;
+      this.setState({
+        ishidden: false,
+        userId: userId,
+        userName: userName
+      });
+    }
+  }, {
     key: "unescapeUserName",
     value: function unescapeUserName(str) {
       var patterns = {
@@ -77286,8 +77347,11 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AvailabilitiesTable, {
         users: this.users,
         candidates: this.candidatesDate,
-        availabilities: this.availabilities
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UserName, {
+        availabilities: this.availabilities,
+        userClick: this.userClick
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        id: "input-title"
+      }, "Input availabilities"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UserName, {
         userName: this.state.userName,
         userId: this.state.userId,
         onChange: this.onChangeUserName

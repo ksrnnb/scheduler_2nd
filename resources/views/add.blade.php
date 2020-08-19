@@ -22,43 +22,6 @@
     <p id="candidates">{{json_encode($params['candidates'])}}</p>
     <p class="mb-5" id="availabilities">{{json_encode($params['availabilities'])}}</p>
 
-  <table class="table-bordered text-center" style="width: 100%;">
-
-    <tr>
-      <th>Date</th><th scope="col">○</th><th scope="col">△</th><th scope="col">×</th>
-      @foreach($params['users'] as $user)
-      <!-- Need to modify link -->
-        <th scope="col"><a class="users" data-id="{{$user['userId']}}" href="#input-title" method="GET">{{$user->userName}}</a></th>
-      @endforeach
-    </tr>
-    
-    @foreach($params['candidates'] as $candidateId => $candidate)
-      <tr scope="row">
-        <td>{{$candidate}}</td>
-        @foreach($params['countAvailabilities']['candidate' . $candidateId] as $countAvailability)
-          <td>{{$countAvailability}}</td>
-        @endforeach
-
-        @foreach($params['availabilities'][$candidateId] as $availability)
-          @switch($availability)
-            @case(0)
-              <td>○</td>
-              @break
-            
-            @case(1)
-              <td>△</td>
-              @break
-
-            @case(2)
-              <td>×</td>
-              @break
-
-          @endswitch
-        @endforeach
-        
-      </tr>
-    @endforeach
-  </table>
 </div>
 
 <div>
@@ -66,7 +29,6 @@
     @csrf
     <input type="hidden" name="scheduleId" value="{{$params['scheduleId']}}">
     
-    <p id="input-title">Input availabilities</p>
     @foreach($params['candidates'] as $candidateId => $candidate)
       <input type="hidden" data-date="{{$candidate}}" class="candidates" name="{{'candidate_' . $candidateId}}">
     @endforeach
