@@ -209,9 +209,6 @@ class AvailabilitiesTable extends React.Component {
     candidates.forEach((candidate, i) => {
       tableData.push(<tr key={candidate + '_' + i} scope="row">
         <td>{candidate}</td>
-        {/* <td>1</td>
-        <td>1</td>
-        <td>1</td> */}
         {this.getAvailability(availabilities, i)}
       </tr>);
     });
@@ -228,10 +225,9 @@ class AvailabilitiesTable extends React.Component {
         <th>Date</th><th scope="col">○</th><th scope="col">△</th><th scope="col">×</th>
         {this.userNameTableHeader()}
         </tr>
-        {this.availabilitiesTableData()}
       </thead>
       <tbody>
-
+        {this.availabilitiesTableData()}
       </tbody>
     </table>
     );
@@ -243,75 +239,49 @@ class UserAddForm extends React.Component {
   constructor(props) {
     super(props);
 
-    const candidates = document.getElementsByClassName('candidates');
+    const setStateValue = new Promise((resolve, reject) => {
+
+      const candidates = document.getElementsByClassName('candidates');
    
-    const usersNode = document.getElementById('users');
-    const candidatesNode = document.getElementById('candidates');
-    const availabilitiesNode = document.getElementById('availabilities');
-
-    const usersObj = JSON.parse(usersNode.innerHTML);
-    const candidatesObj = JSON.parse(candidatesNode.innerHTML);
-    const availabilitiesObj = JSON.parse(availabilitiesNode.innerHTML);
-
-    this.users = Object.values(usersObj);
-    this.candidatesDate = Object.values(candidatesObj);
-    this.availabilities = Object.values(availabilitiesObj);
-   
-   /////// //////
-   
-    // const node = document.getElementById('availabilities');
-
-    // const obj = JSON.parse(node.innerHTML);
-    
-    // this.availabilities = Object.values(obj).map(values => {
-    //   return values;
-    // });
-
-    // setTimeout( () => {
-    //   node.parentNode.removeChild(node);
-    // }, 1);
-
-    // const users = document.getElementsByClassName('users');
-    
-    // Array.prototype.forEach.call(users, user => {
+      const usersNode = document.getElementById('users');
+      const candidatesNode = document.getElementById('candidates');
+      const availabilitiesNode = document.getElementById('availabilities');
       
-    //   user.addEventListener('click', () => {
+      const usersObj = JSON.parse(usersNode.innerHTML);
+      const candidatesObj = JSON.parse(candidatesNode.innerHTML);
+      const availabilitiesObj = JSON.parse(availabilitiesNode.innerHTML);
 
-    //       const userName = this.unescapeUserName(user.innerHTML);
-    //       const userId = user.userId;
-    //       submit_button.value = "Update user";
+      this.users = Object.values(usersObj);
+      this.candidatesDate = Object.values(candidatesObj);
+      this.availabilities = Object.values(availabilitiesObj);
 
-    //       const candidates = this.state.candidates;
+      // initial input value = 0
+      Array.prototype.map.call(candidates, candidate => {
+        return candidate.value = 0;
+      });
 
-    //       Array.prototype.map.call(candidates, (key, candidate) => {
-    //         return candidate.value = this.availabilities[key][userId];
-    //       });
+      this.state = {
+        candidates: candidates,
+        ishidden: true,
+        userId: '',
+        userName: '',
+      };
 
-    //       this.setState({
-    //         candidates: candidate,
-    //         ishidden: true,
-    //         userName: userName,
-    //         userId: userId,
-    //       })
-      
-    //     });
-    // });
+      resolve([usersNode, candidatesNode, availabilitiesNode]);
 
-    ///////////////
-
-    // initial input value = 0
-    Array.prototype.map.call(candidates, candidate => {
-      return candidate.value = 0;
     });
 
-    this.state = {
-      candidates: candidates,
-      ishidden: true,
-      userId: '',
-      userName: '',
-    };
+    // ========== delete JSON node =============
 
-    // bind is necessary...
+    // setStateValue.then(nodes => {
+    //   nodes.forEach(node => {
+    //     node.parentNode.removeChild(node);
+    //   });
+    // });
+
+    //  ========================================
+
+
     this.handleClick = this.handleClick.bind(this);
     this.resetClick = this.resetClick.bind(this);
     this.onChangeUserName = this.onChangeUserName.bind(this);
@@ -329,22 +299,22 @@ class UserAddForm extends React.Component {
     });
   }
 
-  unescapeUserName (str) {
+  // unescapeUserName (str) {
 
-    const patterns = {
-            '&lt;': '<',
-            '&gt;': '>',
-            '&amp;': '&',
-            '&quot;': '"',
-            '&#x27;': '\'',
-            '&#x60;': '`',
-    }
+  //   const patterns = {
+  //           '&lt;': '<',
+  //           '&gt;': '>',
+  //           '&amp;': '&',
+  //           '&quot;': '"',
+  //           '&#x27;': '\'',
+  //           '&#x60;': '`',
+  //   }
 
-    return str.replace(/&(lt|gt|amp|quot|#x27|#x60);/g, (match) => {
-      return patterns[match];
-    });
+  //   return str.replace(/&(lt|gt|amp|quot|#x27|#x60);/g, (match) => {
+  //     return patterns[match];
+  //   });
 
-  }
+  // }
 
   resetClick(e) {
     e.preventDefault();
@@ -384,6 +354,7 @@ class UserAddForm extends React.Component {
 
   render() {
     const candidates = this.state.candidates;
+
     return (
       <div>
         <AvailabilitiesTable users={this.users} candidates={this.candidatesDate} availabilities={this.availabilities} userClick={this.userClick}/>

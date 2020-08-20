@@ -83,6 +83,7 @@ class User extends Authenticatable
         $candidatesArray = [];
         $availabilitiesArray = [];
         $countAvailabilities = [];
+        $usersAvailabilities = [];
 
         foreach($candidates as $candidate) {
             $candidatesArray[$candidate->candidateId] = $candidate->candidateDate;
@@ -99,26 +100,35 @@ class User extends Authenticatable
         // When schedule has been made...
         if (! $availabilities->isEmpty()) {
             foreach($availabilities as $availability) {
-                $availabilitiesArray[$availability->candidateId][$availability->userId] = $availability->availability;
+                $userId = $availability->userId;
+                $ava = $availability->availability;
+
+                $availabilitiesArray[$availability->candidateId][$userId] = $ava;
+                
+                if (isset($usersAvailabilities[$userId])) {
+                    $usersAvailabilities[$userId] .= $ava . '_';
+                } else {
+                    $usersAvailabilities[$userId] = $ava . '_';
+                }
             }
 
-            foreach($candidates as $candidate) {
-                $temp = [0, 0, 0];
-                foreach($availabilitiesArray[$candidate->candidateId] as $availability) {
-                    $temp[$availability] += 1;
-                }
-                $countAvailabilities = array_merge($countAvailabilities, [
-                    'candidate' . $candidate->candidateId => $temp,
-                ]);
+            // foreach($candidates as $candidate) {
+            //     $temp = [0, 0, 0];
+            //     foreach($availabilitiesArray[$candidate->candidateId] as $availability) {
+            //         $temp[$availability] += 1;
+            //     }
+            //     $countAvailabilities = array_merge($countAvailabilities, [
+            //         'candidate' . $candidate->candidateId => $temp,
+            //     ]);
                 
-            }
+            // }
         //  When schedule has not been made...
         } else {
             foreach($candidates as $candidate) {
                 $id = $candidate->candidateId;
-                $countAvailabilities = array_merge($countAvailabilities, [
-                    'candidate' . $candidate->candidateId => [0, 0, 0]
-                ]);
+                // $countAvailabilities = array_merge($countAvailabilities, [
+                //     'candidate' . $candidate->candidateId => [0, 0, 0]
+                // ]);
                 $availabilitiesArray[$id] = [];
             }
         }
@@ -138,7 +148,7 @@ class User extends Authenticatable
             'uuid' => $schedule->scheduleUuid,
             'candidates' => $candidatesArray,
             'availabilities' => $availabilitiesArray,
-            'countAvailabilities' => $countAvailabilities,
+            'usersAvailabilities' => $usersAvailabilities,
         );
 
         return $params;

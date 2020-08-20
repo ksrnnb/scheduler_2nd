@@ -16,11 +16,11 @@
 </div>
 
 <div>
-<!-- Need to adjust table width later -->
-
+    <!-- json data to javascript -->
     <p id="users">{{json_encode($params['users'])}}</p>
     <p id="candidates">{{json_encode($params['candidates'])}}</p>
     <p class="mb-5" id="availabilities">{{json_encode($params['availabilities'])}}</p>
+    <p class="mb-5" id="usersAvailabilities">{{json_encode($params['usersAvailabilities'])}}</p>
 
 </div>
 

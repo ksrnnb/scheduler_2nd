@@ -77082,9 +77082,7 @@ var AvailabilitiesTable = /*#__PURE__*/function (_React$Component5) {
     _this5.userNameTableHeader = _this5.userNameTableHeader.bind(_assertThisInitialized(_this5));
     _this5.availabilitiesTableData = _this5.availabilitiesTableData.bind(_assertThisInitialized(_this5));
     _this5.getAvailability = _this5.getAvailability.bind(_assertThisInitialized(_this5));
-    _this5.userClick = _this5.props.userClick.bind(_assertThisInitialized(_this5));
-
-    _this5.countAvailability();
+    _this5.userClick = _this5.props.userClick.bind(_assertThisInitialized(_this5)); // this.countAvailability();
 
     return _this5;
   }
@@ -77207,7 +77205,7 @@ var AvailabilitiesTable = /*#__PURE__*/function (_React$Component5) {
         scope: "col"
       }, "\u25B3"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
-      }, "\xD7"), this.userNameTableHeader()), this.availabilitiesTableData()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null));
+      }, "\xD7"), this.userNameTableHeader())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, this.availabilitiesTableData()));
     }
   }]);
 
@@ -77225,54 +77223,35 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
     _classCallCheck(this, UserAddForm);
 
     _this8 = _super6.call(this, props);
-    var candidates = document.getElementsByClassName('candidates');
-    var usersNode = document.getElementById('users');
-    var candidatesNode = document.getElementById('candidates');
-    var availabilitiesNode = document.getElementById('availabilities');
-    var usersObj = JSON.parse(usersNode.innerHTML);
-    var candidatesObj = JSON.parse(candidatesNode.innerHTML);
-    var availabilitiesObj = JSON.parse(availabilitiesNode.innerHTML);
-    _this8.users = Object.values(usersObj);
-    _this8.candidatesDate = Object.values(candidatesObj);
-    _this8.availabilities = Object.values(availabilitiesObj); /////// //////
-    // const node = document.getElementById('availabilities');
-    // const obj = JSON.parse(node.innerHTML);
-    // this.availabilities = Object.values(obj).map(values => {
-    //   return values;
-    // });
-    // setTimeout( () => {
-    //   node.parentNode.removeChild(node);
-    // }, 1);
-    // const users = document.getElementsByClassName('users');
-    // Array.prototype.forEach.call(users, user => {
-    //   user.addEventListener('click', () => {
-    //       const userName = this.unescapeUserName(user.innerHTML);
-    //       const userId = user.userId;
-    //       submit_button.value = "Update user";
-    //       const candidates = this.state.candidates;
-    //       Array.prototype.map.call(candidates, (key, candidate) => {
-    //         return candidate.value = this.availabilities[key][userId];
-    //       });
-    //       this.setState({
-    //         candidates: candidate,
-    //         ishidden: true,
-    //         userName: userName,
-    //         userId: userId,
-    //       })
-    //     });
-    // });
-    ///////////////
-    // initial input value = 0
+    var setStateValue = new Promise(function (resolve, reject) {
+      var candidates = document.getElementsByClassName('candidates');
+      var usersNode = document.getElementById('users');
+      var candidatesNode = document.getElementById('candidates');
+      var availabilitiesNode = document.getElementById('availabilities');
+      var usersObj = JSON.parse(usersNode.innerHTML);
+      var candidatesObj = JSON.parse(candidatesNode.innerHTML);
+      var availabilitiesObj = JSON.parse(availabilitiesNode.innerHTML);
+      _this8.users = Object.values(usersObj);
+      _this8.candidatesDate = Object.values(candidatesObj);
+      _this8.availabilities = Object.values(availabilitiesObj); // initial input value = 0
 
-    Array.prototype.map.call(candidates, function (candidate) {
-      return candidate.value = 0;
-    });
-    _this8.state = {
-      candidates: candidates,
-      ishidden: true,
-      userId: '',
-      userName: ''
-    }; // bind is necessary...
+      Array.prototype.map.call(candidates, function (candidate) {
+        return candidate.value = 0;
+      });
+      _this8.state = {
+        candidates: candidates,
+        ishidden: true,
+        userId: '',
+        userName: ''
+      };
+      resolve([usersNode, candidatesNode, availabilitiesNode]);
+    }); // ========== delete JSON node =============
+    // setStateValue.then(nodes => {
+    //   nodes.forEach(node => {
+    //     node.parentNode.removeChild(node);
+    //   });
+    // });
+    //  ========================================
 
     _this8.handleClick = _this8.handleClick.bind(_assertThisInitialized(_this8));
     _this8.resetClick = _this8.resetClick.bind(_assertThisInitialized(_this8));
@@ -77291,22 +77270,20 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
         userId: userId,
         userName: userName
       });
-    }
-  }, {
-    key: "unescapeUserName",
-    value: function unescapeUserName(str) {
-      var patterns = {
-        '&lt;': '<',
-        '&gt;': '>',
-        '&amp;': '&',
-        '&quot;': '"',
-        '&#x27;': '\'',
-        '&#x60;': '`'
-      };
-      return str.replace(/&(lt|gt|amp|quot|#x27|#x60);/g, function (match) {
-        return patterns[match];
-      });
-    }
+    } // unescapeUserName (str) {
+    //   const patterns = {
+    //           '&lt;': '<',
+    //           '&gt;': '>',
+    //           '&amp;': '&',
+    //           '&quot;': '"',
+    //           '&#x27;': '\'',
+    //           '&#x60;': '`',
+    //   }
+    //   return str.replace(/&(lt|gt|amp|quot|#x27|#x60);/g, (match) => {
+    //     return patterns[match];
+    //   });
+    // }
+
   }, {
     key: "resetClick",
     value: function resetClick(e) {
