@@ -76981,6 +76981,7 @@ var ResetButton = /*#__PURE__*/function (_React$Component2) {
     key: "render",
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
         id: "reset-button",
         className: "btn btn-outline-success w-100 mb-5",
         onClick: this.resetClick
@@ -77112,13 +77113,15 @@ var AvailabilitiesTable = /*#__PURE__*/function (_React$Component5) {
       var _this6 = this;
 
       var tableHeader = [];
-      this.props.users.forEach(function (user) {
+      var availabilities = this.props.usersAvailabilities;
+      this.props.users.forEach(function (user, i) {
         tableHeader.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
           key: user.userId,
           scope: "col"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           className: "users",
           "data-id": user.userId,
+          "data-availabilities": availabilities[i],
           href: "#input-title",
           method: "GET",
           onClick: _this6.userClick
@@ -77228,12 +77231,15 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
       var usersNode = document.getElementById('users');
       var candidatesNode = document.getElementById('candidates');
       var availabilitiesNode = document.getElementById('availabilities');
+      var usersAvailabilitiesNode = document.getElementById('usersAvailabilities');
       var usersObj = JSON.parse(usersNode.innerHTML);
       var candidatesObj = JSON.parse(candidatesNode.innerHTML);
       var availabilitiesObj = JSON.parse(availabilitiesNode.innerHTML);
+      var usersAvailabilitiesObj = JSON.parse(usersAvailabilitiesNode.innerHTML);
       _this8.users = Object.values(usersObj);
       _this8.candidatesDate = Object.values(candidatesObj);
-      _this8.availabilities = Object.values(availabilitiesObj); // initial input value = 0
+      _this8.availabilities = Object.values(availabilitiesObj);
+      _this8.usersAvailabilities = Object.values(usersAvailabilitiesObj); // initial input value = 0
 
       Array.prototype.map.call(candidates, function (candidate) {
         return candidate.value = 0;
@@ -77244,14 +77250,14 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
         userId: '',
         userName: ''
       };
-      resolve([usersNode, candidatesNode, availabilitiesNode]);
+      resolve([usersNode, candidatesNode, availabilitiesNode, usersAvailabilitiesNode]);
     }); // ========== delete JSON node =============
-    // setStateValue.then(nodes => {
-    //   nodes.forEach(node => {
-    //     node.parentNode.removeChild(node);
-    //   });
-    // });
-    //  ========================================
+
+    setStateValue.then(function (nodes) {
+      nodes.forEach(function (node) {
+        node.parentNode.removeChild(node);
+      });
+    }); //  ========================================
 
     _this8.handleClick = _this8.handleClick.bind(_assertThisInitialized(_this8));
     _this8.resetClick = _this8.resetClick.bind(_assertThisInitialized(_this8));
@@ -77265,7 +77271,13 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
     value: function userClick(e) {
       var userId = e.target.dataset.id;
       var userName = e.target.innerHTML;
+      var candidates = this.state.candidates;
+      var usersAvailabilities = e.target.dataset.availabilities.split('_');
+      Array.prototype.map.call(candidates, function (candidate, i) {
+        return candidate.value = usersAvailabilities[i];
+      });
       this.setState({
+        candidates: candidates,
         ishidden: false,
         userId: userId,
         userName: userName
@@ -77287,12 +77299,10 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
   }, {
     key: "resetClick",
     value: function resetClick(e) {
-      e.preventDefault();
       var candidates = this.state.candidates;
       Array.prototype.map.call(candidates, function (candidate) {
         return candidate.value = 0;
-      }); // this.resetUser();
-
+      });
       this.setState({
         candidates: candidates,
         ishidden: true,
@@ -77321,10 +77331,11 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
     key: "render",
     value: function render() {
       var candidates = this.state.candidates;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AvailabilitiesTable, {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Schedule"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AvailabilitiesTable, {
         users: this.users,
         candidates: this.candidatesDate,
         availabilities: this.availabilities,
+        usersAvailabilities: this.usersAvailabilities,
         userClick: this.userClick
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         id: "input-title"

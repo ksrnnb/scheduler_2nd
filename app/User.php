@@ -112,6 +112,10 @@ class User extends Authenticatable
                 }
             }
 
+            foreach($usersAvailabilities as $key => $ava) {
+                $usersAvailabilities[$key] = substr($ava, 0, -1);
+            }
+
             // foreach($candidates as $candidate) {
             //     $temp = [0, 0, 0];
             //     foreach($availabilitiesArray[$candidate->candidateId] as $availability) {

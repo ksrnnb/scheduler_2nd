@@ -58,7 +58,7 @@ class ResetButton extends React.Component {
   }
 
   render() {
-    return <button id="reset-button" className="btn btn-outline-success w-100 mb-5" onClick={this.resetClick}>Reset input information</button>
+    return <button type="button" id="reset-button" className="btn btn-outline-success w-100 mb-5" onClick={this.resetClick}>Reset input information</button>
   }
 }
 
@@ -151,9 +151,10 @@ class AvailabilitiesTable extends React.Component {
 
   userNameTableHeader() {
     const tableHeader = [];
+    const availabilities = this.props.usersAvailabilities;
 
-    this.props.users.forEach(user => {
-      tableHeader.push(<th key={user.userId} scope="col"><a className="users" data-id={user.userId} href="#input-title" method="GET" onClick={this.userClick}>{user.userName}</a></th>);
+    this.props.users.forEach((user, i) => {
+      tableHeader.push(<th key={user.userId} scope="col"><a className="users" data-id={user.userId} data-availabilities={availabilities[i]} href="#input-title" method="GET" onClick={this.userClick}>{user.userName}</a></th>);
     });
 
     return tableHeader;
@@ -246,14 +247,17 @@ class UserAddForm extends React.Component {
       const usersNode = document.getElementById('users');
       const candidatesNode = document.getElementById('candidates');
       const availabilitiesNode = document.getElementById('availabilities');
+      const usersAvailabilitiesNode = document.getElementById('usersAvailabilities');
       
       const usersObj = JSON.parse(usersNode.innerHTML);
       const candidatesObj = JSON.parse(candidatesNode.innerHTML);
       const availabilitiesObj = JSON.parse(availabilitiesNode.innerHTML);
+      const usersAvailabilitiesObj = JSON.parse(usersAvailabilitiesNode.innerHTML);
 
       this.users = Object.values(usersObj);
       this.candidatesDate = Object.values(candidatesObj);
       this.availabilities = Object.values(availabilitiesObj);
+      this.usersAvailabilities = Object.values(usersAvailabilitiesObj);
 
       // initial input value = 0
       Array.prototype.map.call(candidates, candidate => {
@@ -267,17 +271,17 @@ class UserAddForm extends React.Component {
         userName: '',
       };
 
-      resolve([usersNode, candidatesNode, availabilitiesNode]);
+      resolve([usersNode, candidatesNode, availabilitiesNode, usersAvailabilitiesNode]);
 
     });
 
     // ========== delete JSON node =============
 
-    // setStateValue.then(nodes => {
-    //   nodes.forEach(node => {
-    //     node.parentNode.removeChild(node);
-    //   });
-    // });
+    setStateValue.then(nodes => {
+      nodes.forEach(node => {
+        node.parentNode.removeChild(node);
+      });
+    });
 
     //  ========================================
 
@@ -291,11 +295,20 @@ class UserAddForm extends React.Component {
   userClick(e) {
     const userId = e.target.dataset.id;
     const userName = e.target.innerHTML;
+    
+    const candidates = this.state.candidates;
+    
+    const usersAvailabilities = e.target.dataset.availabilities.split('_');
+
+    Array.prototype.map.call(candidates, (candidate, i) => {
+      return candidate.value = usersAvailabilities[i];
+    });
 
     this.setState({
+      candidates: candidates,
       ishidden: false,
-      userId,
-      userName,
+      userId: userId,
+      userName: userName,
     });
   }
 
@@ -317,14 +330,11 @@ class UserAddForm extends React.Component {
   // }
 
   resetClick(e) {
-    e.preventDefault();
     const candidates = this.state.candidates;
 
     Array.prototype.map.call(candidates, candidate => {
       return candidate.value = 0;
     });
-
-    // this.resetUser();
     
     this.setState({
       candidates: candidates,
@@ -357,7 +367,8 @@ class UserAddForm extends React.Component {
 
     return (
       <div>
-        <AvailabilitiesTable users={this.users} candidates={this.candidatesDate} availabilities={this.availabilities} userClick={this.userClick}/>
+        <p>Schedule</p>
+        <AvailabilitiesTable users={this.users} candidates={this.candidatesDate} availabilities={this.availabilities} usersAvailabilities={this.usersAvailabilities} userClick={this.userClick}/>
         <p id="input-title">Input availabilities</p>
         <UserName userName={this.state.userName} userId={this.state.userId} onChange={this.onChangeUserName}/>
         <Candidates handleClick={this.handleClick} candidates={candidates}/>

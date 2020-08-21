@@ -1,7 +1,7 @@
 @extends('layouts.schedule')
 
 @section('body')
-<p>edit page</p>
+<p class="h2 mb-4">Schedule Edit page</p>
 
 <div>
   <form action="/edit?id={{$params['uuid']}}" method="POST">
