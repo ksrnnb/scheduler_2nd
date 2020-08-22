@@ -17,4 +17,21 @@ class Schedule extends Model
     public function candidates() {
         return $this->hasMany('App\Candidate', 'scheduleId', 'scheduleId');
     }
+
+    public static function deleteSchedule($schedule) {
+
+        $users = $schedule->users();
+        $candidates = $schedule->candidates();
+
+        if (isset($users)) {
+            $users->each(function($user) {
+                $user->availabilities()->delete();
+            });
+            $users->delete();
+        }
+        
+        $candidates->delete();
+
+        $schedule->delete();
+    }
 }

@@ -82,7 +82,6 @@ class User extends Authenticatable
 
         $candidatesArray = [];
         $availabilitiesArray = [];
-        $countAvailabilities = [];
         $usersAvailabilities = [];
 
         foreach($candidates as $candidate) {
@@ -115,24 +114,11 @@ class User extends Authenticatable
             foreach($usersAvailabilities as $key => $ava) {
                 $usersAvailabilities[$key] = substr($ava, 0, -1);
             }
-
-            // foreach($candidates as $candidate) {
-            //     $temp = [0, 0, 0];
-            //     foreach($availabilitiesArray[$candidate->candidateId] as $availability) {
-            //         $temp[$availability] += 1;
-            //     }
-            //     $countAvailabilities = array_merge($countAvailabilities, [
-            //         'candidate' . $candidate->candidateId => $temp,
-            //     ]);
                 
-            // }
         //  When schedule has not been made...
         } else {
             foreach($candidates as $candidate) {
                 $id = $candidate->candidateId;
-                // $countAvailabilities = array_merge($countAvailabilities, [
-                //     'candidate' . $candidate->candidateId => [0, 0, 0]
-                // ]);
                 $availabilitiesArray[$id] = [];
             }
         }

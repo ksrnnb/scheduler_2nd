@@ -23,10 +23,12 @@ class ScheduleController extends Controller
         $form = $request->all();
         unset($form['_token']);
 
+        $scheduleName = $form['scheduleName'];
         $uuid = Str::uuid();
 
+        // need to validate
         $schedule = [
-            'scheduleName' => $form['scheduleName'],
+            'scheduleName' => $scheduleName,
             'scheduleUuid' => $uuid,
         ];
 
@@ -36,6 +38,11 @@ class ScheduleController extends Controller
         // フォーム送信された改行は\r\nらしい。→trimで除く必要あり。
         $c = explode("\n", $form["candidates"]);
         $c = array_map('trim', $c);
+
+        // validation
+        if (! $this->isValidatedSchedule($scheduleName, $c) ) {
+            return redirect('error');
+        }
 
         $candidates = [];
 
@@ -54,6 +61,21 @@ class ScheduleController extends Controller
         $scheduleInstance->candidates()->createMany($candidates);
 
         return redirect('/add?id=' . $uuid);
+    }
+
+    public function isValidatedSchedule($scheduleName, $candidates) {
+        foreach($candidates as $candidate) {
+
+            if(! preg_match('/[0-9]+\/[0-9]+\s\(.+\)/', $candidate)) {
+                return false;
+            }
+        }
+       
+        if (empty($scheduleName)) {
+            return false;
+        } else  {
+            return true;
+        }
     }
 
     
@@ -92,7 +114,7 @@ class ScheduleController extends Controller
 
             if(isset($schedule)) {
 
-                $this->deleteSchedule($schedule);
+                Schedule::deleteSchedule($schedule);
 
                 return view('delete');
 
@@ -102,47 +124,31 @@ class ScheduleController extends Controller
             }
 
         } else {
-            // var_dump($request->input());
             return redirect('error');
         }
 
 
     }
     
-    public function delete(Request $request) {
-        $queryId = $request->query('id');
+    // public function delete(Request $request) {
+    //     $queryId = $request->query('id');
 
-        $schedule = Schedule::where('scheduleUuid', $queryId)->first();
+    //     $schedule = Schedule::where('scheduleUuid', $queryId)->first();
 
-        if(isset($schedule)) {
+    //     if(isset($schedule)) {
 
-            $this->deleteSchedule($schedule);
+    //         Schedule::deleteSchedule($schedule);
 
-            return view('delete');
+    //         return view('delete');
 
 
-        } else {
-            return redirect('error');
-        }
-    }
+    //     } else {
+    //         return redirect('error');
+    //     }
+    // }
 
     public function error(Request $request) {
         return view('error');
-    }
-
-    public function deleteSchedule($schedule) {
-
-        $users = $schedule->users();
-        $candidates = $schedule->candidates();
-
-        $users->each(function($user) {
-            $user->availabilities()->delete();
-        });
-        
-        $users->delete();
-        $candidates->delete();
-
-        $schedule->delete();
     }
 
 }

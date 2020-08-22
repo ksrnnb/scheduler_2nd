@@ -8,6 +8,9 @@ use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Illuminate\Support\Str;
 
+use App\Schedule;
+
+
 class ScheduleTest extends DuskTestCase
 {
         use WithoutMiddleware; 
@@ -54,24 +57,19 @@ class ScheduleTest extends DuskTestCase
 //                     ->assertSee('test2');
 
 //             // delete schedule
-//             $browser->clickLink('test')
+//             $browser->clickLink('test2')
 //                     ->press('Delete')
 //                     ->assertSee('Schedule has deleted.')
 //                     ->clickLink('Scheduler');
-
-
-
 //         });
 //     }
 
     public function testMakeSchedule()
     {
-        
-        $uuid = Str::uuid();
-        echo $uuid;
+
         $params = [
-                'scheduleName' => 'testSchedule',
-                'candidates' => '8/4 (Tue)\n8/6 (Thr)\n8/10(Mon)',
+                'scheduleName' => 'Hoge',
+                'candidates' => `8/4 (Tue)\r\n8/6 (Thr)\r\n8/10(Mon)`,
         ];
 
         $response = $this->withHeaders([
@@ -79,6 +77,36 @@ class ScheduleTest extends DuskTestCase
                 ])->json('POST', '/', $params);
 
         $response->assertStatus(302);
+        
+        $schedule = Schedule::orderBy('scheduleId', 'desc')->take(1)->get();
+
+        Schedule::deleteSchedule($schedule[0]);
+
+        // the case scheduleName is not defined
+        $params = [
+                'scheduleName' => '',
+                'candidates' => `8/4 (Tue)\r\n8/6 (Thr)\r\n8/10(Mon)`,
+        ];
+        
+        $response = $this->withHeaders([
+                'X-Header' => 'Value',
+                ])->json('POST', '/', $params);
+
+        $response->assertRedirect('/error');
+
+
+        // the case candidates are not date
+        $params = [
+                'scheduleName' => 'hoge',
+                'candidates' => 'not data format',
+        ];
+        
+        $response = $this->withHeaders([
+                'X-Header' => 'Value',
+                ])->json('POST', '/', $params);
+
+        $response->assertRedirect('/error');
+
 
     }
     

@@ -123,31 +123,7 @@ class AvailabilitiesTable extends React.Component {
     this.availabilitiesTableData = this.availabilitiesTableData.bind(this);
     this.getAvailability = this.getAvailability.bind(this);
     this.userClick = this.props.userClick.bind(this);
-    // this.countAvailability();
   }
-
-  countAvailability() {
-
-    // availabilities: {candidateId:{userId: availability, userId: availability, ...}, ...}
-    const availabilities = this.props.availabilities;
-    const temp = [];
-    Object.keys(availabilities).forEach(key => {
-      // console.log('key: ' + key);
-      // console.log('value: ' + availabilities[key]);
-      // console.log(availabilities[key]);
-      Object.keys(availabilities[key]).forEach(userId => {
-        temp[userId] += availabilities[key][userId] + '-';
-      })
-    });
-
-    console.log(temp);
-    // const availabilitiesObj = availabilities[i];
-    // const availabilitiesArray = Object.values(availabilitiesObj);
-
-    // //<td>count 0</td><td>count 1</td><td>count 2</td>
-    // tableData.push(this.getTableDataForCountAvailabilities(availabilitiesArray));
-  }
-
 
   userNameTableHeader() {
     const tableHeader = [];
