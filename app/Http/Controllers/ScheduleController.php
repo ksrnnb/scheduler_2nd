@@ -62,22 +62,6 @@ class ScheduleController extends Controller
 
         return redirect('/add?id=' . $uuid);
     }
-
-    public function isValidatedSchedule($scheduleName, $candidates) {
-        foreach($candidates as $candidate) {
-
-            if(! preg_match('/[0-9]+\/[0-9]+\s\(.+\)/', $candidate)) {
-                return false;
-            }
-        }
-       
-        if (empty($scheduleName)) {
-            return false;
-        } else  {
-            return true;
-        }
-    }
-
     
 
     public function edit(Request $request) {
@@ -100,9 +84,14 @@ class ScheduleController extends Controller
 
     public function update(Request $request) {
         $queryId = $request->query('id');
+        $scheduleName = $request->all()['scheduleName'];
+
+        // validation
+        if (! $this->isValidatedUpdate($queryId, $scheduleName)) {
+            return redirect('error');
+        }
 
         $schedule = Schedule::where('scheduleUuid', $queryId)->first();
-        $scheduleName = $request->all()['scheduleName'];
 
         if ($request->input('update')) {
             
@@ -129,23 +118,32 @@ class ScheduleController extends Controller
 
 
     }
-    
-    // public function delete(Request $request) {
-    //     $queryId = $request->query('id');
 
-    //     $schedule = Schedule::where('scheduleUuid', $queryId)->first();
+    public function isValidatedSchedule($scheduleName, $candidates) {
+        foreach($candidates as $candidate) {
 
-    //     if(isset($schedule)) {
+            if(! preg_match('/[0-9]+\/[0-9]+\s\(.+\)/', $candidate)) {
+                return false;
+            }
+        }
+       
+        if (empty($scheduleName)) {
+            return false;
+        } else  {
+            return true;
+        }
+    }
 
-    //         Schedule::deleteSchedule($schedule);
+    public function isValidatedUpdate($queryId, $scheduleName) {
 
-    //         return view('delete');
-
-
-    //     } else {
-    //         return redirect('error');
-    //     }
-    // }
+        if (! Str::isUuid($queryId)) {
+            return false;
+        } elseif (empty($scheduleName)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     public function error(Request $request) {
         return view('error');

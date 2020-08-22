@@ -60,12 +60,19 @@ class User extends Authenticatable
     public static function deleteUser($form) {
         
         $id = $form["userId"];
+        
         if (isset($id)) {
+            
             $user = User::find($id);
-            $user->delete();
 
-            $user->availabilities()->delete();
-            return true;
+            // find error : return null
+            if(isset($user)) {
+                $user->delete();
+                $user->availabilities()->delete();
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

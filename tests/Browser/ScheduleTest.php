@@ -64,50 +64,78 @@ class ScheduleTest extends DuskTestCase
 //         });
 //     }
 
-    public function testMakeSchedule()
-    {
+//     public function testMakeSchedule()
+//     {
 
-        $params = [
-                'scheduleName' => 'Hoge',
-                'candidates' => `8/4 (Tue)\r\n8/6 (Thr)\r\n8/10(Mon)`,
-        ];
+//         $params = [
+//                 'scheduleName' => 'Hoge',
+//                 'candidates' => `8/4 (Tue)\r\n8/6 (Thr)\r\n8/10(Mon)`,
+//         ];
 
-        $response = $this->withHeaders([
-                'X-Header' => 'Value',
-                ])->json('POST', '/', $params);
+//         $response = $this->withHeaders([
+//                 'X-Header' => 'Value',
+//                 ])->json('POST', '/', $params);
 
-        $response->assertStatus(302);
+//         $response->assertStatus(302);
         
-        $schedule = Schedule::orderBy('scheduleId', 'desc')->take(1)->get();
+//         $schedule = Schedule::orderBy('scheduleId', 'desc')->take(1)->get();
 
-        Schedule::deleteSchedule($schedule[0]);
+//         Schedule::deleteSchedule($schedule[0]);
 
-        // the case scheduleName is not defined
-        $params = [
-                'scheduleName' => '',
-                'candidates' => `8/4 (Tue)\r\n8/6 (Thr)\r\n8/10(Mon)`,
-        ];
+//         // the case scheduleName is not defined
+//         $params = [
+//                 'scheduleName' => '',
+//                 'candidates' => `8/4 (Tue)\r\n8/6 (Thr)\r\n8/10(Mon)`,
+//         ];
         
-        $response = $this->withHeaders([
-                'X-Header' => 'Value',
-                ])->json('POST', '/', $params);
+//         $response = $this->withHeaders([
+//                 'X-Header' => 'Value',
+//                 ])->json('POST', '/', $params);
 
-        $response->assertRedirect('/error');
+//         $response->assertRedirect('/error');
 
 
-        // the case candidates are not date
-        $params = [
-                'scheduleName' => 'hoge',
-                'candidates' => 'not data format',
-        ];
+//         // the case candidates are not date
+//         $params = [
+//                 'scheduleName' => 'hoge',
+//                 'candidates' => 'not data format',
+//         ];
         
-        $response = $this->withHeaders([
-                'X-Header' => 'Value',
-                ])->json('POST', '/', $params);
+//         $response = $this->withHeaders([
+//                 'X-Header' => 'Value',
+//                 ])->json('POST', '/', $params);
 
-        $response->assertRedirect('/error');
+//         $response->assertRedirect('/error');
 
 
-    }
+//     }
+
+        public function testUpdateSchedule() {
+
+                $params = [
+                        'scheduleName' => 'Hoge',
+                        'candidates' => `8/4 (Tue)\r\n8/6 (Thr)\r\n8/10(Mon)`,
+                ];
+
+                $response = $this->withHeaders([
+                        'X-Header' => 'Value',
+                        ])->json('POST', '/', $params);
+
+                $response->assertStatus(302);
+                
+                $schedule = Schedule::orderBy('scheduleId', 'desc')->take(1)->get()[0];
+
+                $scheduleUuid = $schedule->scheduleUuid;
+                $scheduleName= $schedule->scheduleName;
+                $scheduleId= $schedule->scheduleId;
+                
+                $response = $this->withHeaders([
+                        'X-Header' => 'Value',
+                        ])->json('GET', '/add?id=' . $scheduleUuid);
+                        
+                $response->assertStatus(200);
+
+                Schedule::deleteSchedule($schedule);
+        }
     
 }

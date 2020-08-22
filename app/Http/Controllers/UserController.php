@@ -16,6 +16,11 @@ class UserController extends Controller
         
         $queryId = $request->query('id');
 
+        // validate
+        if (! Str::isUuid($queryId)) {
+            return redirect('error');
+        }
+
         $schedule = Schedule::where('scheduleUuid', $queryId)->first();
 
         if(isset($schedule)) {
@@ -55,11 +60,15 @@ class UserController extends Controller
             
         } elseif ($request->input('add')) {
 
-            $validateRule = [
-                'scheduleId' => 'required|integer|min:1',
-                'userName' => 'required|string',
-                'id' => 'required|uuid',
-            ];
+            // $validateRule = [
+            //     'scheduleId' => 'required|integer|min:1',
+            //     'userName' => 'required|string',
+            //     'id' => 'required|uuid',
+            // ];
+
+            if(! $this->isValidatedAdd($form)) {
+                return redirect('error');
+            }
     
             $candidatesArray = [];
             foreach($form as $key => $value) {
@@ -67,15 +76,9 @@ class UserController extends Controller
                     
                     $candidateId = (int)explode('_', $key)[1];
                     $candidatesArray[$candidateId] = $value;
-    
-                    // adding validation rule
-                    $validateRule['candidate_' . $candidateId] = 'integer|between:0,2';
+
                 }
             }
-    
-            // Validation
-            // return redirectにしてるからエラーあっても現状ではリダイレクトするだけ。
-            $request->validate($validateRule);
     
             if (!isset($form["userId"])) {
                 $user = [
@@ -94,11 +97,45 @@ class UserController extends Controller
             $userInstance = User::registerUser($user);
     
             User::registerAvaialbility($userInstance, $candidatesArray);
+        } else {
+            return redirect('error');
         }
 
 
         return redirect('/add?id=' . $form["id"]);
 
     
+    }
+
+    /*
+     *  $form 
+     *      'scheduleId' => integer,
+     *      'userName' => string,
+     *      'candidate_*' => 0 or 1 or 2,
+     *      'id' => uuid
+     *  
+     *  @return boolean
+     *  
+     */
+
+    public function isValidatedAdd($form) {
+        if (! ctype_digit(strval($form['scheduleId']))) {
+            return false;
+        } elseif (empty($form['userName'])) {
+            return false;
+        } elseif (! Str::isUuid($form['id'])) {
+            return false;
+        } else {
+            foreach($form as $key => $value) {
+                if (preg_match('/candidate_[0-9]+/', $key)) {
+                    if (! ($value == 0 || $value == 1 || $value == 2)) {
+                        echo 4;
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
     }
 }
