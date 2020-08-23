@@ -4,6 +4,11 @@ td {
   height: 30pt;
 }
 
+.navbar-brand {
+  font-size: 20pt;
+  font-weight: bold;
+}
+
 table {
   margin-bottom: 30pt;
   width: 100%
@@ -91,5 +96,5 @@ h2 {
 
 #input-title {
   margin-top: 50pt;
-  font-size: 24pt;
+  font-size: 20pt;
 }

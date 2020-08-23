@@ -9,7 +9,7 @@
   <title>Scheduler</title>
 </head>
 <body>
-  <div id="header" class="mb-3">
+  <div id="header" class="mb-5">
     <nav class="navbar navbar-dark sticky-top bg-primary">
       <a class="navbar-brand" href="/">Scheduler</a>
     </nav>

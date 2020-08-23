@@ -76941,18 +76941,19 @@ var TableRows = /*#__PURE__*/function (_React$Component) {
   return TableRows;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-function AddButton() {
+function AddButton(props) {
+  var value = props.isAdd ? 'Add user' : 'Update user';
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     type: "submit",
     id: "submit-button",
     className: "btn btn-outline-primary",
     name: "add",
-    value: "Add user"
+    value: value
   });
 }
 
 function DeleteButton(props) {
-  var hidden = props.ishidden ? ' display-none' : '';
+  var hidden = props.isHidden ? ' display-none' : '';
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     type: "submit",
     id: "delete-button",
@@ -77083,31 +77084,11 @@ var AvailabilitiesTable = /*#__PURE__*/function (_React$Component5) {
     _this5.userNameTableHeader = _this5.userNameTableHeader.bind(_assertThisInitialized(_this5));
     _this5.availabilitiesTableData = _this5.availabilitiesTableData.bind(_assertThisInitialized(_this5));
     _this5.getAvailability = _this5.getAvailability.bind(_assertThisInitialized(_this5));
-    _this5.userClick = _this5.props.userClick.bind(_assertThisInitialized(_this5)); // this.countAvailability();
-
+    _this5.userClick = _this5.props.userClick.bind(_assertThisInitialized(_this5));
     return _this5;
   }
 
   _createClass(AvailabilitiesTable, [{
-    key: "countAvailability",
-    value: function countAvailability() {
-      // availabilities: {candidateId:{userId: availability, userId: availability, ...}, ...}
-      var availabilities = this.props.availabilities;
-      var temp = [];
-      Object.keys(availabilities).forEach(function (key) {
-        // console.log('key: ' + key);
-        // console.log('value: ' + availabilities[key]);
-        // console.log(availabilities[key]);
-        Object.keys(availabilities[key]).forEach(function (userId) {
-          temp[userId] += availabilities[key][userId] + '-';
-        });
-      });
-      console.log(temp); // const availabilitiesObj = availabilities[i];
-      // const availabilitiesArray = Object.values(availabilitiesObj);
-      // //<td>count 0</td><td>count 1</td><td>count 2</td>
-      // tableData.push(this.getTableDataForCountAvailabilities(availabilitiesArray));
-    }
-  }, {
     key: "userNameTableHeader",
     value: function userNameTableHeader() {
       var _this6 = this;
@@ -77246,7 +77227,8 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
       });
       _this8.state = {
         candidates: candidates,
-        ishidden: true,
+        isHidden: true,
+        isAdd: true,
         userId: '',
         userName: ''
       };
@@ -77278,10 +77260,12 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
       });
       this.setState({
         candidates: candidates,
-        ishidden: false,
+        isHidden: false,
+        isAdd: false,
         userId: userId,
         userName: userName
       });
+      console.log(this.state.isAdd);
     } // unescapeUserName (str) {
     //   const patterns = {
     //           '&lt;': '<',
@@ -77305,7 +77289,8 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
       });
       this.setState({
         candidates: candidates,
-        ishidden: true,
+        isHidden: true,
+        isAdd: true,
         userId: '',
         userName: ''
       });
@@ -77338,6 +77323,7 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
         usersAvailabilities: this.usersAvailabilities,
         userClick: this.userClick
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "mb-5",
         id: "input-title"
       }, "Input availabilities"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UserName, {
         userName: this.state.userName,
@@ -77346,8 +77332,10 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Candidates, {
         handleClick: this.handleClick,
         candidates: candidates
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AddButton, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DeleteButton, {
-        ishidden: this.state.ishidden
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AddButton, {
+        isAdd: this.state.isAdd
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DeleteButton, {
+        isHidden: this.state.isHidden
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ResetButton, {
         onClick: this.resetClick,
         candidates: candidates

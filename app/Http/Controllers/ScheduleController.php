@@ -122,7 +122,7 @@ class ScheduleController extends Controller
     public function isValidatedSchedule($scheduleName, $candidates) {
         foreach($candidates as $candidate) {
 
-            if(! preg_match('/[0-9]+\/[0-9]+\s\(.+\)/', $candidate)) {
+            if(! preg_match('/[0-9]+\/[0-9]+ \(.+\)/', $candidate)) {
                 return false;
             }
         }

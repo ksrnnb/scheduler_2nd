@@ -4,6 +4,7 @@ namespace Tests\Browser;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithoutMiddleware; 
+// use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Illuminate\Support\Str;
@@ -13,129 +14,141 @@ use App\Schedule;
 
 class ScheduleTest extends DuskTestCase
 {
-        use WithoutMiddleware; 
+    use WithoutMiddleware; 
+    // use RefreshDatabase;
 
     /**
      * A Dusk test example.
      *
      * @return void
      */
-//     public function testSchedule()
-//     {
-//         $this->browse(function (Browser $browser) {
 
-//             // check input error
-//             $browser->visit('/')
-//                     ->clickAtXPath('//td[contains(@data-date, "14")]')
-//                     ->clickAtXPath('//td[contains(@data-date, "15")]')
-//                     ->clickAtXPath('//td[contains(@data-date, "16")]')
-//                     ->press('Create schedule')
-//                     ->assertPathIs('/');
+    public function testSchedule()
+    {
+        $this->browse(function (Browser $browser) {
 
-//             // create schedule
-//             $browser->type('scheduleName', 'test')
-//                     ->press('Create schedule')
-//                     ->assertPathIs('/add');
+            // check input error
+            $browser->visit('/')
+                    ->clickAtXPath('//td[contains(@data-date, "14")]')
+                    ->clickAtXPath('//td[contains(@data-date, "15")]')
+                    ->clickAtXPath('//td[contains(@data-date, "16")]')
+                    ->press('Create schedule')
+                    ->assertPathIs('/');
 
-//             // add user
-//             $browser->type('userName', 'test_user')
-//                     ->press('Add user')
-//                     ->assertSee('test_user')
-//                     ->type('userName', 'test_user2')
-//                     ->press('Add user')
-//                     ->assertSee('test_user2');
+            // create schedule
+            $browser->type('scheduleName', 'test')
+                    ->press('Create schedule')
+                    ->assertPathIs('/add');
 
-//             // delete user
-//             $browser->clickLink('test_user2')
-//                     ->press('Delete user')
-//                     ->assertDontSee('test_user2');
+            // add user
+            $browser->type('userName', 'test_user')
+                    ->press('Add user')
+                    ->assertSee('test_user')
+                    ->type('userName', 'test_user2')
+                    ->press('Add user')
+                    ->assertSee('test_user2');
 
-//             // update schedule name
-//             $browser->clickLink('test')
-//                     ->type('scheduleName', 'test2')
-//                     ->press('Update')
-//                     ->assertSee('test2');
+            // delete user
+            $browser->clickLink('test_user2')
+                    ->press('Delete user')
+                    ->assertDontSee('test_user2');
 
-//             // delete schedule
-//             $browser->clickLink('test2')
-//                     ->press('Delete')
-//                     ->assertSee('Schedule has deleted.')
-//                     ->clickLink('Scheduler');
-//         });
-//     }
+            // update schedule name
+            $browser->clickLink('test')
+                    ->type('scheduleName', 'test2')
+                    ->press('Update')
+                    ->assertSee('test2');
 
-//     public function testMakeSchedule()
-//     {
+            // delete schedule
+            $browser->clickLink('test2')
+                    ->press('Delete')
+                    ->assertSee('Schedule has deleted.')
+                    ->clickLink('Scheduler');
 
-//         $params = [
-//                 'scheduleName' => 'Hoge',
-//                 'candidates' => `8/4 (Tue)\r\n8/6 (Thr)\r\n8/10(Mon)`,
-//         ];
+        });
+    }
 
-//         $response = $this->withHeaders([
-//                 'X-Header' => 'Value',
-//                 ])->json('POST', '/', $params);
+    // public function testMakeSchedule()
+    // {
 
-//         $response->assertStatus(302);
+    //     $params = [
+    //             'scheduleName' => 'Hoge',
+    //             'candidates' => `8/4 (Tue)\r\n8/6 (Thr)\r\n8/10(Mon)`,
+    //     ];
+
+    //     $response = $this->withHeaders([
+    //             'X-Header' => 'Value',
+    //             ])->json('POST', '/', $params);
+
+    //     $response->assertStatus(302);
         
-//         $schedule = Schedule::orderBy('scheduleId', 'desc')->take(1)->get();
+    //     $schedule = Schedule::orderBy('scheduleId', 'desc')->take(1)->get();
 
-//         Schedule::deleteSchedule($schedule[0]);
+    //     Schedule::deleteSchedule($schedule[0]);
 
-//         // the case scheduleName is not defined
-//         $params = [
-//                 'scheduleName' => '',
-//                 'candidates' => `8/4 (Tue)\r\n8/6 (Thr)\r\n8/10(Mon)`,
-//         ];
+    //     // the case scheduleName is not defined
+    //     $params = [
+    //             'scheduleName' => '',
+    //             'candidates' => `8/4 (Tue)\r\n8/6 (Thr)\r\n8/10(Mon)`,
+    //     ];
         
-//         $response = $this->withHeaders([
-//                 'X-Header' => 'Value',
-//                 ])->json('POST', '/', $params);
+    //     $response = $this->withHeaders([
+    //             'X-Header' => 'Value',
+    //             ])->json('POST', '/', $params);
 
-//         $response->assertRedirect('/error');
+    //     $response->assertRedirect('/error');
 
 
-//         // the case candidates are not date
-//         $params = [
-//                 'scheduleName' => 'hoge',
-//                 'candidates' => 'not data format',
-//         ];
+    //     // the case candidates are not date
+    //     $params = [
+    //             'scheduleName' => 'hoge',
+    //             'candidates' => 'not data format',
+    //     ];
         
-//         $response = $this->withHeaders([
-//                 'X-Header' => 'Value',
-//                 ])->json('POST', '/', $params);
+    //     $response = $this->withHeaders([
+    //             'X-Header' => 'Value',
+    //             ])->json('POST', '/', $params);
 
-//         $response->assertRedirect('/error');
+    //     $response->assertRedirect('/error');
 
 
-//     }
+    // }
 
-        public function testUpdateSchedule() {
+        // public function testUpdateSchedule() {
 
-                $params = [
-                        'scheduleName' => 'Hoge',
-                        'candidates' => `8/4 (Tue)\r\n8/6 (Thr)\r\n8/10(Mon)`,
-                ];
+        //         $candidate = '12/31 (test)';
 
-                $response = $this->withHeaders([
-                        'X-Header' => 'Value',
-                        ])->json('POST', '/', $params);
-
-                $response->assertStatus(302);
+        //         $params = [
+        //                 'scheduleName' => 'HSSS',
+        //                 'candidates' => $candidate,
+        //         ];
                 
-                $schedule = Schedule::orderBy('scheduleId', 'desc')->take(1)->get()[0];
+        //         echo $params['candidates'];
 
-                $scheduleUuid = $schedule->scheduleUuid;
-                $scheduleName= $schedule->scheduleName;
-                $scheduleId= $schedule->scheduleId;
+        //         $response = $this->withHeaders([
+        //                 'X-Header' => 'Value',
+        //                 ])->json('POST', '/', $params);
+
+        //         $response->assertStatus(302);
                 
-                $response = $this->withHeaders([
-                        'X-Header' => 'Value',
-                        ])->json('GET', '/add?id=' . $scheduleUuid);
+        //         $schedule = Schedule::orderBy('scheduleId', 'desc')->take(1)->get()[0];
+
+        //         $scheduleUuid = $schedule->scheduleUuid;
+        //         $scheduleName= $schedule->scheduleName;
+        //         $scheduleId= $schedule->scheduleId;
+                
+        //         $response = $this->withHeaders([
+        //                 'X-Header' => 'Value',
+        //                 ])->json('GET', '/add?id=' . $scheduleUuid);
                         
-                $response->assertStatus(200);
+        //         $response->assertStatus(200)
+        //                 ->assertSeeText($scheduleName);
 
-                Schedule::deleteSchedule($schedule);
-        }
+        //         $this->assertDatabaseHas('candidates', [
+        //                     'candidateDate' => $candidate,
+        //                 ]);
+
+        //         Schedule::deleteSchedule($schedule);
+        // }
     
 }

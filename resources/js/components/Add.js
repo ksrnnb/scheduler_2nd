@@ -41,12 +41,13 @@ class TableRows extends React.Component {
   }
 }
 
-function AddButton() {
-  return <input type="submit" id="submit-button" className="btn btn-outline-primary" name="add" value="Add user" />
+function AddButton(props) {
+  const value = props.isAdd ? 'Add user' : 'Update user';
+  return <input type="submit" id="submit-button" className="btn btn-outline-primary" name="add" value={value} />
 }
 
 function DeleteButton(props) {
-  const hidden = props.ishidden ? ' display-none' : '';
+  const hidden = props.isHidden ? ' display-none' : '';
   return <input type="submit" id="delete-button" className={"btn btn-outline-danger" + hidden} name="delete" value="Delete user" />
 }
 
@@ -242,7 +243,8 @@ class UserAddForm extends React.Component {
 
       this.state = {
         candidates: candidates,
-        ishidden: true,
+        isHidden: true,
+        isAdd: true,
         userId: '',
         userName: '',
       };
@@ -282,7 +284,8 @@ class UserAddForm extends React.Component {
 
     this.setState({
       candidates: candidates,
-      ishidden: false,
+      isHidden: false,
+      isAdd: false,
       userId: userId,
       userName: userName,
     });
@@ -314,7 +317,8 @@ class UserAddForm extends React.Component {
     
     this.setState({
       candidates: candidates,
-      ishidden: true,
+      isHidden: true,
+      isAdd: true,
       userId: '',
       userName: '',
     });
@@ -345,11 +349,11 @@ class UserAddForm extends React.Component {
       <div>
         <p>Schedule</p>
         <AvailabilitiesTable users={this.users} candidates={this.candidatesDate} availabilities={this.availabilities} usersAvailabilities={this.usersAvailabilities} userClick={this.userClick}/>
-        <p id="input-title">Input availabilities</p>
+        <p className="mb-5" id="input-title">Input availabilities</p>
         <UserName userName={this.state.userName} userId={this.state.userId} onChange={this.onChangeUserName}/>
         <Candidates handleClick={this.handleClick} candidates={candidates}/>
-        <AddButton />
-        <DeleteButton ishidden={this.state.ishidden} />
+        <AddButton isAdd={this.state.isAdd}/>
+        <DeleteButton isHidden={this.state.isHidden} />
         <ResetButton onClick={this.resetClick} candidates={candidates}/>
       </div>
     );
