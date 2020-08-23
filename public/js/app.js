@@ -77265,7 +77265,6 @@ var UserAddForm = /*#__PURE__*/function (_React$Component6) {
         userId: userId,
         userName: userName
       });
-      console.log(this.state.isAdd);
     } // unescapeUserName (str) {
     //   const patterns = {
     //           '&lt;': '<',

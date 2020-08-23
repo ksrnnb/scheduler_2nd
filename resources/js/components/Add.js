@@ -77,7 +77,6 @@ class Candidates extends React.Component {
     return (
       <div>
         <p>Candidates</p>
-        {/* Need to adjust table width later */}
         <table className="table-bordered text-center">
           <thead>
             <tr>
