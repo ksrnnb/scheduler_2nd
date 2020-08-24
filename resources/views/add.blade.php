@@ -10,9 +10,8 @@
   <p>Schedule Name</p>
   <p class="h2 mb-5"><a href="/edit?id={{$params['uuid']}}">{{$params['scheduleName']}}</a></p>
 </div>
-<div>
-  <p>Schedule URL</p>
-  <p class="mb-5">{{request()->fullUrl()}}</p>
+<div id="schedule-url" data-url="{{request()->fullUrl()}}">
+
 </div>
 
 <div>

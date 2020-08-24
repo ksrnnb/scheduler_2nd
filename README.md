@@ -70,7 +70,7 @@ require('./components/Index');
 ```
 
 ## LaravelからReactに値を渡したい
-JSONでの受け渡しとか調べたけどよくわからん。今回は`input`タグに入れておいて、取得するようにした。
+今回はJSONで渡した。inputよりは短く済む、はず。
 
 ## migrateできない
 `php artisan migrate`しようとすると、以下のようなエラーが発生。MySQLのrootユーザーにパスワードが設定されていないため。

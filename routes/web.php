@@ -27,6 +27,10 @@ Route::post('/edit', 'ScheduleController@update');
 
 Route::get('/error', 'ScheduleController@error');
 
+Route::fallback(function() {
+  return redirect('error');
+});
+
 
 // Route::get('/test', function() {
 //     return view('test');

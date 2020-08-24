@@ -1,6 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { divide } from 'lodash';
+import { divide, forEach } from 'lodash';
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faCopy } from '@fortawesome/free-regular-svg-icons'
+
 
 function TableData(props) {
   const symbols = ['○', '△', '×'];
@@ -196,77 +201,142 @@ class AvailabilitiesTable extends React.Component {
   render() {
 
     return (
-    <table className="table-bordered text-center">
-      <thead>
-        <tr>
-        <th>Date</th><th scope="col">○</th><th scope="col">△</th><th scope="col">×</th>
-        {this.userNameTableHeader()}
-        </tr>
-      </thead>
-      <tbody>
-        {this.availabilitiesTableData()}
-      </tbody>
-    </table>
+    <div>
+      <p className="mt-5">Schedule</p>
+      <table className="table-bordered text-center">
+        <thead>
+          <tr>
+          <th>Date</th><th scope="col">○</th><th scope="col">△</th><th scope="col">×</th>
+          {this.userNameTableHeader()}
+          </tr>
+        </thead>
+        <tbody>
+          {this.availabilitiesTableData()}
+        </tbody>
+      </table>
+    </div>
     );
   }
 }
+
+class ScheduleURL extends React.Component {
+  constructor(props) {
+    super(props);
+    this.schedule_url = document.getElementById('schedule-url').dataset.url;
+    
+    this.container = document.getElementById('schedule-url');
+
+    this.copyToClipboard = this.copyToClipboard.bind(this);
+    this.showMessage = this.showMessage.bind(this);
+  }
+
+  showMessage() {
+    let messageParent = document.createElement('div');
+    let message = document.createElement('p');
+    messageParent.classList.add('text-container', 'mb-5');
+    message.classList.add('message');
+    message.textContent = 'You have copied URL.';
+
+    this.container.appendChild(messageParent);
+    messageParent.appendChild(message);
+
+    setTimeout(() => {
+      messageParent.removeChild(message);
+      this.container.removeChild(messageParent);
+    }, 2000);
+
+  }
+
+  copyToClipboard() {
+    let dummy = document.createElement('textarea');
+    // dummy.classList.add('d-none');
+
+    console.log(this.schedule_url);
+
+    dummy.textContent = this.schedule_url;
+
+    document.body.appendChild(dummy);
+
+    dummy.select();
+    document.execCommand('copy');
+
+    document.body.removeChild(dummy);
+
+    this.showMessage();
+  }
+
+  render() {
+    return (
+      <div>
+        <p>
+          {'Schedule URL' + ' '}
+          <FontAwesomeIcon className="copy-icon" icon={faCopy} onClick={this.copyToClipboard}/>
+        </p>
+        <p>{this.schedule_url}</p>
+      </div>
+    );
+  }
+}
+
 
 class UserAddForm extends React.Component {
 
   constructor(props) {
     super(props);
 
-    const setStateValue = new Promise((resolve, reject) => {
+    const candidates = document.getElementsByClassName('candidates');
 
-      const candidates = document.getElementsByClassName('candidates');
-   
-      const usersNode = document.getElementById('users');
-      const candidatesNode = document.getElementById('candidates');
-      const availabilitiesNode = document.getElementById('availabilities');
-      const usersAvailabilitiesNode = document.getElementById('usersAvailabilities');
-      
-      const usersObj = JSON.parse(usersNode.innerHTML);
-      const candidatesObj = JSON.parse(candidatesNode.innerHTML);
-      const availabilitiesObj = JSON.parse(availabilitiesNode.innerHTML);
-      const usersAvailabilitiesObj = JSON.parse(usersAvailabilitiesNode.innerHTML);
 
-      this.users = Object.values(usersObj);
-      this.candidatesDate = Object.values(candidatesObj);
-      this.availabilities = Object.values(availabilitiesObj);
-      this.usersAvailabilities = Object.values(usersAvailabilitiesObj);
+    // get data from JSON
+    this.usersNode = document.getElementById('users');
+    this.candidatesNode = document.getElementById('candidates');
+    this.availabilitiesNode = document.getElementById('availabilities');
+    this.usersAvailabilitiesNode = document.getElementById('usersAvailabilities');
+    
+    const usersObj = JSON.parse(this.usersNode.innerHTML);
+    const candidatesObj = JSON.parse(this.candidatesNode.innerHTML);
+    const availabilitiesObj = JSON.parse(this.availabilitiesNode.innerHTML);
+    const usersAvailabilitiesObj = JSON.parse(this.usersAvailabilitiesNode.innerHTML);
 
-      // initial input value = 0
-      Array.prototype.map.call(candidates, candidate => {
-        return candidate.value = 0;
-      });
+    this.users = Object.values(usersObj);
+    this.candidatesDate = Object.values(candidatesObj);
+    this.availabilities = Object.values(availabilitiesObj);
+    this.usersAvailabilities = Object.values(usersAvailabilitiesObj);
 
-      this.state = {
-        candidates: candidates,
-        isHidden: true,
-        isAdd: true,
-        userId: '',
-        userName: '',
-      };
-
-      resolve([usersNode, candidatesNode, availabilitiesNode, usersAvailabilitiesNode]);
-
+    // initial input value = 0
+    Array.prototype.map.call(candidates, candidate => {
+      return candidate.value = 0;
     });
 
-    // ========== delete JSON node =============
-
-    setStateValue.then(nodes => {
-      nodes.forEach(node => {
-        node.parentNode.removeChild(node);
-      });
-    });
-
-    //  ========================================
+    this.state = {
+      candidates: candidates,
+      isHidden: true,
+      isAdd: true,
+      userId: '',
+      userName: '',
+    };
 
 
     this.handleClick = this.handleClick.bind(this);
     this.resetClick = this.resetClick.bind(this);
     this.onChangeUserName = this.onChangeUserName.bind(this);
     this.userClick = this.userClick.bind(this);
+  }
+
+  componentDidMount() {
+
+    // ==== delete JSON node =====
+
+    const nodes = [
+      this.usersNode,
+      this.candidatesNode,
+      this.availabilitiesNode,
+      this.usersAvailabilitiesNode,
+    ];
+
+    nodes.forEach(node => {
+      node.parentNode.removeChild(node);
+    });
   }
 
   userClick(e) {
@@ -346,7 +416,7 @@ class UserAddForm extends React.Component {
 
     return (
       <div>
-        <p>Schedule</p>
+        <ScheduleURL />
         <AvailabilitiesTable users={this.users} candidates={this.candidatesDate} availabilities={this.availabilities} usersAvailabilities={this.usersAvailabilities} userClick={this.userClick}/>
         <p className="mb-5" id="input-title">Input availabilities</p>
         <UserName userName={this.state.userName} userId={this.state.userId} onChange={this.onChangeUserName}/>
