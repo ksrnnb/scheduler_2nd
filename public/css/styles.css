@@ -8,6 +8,15 @@ td {
   font-size: 20pt;
   font-weight: bold;
 }
+.w-40 {
+  width: 40%;
+}
+.w-20 {
+  width: 20%;
+}
+.w-5 {
+  width: 5%;
+}
 
 .copy-icon:hover {
   cursor: pointer;
@@ -110,6 +119,7 @@ h2 {
 @media (min-width: 500px) {
   #top-container {
     padding-left: 50px;
+    padding-right: 50px;
   }
 }
 

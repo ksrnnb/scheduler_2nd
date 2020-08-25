@@ -19,14 +19,13 @@ class ScheduleController extends Controller
     }
 
     public function create(Request $request) {
-        //Need to validate and registrate data
-        $form = $request->all();
-        unset($form['_token']);
+        
+        // exceptでinputの一部だけ取得できる。あとonlyも使える。
+        $form = $request->except('_token');
 
         $scheduleName = $form['scheduleName'];
         $uuid = Str::uuid();
 
-        // need to validate
         $schedule = [
             'scheduleName' => $scheduleName,
             'scheduleUuid' => $uuid,

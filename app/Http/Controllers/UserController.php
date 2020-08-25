@@ -37,9 +37,7 @@ class UserController extends Controller
 
     public function create(Request $request) {
 
-        // $request->input()とおなじ
-        $form = $request->all();
-        unset($form['_token']);
+        $form = $request->except('_token');
 
         /*
             $form 

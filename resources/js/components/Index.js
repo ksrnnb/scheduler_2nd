@@ -43,12 +43,10 @@ class Schedule extends React.Component {
     const date = td.dataset.date;
 
     if (td.classList.contains('selected')) {
-      // td.classList.remove('selected');
       list = list.filter(item => {
         return item != date;
       });
     } else {
-      // td.classList.add('selected');
       list.push(date);
       list.sort((a, b) => new Date(a) - new Date(b));
     }
@@ -161,31 +159,39 @@ class Calender extends React.Component {
         const tableData = [];
 
         for (let week = 0; week < 7; week++) {
-          const key = 'key' + row + '_' + week;
+
+          // keyにindexを使うのは良くないのでやめた
+          // const key = row + '_' + week;
 
           if (row === 0) {
 
             if (week <= lastMonthEndWeek) {
-              tableData.push(<td key={key} className={"disable " + weeks[week]}>{lastMonthEndDay - lastMonthEndWeek + week}</td>);
+              const date_ = lastMonthEndDay - lastMonthEndWeek + week;
+              const fullDate = year + '/' + month + '/' + date_;
+
+              tableData.push(<td key={fullDate} className={"disable " + weeks[week]}>{date_}</td>);
               continue;
             } else {
               const fullDate = yearMonth + date;
               let classSelected = isSelected(fullDate) ? ' selected ' : ' ';
-              tableData.push(<td onClick={this.handleClick} className={'able' + classSelected + weeks[week]} data-date={fullDate} key={key}>{date}</td>);
+              tableData.push(<td onClick={this.handleClick} className={'able' + classSelected + weeks[week]} data-date={fullDate} key={fullDate}>{date}</td>);
             }
           } else {
             if (date <= lastMonthEndDay) {
               const fullDate = yearMonth + date;
               let classSelected = isSelected(fullDate) ? ' selected ' : ' ';
-              tableData.push(<td onClick={this.handleClick} className={'able' + classSelected + weeks[week]} data-date={fullDate} key={key}>{date}</td>)
+              tableData.push(<td onClick={this.handleClick} className={'able' + classSelected + weeks[week]} data-date={fullDate} key={fullDate}>{date}</td>)
             } else {
-              tableData.push(<td key={key} className={"disable " + weeks[week]}>{date - monthEndDay}</td>)
+              const date_temp = date - monthEndDay;
+              const fullDate = year + '/' + month + '/' + date_temp;
+              tableData.push(<td key={fullDate} className={"disable " + weeks[week]}>{date - monthEndDay}</td>)
             }
           }
           date++;
         }
 
-        dateTableRowData.push(<tr key={row}>{tableData}</tr>);
+        // yearMonth + row -> fullDateのキーと被るけど兄弟要素じゃないから大丈夫、なはず
+        dateTableRowData.push(<tr key={yearMonth + row}>{tableData}</tr>);
 
       }
     }

@@ -85,7 +85,7 @@ class Candidates extends React.Component {
         <table className="table-bordered text-center">
           <thead>
             <tr>
-              <th>Date</th><th scope="col"></th><th scope="col"></th><th scope="col"></th>
+              <th className="w-40">Date</th><th className="w-20" scope="col"></th><th className="w-20" scope="col"></th><th className="w-20" scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -206,7 +206,7 @@ class AvailabilitiesTable extends React.Component {
       <table className="table-bordered text-center">
         <thead>
           <tr>
-          <th>Date</th><th scope="col">○</th><th scope="col">△</th><th scope="col">×</th>
+          <th className="w-20">Date</th><th scope="col">○</th><th scope="col">△</th><th scope="col">×</th>
           {this.userNameTableHeader()}
           </tr>
         </thead>
@@ -419,11 +419,13 @@ class UserAddForm extends React.Component {
         <ScheduleURL />
         <AvailabilitiesTable users={this.users} candidates={this.candidatesDate} availabilities={this.availabilities} usersAvailabilities={this.usersAvailabilities} userClick={this.userClick}/>
         <p className="mb-5" id="input-title">Input availabilities</p>
-        <UserName userName={this.state.userName} userId={this.state.userId} onChange={this.onChangeUserName}/>
-        <Candidates handleClick={this.handleClick} candidates={candidates}/>
-        <AddButton isAdd={this.state.isAdd}/>
-        <DeleteButton isHidden={this.state.isHidden} />
-        <ResetButton onClick={this.resetClick} candidates={candidates}/>
+        {/* <div className="w-50"> */}
+          <UserName userName={this.state.userName} userId={this.state.userId} onChange={this.onChangeUserName}/>
+          <Candidates handleClick={this.handleClick} candidates={candidates}/>
+          <AddButton isAdd={this.state.isAdd}/>
+          <DeleteButton isHidden={this.state.isHidden} />
+          <ResetButton onClick={this.resetClick} candidates={candidates}/>
+        {/* </div> */}
       </div>
     );
   }

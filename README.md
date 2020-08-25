@@ -158,12 +158,6 @@ foreach ($comments as $comment) {
 `<table>`タグのクラスに`text-center`つければCenterにくるようになった。
 あとは、`<th>`や`<td>`の子要素に`<div>`を作って`text-align: center`という方法も。。。
 
-## bind
-正直よくわかってない。。。bindしないとスコープが内部に入っちゃうとthisの対象が変わる？
-```javascript
-
-```
-
 ## cache
 毎回、キャッシュ削除するのがめんどい。`<meta>`でキャッシュしないように設定したら、やらなくて済むようになった。
 [リンク](https://stackoverflow.com/questions/51207570/how-to-clear-browser-cache-in-reactjs)を参照。

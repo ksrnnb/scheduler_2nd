@@ -78103,11 +78103,16 @@ var Candidates = /*#__PURE__*/function (_React$Component3) {
       var candidates = this.props.candidates;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Candidates"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "table-bordered text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        className: "w-40"
+      }, "Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        className: "w-20",
         scope: "col"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        className: "w-20",
         scope: "col"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        className: "w-20",
         scope: "col"
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TableRows, {
         onClick: this.handleClick,
@@ -78273,7 +78278,9 @@ var AvailabilitiesTable = /*#__PURE__*/function (_React$Component5) {
         className: "mt-5"
       }, "Schedule"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "table-bordered text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        className: "w-20"
+      }, "Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
       }, "\u25CB"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         scope: "col"
@@ -78589,12 +78596,10 @@ var Schedule = /*#__PURE__*/function (_React$Component) {
       var date = td.dataset.date;
 
       if (td.classList.contains('selected')) {
-        // td.classList.remove('selected');
         list = list.filter(function (item) {
           return item != date;
         });
       } else {
-        // td.classList.add('selected');
         list.push(date);
         list.sort(function (a, b) {
           return new Date(a) - new Date(b);
@@ -78729,50 +78734,58 @@ var Calender = /*#__PURE__*/function (_React$Component3) {
           var tableData = [];
 
           for (var week = 0; week < 7; week++) {
-            var key = 'key' + row + '_' + week;
-
+            // keyにindexを使うのは良くないのでやめた
+            // const key = row + '_' + week;
             if (row === 0) {
               if (week <= lastMonthEndWeek) {
+                var date_ = lastMonthEndDay - lastMonthEndWeek + week;
+                var fullDate = year + '/' + month + '/' + date_;
                 tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-                  key: key,
+                  key: fullDate,
                   className: "disable " + weeks[week]
-                }, lastMonthEndDay - lastMonthEndWeek + week));
+                }, date_));
                 continue;
               } else {
-                var fullDate = yearMonth + date;
-                var classSelected = isSelected(fullDate) ? ' selected ' : ' ';
+                var _fullDate = yearMonth + date;
+
+                var classSelected = isSelected(_fullDate) ? ' selected ' : ' ';
                 tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
                   onClick: this.handleClick,
                   className: 'able' + classSelected + weeks[week],
-                  "data-date": fullDate,
-                  key: key
+                  "data-date": _fullDate,
+                  key: _fullDate
                 }, date));
               }
             } else {
               if (date <= lastMonthEndDay) {
-                var _fullDate = yearMonth + date;
+                var _fullDate2 = yearMonth + date;
 
-                var _classSelected = isSelected(_fullDate) ? ' selected ' : ' ';
+                var _classSelected = isSelected(_fullDate2) ? ' selected ' : ' ';
 
                 tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
                   onClick: this.handleClick,
                   className: 'able' + _classSelected + weeks[week],
-                  "data-date": _fullDate,
-                  key: key
+                  "data-date": _fullDate2,
+                  key: _fullDate2
                 }, date));
               } else {
+                var date_temp = date - monthEndDay;
+
+                var _fullDate3 = year + '/' + month + '/' + date_temp;
+
                 tableData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-                  key: key,
+                  key: _fullDate3,
                   className: "disable " + weeks[week]
                 }, date - monthEndDay));
               }
             }
 
             date++;
-          }
+          } // yearMonth + row -> fullDateのキーと被るけど兄弟要素じゃないから大丈夫、なはず
+
 
           dateTableRowData.push( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-            key: row
+            key: yearMonth + row
           }, tableData));
         }
       }
