@@ -15,7 +15,7 @@ th {
 .navbar-brand {
   font-size: 20pt;
   font-weight: bold;
-  padding-left: 34px;
+  /* padding-left: 34px; */
 }
 
 .w-40 {
@@ -85,7 +85,7 @@ h2 {
 }
 
 .footer {
-  padding-left: 34px;
+  /* padding-left: 34px; */
 }
 
 .arrow:hover {
