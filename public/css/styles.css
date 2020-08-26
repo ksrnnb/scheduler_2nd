@@ -15,7 +15,7 @@ th {
 .navbar-brand {
   font-size: 20pt;
   font-weight: bold;
-  /* padding-left: 34px; */
+  padding-left: 24px;
 }
 
 .w-40 {
@@ -85,7 +85,7 @@ h2 {
 }
 
 .footer {
-  /* padding-left: 34px; */
+  padding-left: 24px;
 }
 
 .arrow:hover {
@@ -130,14 +130,14 @@ h2 {
   #top-container {
     margin-left: auto;
     margin-right: auto;
-    padding: 0 20px;
+    padding: 0 40px;
   }
 }
 
 @media (min-width: 500px) {
   #top-container {
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 }
 
