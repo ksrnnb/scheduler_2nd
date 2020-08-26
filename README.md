@@ -71,6 +71,8 @@ require('./components/Index');
 
 ## LaravelからReactに値を渡したい
 今回はJSONで渡した。inputよりは短く済む、はず。
+ただ、p要素に埋め込んで渡してるから、もっといい方法でかきたい。。。([@json](https://readouble.com/laravel/7.x/ja/blade.html#displaying-data)で渡せない？)
+
 
 ## migrateできない
 `php artisan migrate`しようとすると、以下のようなエラーが発生。MySQLのrootユーザーにパスワードが設定されていないため。

@@ -249,9 +249,6 @@ class ScheduleURL extends React.Component {
 
   copyToClipboard() {
     let dummy = document.createElement('textarea');
-    // dummy.classList.add('d-none');
-
-    console.log(this.schedule_url);
 
     dummy.textContent = this.schedule_url;
 

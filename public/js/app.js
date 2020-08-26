@@ -78332,9 +78332,7 @@ var ScheduleURL = /*#__PURE__*/function (_React$Component6) {
   }, {
     key: "copyToClipboard",
     value: function copyToClipboard() {
-      var dummy = document.createElement('textarea'); // dummy.classList.add('d-none');
-
-      console.log(this.schedule_url);
+      var dummy = document.createElement('textarea');
       dummy.textContent = this.schedule_url;
       document.body.appendChild(dummy);
       dummy.select();

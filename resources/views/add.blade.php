@@ -39,6 +39,8 @@
 
 </div>
 
-<script src="{{asset('js/app.js')}}"></script>
+<script src="{{asset('js/app.js')}}">
+  // window.users_JSON = @json($params['users']);
+</script>
 
 @endsection
