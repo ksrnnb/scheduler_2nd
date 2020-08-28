@@ -78365,20 +78365,18 @@ var UserAddForm = /*#__PURE__*/function (_React$Component7) {
     _classCallCheck(this, UserAddForm);
 
     _this10 = _super7.call(this, props);
-    var candidates = document.getElementsByClassName('candidates'); // get data from JSON
+    var candidates = document.getElementsByClassName('candidates'); // get data from laravel
 
-    _this10.usersNode = document.getElementById('users');
-    _this10.candidatesNode = document.getElementById('candidates');
-    _this10.availabilitiesNode = document.getElementById('availabilities');
-    _this10.usersAvailabilitiesNode = document.getElementById('usersAvailabilities');
-    var usersObj = JSON.parse(_this10.usersNode.innerHTML);
-    var candidatesObj = JSON.parse(_this10.candidatesNode.innerHTML);
-    var availabilitiesObj = JSON.parse(_this10.availabilitiesNode.innerHTML);
-    var usersAvailabilitiesObj = JSON.parse(_this10.usersAvailabilitiesNode.innerHTML);
-    _this10.users = Object.values(usersObj);
-    _this10.candidatesDate = Object.values(candidatesObj);
-    _this10.availabilities = Object.values(availabilitiesObj);
-    _this10.usersAvailabilities = Object.values(usersAvailabilitiesObj); // initial input value = 0
+    if (window.users.length) {
+      _this10.users = Object.values(window.users);
+      _this10.usersAvailabilities = Object.values(window.usersAvailabilities);
+    } else {
+      _this10.users = [];
+      _this10.usersAvailabilities = [];
+    }
+
+    _this10.candidatesDate = Object.values(window.candidates);
+    _this10.availabilities = Object.values(window.availabilities); // initial input value = 0
 
     Array.prototype.map.call(candidates, function (candidate) {
       return candidate.value = 0;
@@ -78398,15 +78396,6 @@ var UserAddForm = /*#__PURE__*/function (_React$Component7) {
   }
 
   _createClass(UserAddForm, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      // ==== delete JSON node =====
-      var nodes = [this.usersNode, this.candidatesNode, this.availabilitiesNode, this.usersAvailabilitiesNode];
-      nodes.forEach(function (node) {
-        node.parentNode.removeChild(node);
-      });
-    }
-  }, {
     key: "userClick",
     value: function userClick(e) {
       var userId = e.target.dataset.id;

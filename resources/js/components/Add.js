@@ -282,23 +282,17 @@ class UserAddForm extends React.Component {
     super(props);
 
     const candidates = document.getElementsByClassName('candidates');
-
-
-    // get data from JSON
-    this.usersNode = document.getElementById('users');
-    this.candidatesNode = document.getElementById('candidates');
-    this.availabilitiesNode = document.getElementById('availabilities');
-    this.usersAvailabilitiesNode = document.getElementById('usersAvailabilities');
     
-    const usersObj = JSON.parse(this.usersNode.innerHTML);
-    const candidatesObj = JSON.parse(this.candidatesNode.innerHTML);
-    const availabilitiesObj = JSON.parse(this.availabilitiesNode.innerHTML);
-    const usersAvailabilitiesObj = JSON.parse(this.usersAvailabilitiesNode.innerHTML);
-
-    this.users = Object.values(usersObj);
-    this.candidatesDate = Object.values(candidatesObj);
-    this.availabilities = Object.values(availabilitiesObj);
-    this.usersAvailabilities = Object.values(usersAvailabilitiesObj);
+    // get data from laravel
+    if (window.users.length) {
+      this.users = Object.values(window.users);
+      this.usersAvailabilities = Object.values(window.usersAvailabilities);
+    } else {
+      this.users = [];
+      this.usersAvailabilities = [];
+    }
+    this.candidatesDate = Object.values(window.candidates);
+    this.availabilities = Object.values(window.availabilities);
 
     // initial input value = 0
     Array.prototype.map.call(candidates, candidate => {
@@ -318,22 +312,6 @@ class UserAddForm extends React.Component {
     this.resetClick = this.resetClick.bind(this);
     this.onChangeUserName = this.onChangeUserName.bind(this);
     this.userClick = this.userClick.bind(this);
-  }
-
-  componentDidMount() {
-
-    // ==== delete JSON node =====
-
-    const nodes = [
-      this.usersNode,
-      this.candidatesNode,
-      this.availabilitiesNode,
-      this.usersAvailabilitiesNode,
-    ];
-
-    nodes.forEach(node => {
-      node.parentNode.removeChild(node);
-    });
   }
 
   userClick(e) {

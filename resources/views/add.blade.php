@@ -15,15 +15,6 @@
 </div>
 
 <div>
-    <!-- json data to javascript -->
-    <p class="d-none" id="users">{{json_encode($params['users'])}}</p>
-    <p class="d-none" id="candidates">{{json_encode($params['candidates'])}}</p>
-    <p class="d-none" id="availabilities">{{json_encode($params['availabilities'])}}</p>
-    <p class="d-none mb-5" id="usersAvailabilities">{{json_encode($params['usersAvailabilities'])}}</p>
-
-</div>
-
-<div>
   <form action="/add?id={{$params['uuid']}}" method="post">
     @csrf
     <input type="hidden" name="scheduleId" value="{{$params['scheduleId']}}">
@@ -39,8 +30,13 @@
 
 </div>
 
-<script src="{{asset('js/app.js')}}">
-  // window.users_JSON = @json($params['users']);
+<script>
+  window.users = @json($params['users']);
+  window.candidates = @json($params['candidates']);
+  window.availabilities = @json($params['availabilities']);
+  window.usersAvailabilities = @json($params['usersAvailabilities']);
 </script>
+
+<script src="{{asset('js/app.js')}}"></script>
 
 @endsection
