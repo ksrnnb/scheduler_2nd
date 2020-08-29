@@ -78,12 +78,14 @@ class UserController extends Controller
                 }
             }
     
+            // add user
             if (!isset($form["userId"])) {
                 $user = [
                     "userId" => NULL,
                     "userName" => $form["userName"],
                     "scheduleId" => $form["scheduleId"],
                 ];
+            // update user
             } else {
                 $user = [
                     "userId" => $form["userId"],

@@ -11,14 +11,18 @@ class Availability extends Model
     //
     // protected $fillable = ['userId'];
     protected $guarded = [];
+    protected $primaryKey = ['userId', 'candidateId'];
+    public $incrementing = false;
+
     public $timestamps = false;
     // protected $tables = 'availabilities';
     
     public function users() {
-        return $this->belongsToMany('user', 'userId', 'userId');
+        return $this->belongsToMany('App\Availability', 'App\User', 'userId', 'userId');
+        // return $this->belongsToMany('user', 'userId', 'userId');
     }
 
     public function candidates() {
-        return $this->belongsToMany('candidate', 'candidateId', 'candidateId');
+        return $this->belongsToMany('App\Availability', 'App\Candidate', 'candidateId', 'candidateId');
     }
 }

@@ -70,8 +70,8 @@ require('./components/Index');
 ```
 
 ## LaravelからReactに値を渡したい
-今回はJSONで渡した。inputよりは短く済む、はず。
-ただ、p要素に埋め込んで渡してるから、もっといい方法でかきたい。。。([@json](https://readouble.com/laravel/7.x/ja/blade.html#displaying-data)で渡せない？)
+今回はJSONで渡した。[@json](https://readouble.com/laravel/7.x/ja/blade.html#displaying-data)を使用。
+srcを指定したscriptの中に書くと渡せなかったので注意が必要。
 
 
 ## migrateできない

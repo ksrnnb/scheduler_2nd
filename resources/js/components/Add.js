@@ -282,10 +282,12 @@ class UserAddForm extends React.Component {
     super(props);
 
     const candidates = document.getElementsByClassName('candidates');
-    
+
+    console.log(window.usersAvailabilities);
+
     // get data from laravel
     if (window.users.length) {
-      this.users = Object.values(window.users);
+      this.users = window.users;
       this.usersAvailabilities = Object.values(window.usersAvailabilities);
     } else {
       this.users = [];
@@ -293,6 +295,9 @@ class UserAddForm extends React.Component {
     }
     this.candidatesDate = Object.values(window.candidates);
     this.availabilities = Object.values(window.availabilities);
+    
+    
+    console.log(this.usersAvailabilities);
 
     // initial input value = 0
     Array.prototype.map.call(candidates, candidate => {
@@ -394,13 +399,11 @@ class UserAddForm extends React.Component {
         <ScheduleURL />
         <AvailabilitiesTable users={this.users} candidates={this.candidatesDate} availabilities={this.availabilities} usersAvailabilities={this.usersAvailabilities} userClick={this.userClick}/>
         <p className="mb-5" id="input-title">Input availabilities</p>
-        {/* <div className="w-50"> */}
-          <UserName userName={this.state.userName} userId={this.state.userId} onChange={this.onChangeUserName}/>
-          <Candidates handleClick={this.handleClick} candidates={candidates}/>
-          <AddButton isAdd={this.state.isAdd}/>
-          <DeleteButton isHidden={this.state.isHidden} />
-          <ResetButton onClick={this.resetClick} candidates={candidates}/>
-        {/* </div> */}
+        <UserName userName={this.state.userName} userId={this.state.userId} onChange={this.onChangeUserName}/>
+        <Candidates handleClick={this.handleClick} candidates={candidates}/>
+        <AddButton isAdd={this.state.isAdd}/>
+        <DeleteButton isHidden={this.state.isHidden} />
+        <ResetButton onClick={this.resetClick} candidates={candidates}/>
       </div>
     );
   }

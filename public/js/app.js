@@ -78365,10 +78365,11 @@ var UserAddForm = /*#__PURE__*/function (_React$Component7) {
     _classCallCheck(this, UserAddForm);
 
     _this10 = _super7.call(this, props);
-    var candidates = document.getElementsByClassName('candidates'); // get data from laravel
+    var candidates = document.getElementsByClassName('candidates');
+    console.log(window.usersAvailabilities); // get data from laravel
 
     if (window.users.length) {
-      _this10.users = Object.values(window.users);
+      _this10.users = window.users;
       _this10.usersAvailabilities = Object.values(window.usersAvailabilities);
     } else {
       _this10.users = [];
@@ -78376,7 +78377,8 @@ var UserAddForm = /*#__PURE__*/function (_React$Component7) {
     }
 
     _this10.candidatesDate = Object.values(window.candidates);
-    _this10.availabilities = Object.values(window.availabilities); // initial input value = 0
+    _this10.availabilities = Object.values(window.availabilities);
+    console.log(_this10.usersAvailabilities); // initial input value = 0
 
     Array.prototype.map.call(candidates, function (candidate) {
       return candidate.value = 0;
