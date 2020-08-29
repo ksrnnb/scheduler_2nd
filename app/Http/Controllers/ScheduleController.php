@@ -46,19 +46,10 @@ class ScheduleController extends Controller
         $candidates = [];
 
         foreach($c as $candidateDate) {
-            $candidates[] = ['candidateDate' => $candidateDate];
+            $data = ['candidateDate' => $candidateDate];
+            $scheduleInstance->candidates()->create($data);
         }
-
-        /*
-        $candidates: array (size=2)
-                    [
-                        ['candidateDate' => '8/18(Tue)'],
-                        ['candidateDate' => '8/25(Tue)'],
-                    ]
-        */
-
-        $scheduleInstance->candidates()->createMany($candidates);
-
+        
         return redirect('/add?id=' . $uuid);
     }
     

@@ -68,57 +68,6 @@ class User extends Authenticatable
                 Availability::create($array);
             }
         }
-
-        // // candidatesArrayは既にcandidate_idで昇順に並んでいる
-        // $availabilityInstances = Availability::where("userId", $user["userId"])->orderBy("candidateId", "asc")->get();
-
-        // if ($availabilityInstances->isEmpty()) {
-
-        //     foreach($candidatesArray as $id => $availability) {
-        //         $array = [
-        //             "scheduleId" => $user["scheduleId"],
-        //             "userId" => $user["userId"],
-        //             "candidateId" => $id,
-        //             "availability" => $availability,
-        //         ];
-        //         Availability::create($array);
-        //     }
-            
-        // } else {
-            
-        //     // foreach ($availabilityInstances as $availabilityInstance) {
-        //     //     $id = $availabilityInstance->candidateId;
-
-        //     //     $array = [
-        //     //         // "scheduleId" => $user["scheduleId"],
-        //     //         // "userId" => $user["userId"],
-        //     //         // "candidateId" => $id,
-        //     //         "availability" => $candidatesArray[$id],
-        //     //     ];
-
-
-        //     //     // $availabilityInstance->fill($array)->save();
-        //     //     $availabilityInstance->update($array);
-        //     // };
-        //     foreach ($candidatesArray as $id => $availability) {
-                
-        //         $instance = $availabilityInstances->where("candidateId", $id);
-
-        //         var_dump($instance);
-
-        //         $array = [
-        //             // "scheduleId" => $user["scheduleId"],
-        //             // "userId" => $user["userId"],
-        //             // "candidateId" => $id,
-        //             "availability" => $candidatesArray[$id],
-        //         ];
-
-
-        //         // $availabilityInstance->fill($array)->save();
-        //         $instance->update($array);
-        //     };
-            
-        // }
     }
     public static function deleteUser($form) {
         

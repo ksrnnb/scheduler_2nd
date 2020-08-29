@@ -283,8 +283,6 @@ class UserAddForm extends React.Component {
 
     const candidates = document.getElementsByClassName('candidates');
 
-    console.log(window.usersAvailabilities);
-
     // get data from laravel
     if (window.users.length) {
       this.users = window.users;
@@ -296,9 +294,6 @@ class UserAddForm extends React.Component {
     this.candidatesDate = Object.values(window.candidates);
     this.availabilities = Object.values(window.availabilities);
     
-    
-    console.log(this.usersAvailabilities);
-
     // initial input value = 0
     Array.prototype.map.call(candidates, candidate => {
       return candidate.value = 0;
