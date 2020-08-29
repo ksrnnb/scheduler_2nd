@@ -33,7 +33,6 @@ class ScheduleController extends Controller
 
         $scheduleInstance = Schedule::create($schedule);
 
-        // need to use "" for \n
         // フォーム送信された改行は\r\nらしい。→trimで除く必要あり。
         $c = explode("\n", $form["candidates"]);
         $c = array_map('trim', $c);
@@ -47,6 +46,11 @@ class ScheduleController extends Controller
 
         foreach($c as $candidateDate) {
             $data = ['candidateDate' => $candidateDate];
+
+            //  Heroku上だとcandidateIdが1, 11, 21, ...と保存されてしまう。他のテーブルのIDも同様。
+            //  ClearDBの仕様だった。
+            //  https://w2.cleardb.net/faqs/#general_16
+            //  他のマスタで同じキーにならないように。　ただ、その意味はよく分からない。
             $scheduleInstance->candidates()->create($data);
         }
         
