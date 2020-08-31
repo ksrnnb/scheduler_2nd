@@ -12,7 +12,8 @@ class User extends Authenticatable
 {
     protected $guarded = ['userId'];
     
-    protected $primaryKey = 'userId';
+    protected
+     $primaryKey = 'userId';
     public $timestamps = false;
 
 
@@ -51,9 +52,7 @@ class User extends Authenticatable
 
             $instance = Availability::where($pk);
 
-            $isRecordExist = $instance->count();
-
-            if ($isRecordExist) {
+            if ($instance->exists()) {
                 $array = [
                     "availability" => $availability,
                 ];
